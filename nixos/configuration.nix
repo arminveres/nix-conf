@@ -49,9 +49,9 @@ services.xserver = {
 };
 
   # Configure keymap in X11
-  services.xserver = {
-    layout = "us";
-    xkbVariant = "";
+  services.xserver.xkb = {
+    layout = "eu";
+    variant = "";
   };
 
   # Enable CUPS to print documents.
@@ -102,7 +102,6 @@ services.xserver = {
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     wget
-    # neovim
     kitty
     alacritty
     git
