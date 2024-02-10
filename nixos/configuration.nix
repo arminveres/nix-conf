@@ -5,8 +5,7 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
+  imports = [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
@@ -117,6 +116,8 @@ services.xserver = {
     ripgrep
     fd
     unzip
+    lazygit
+    lazydocker
   ];
   programs.hyprland.enable = true;
   programs.zsh.enable = true;
