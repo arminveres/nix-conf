@@ -121,6 +121,11 @@ services.xserver = {
   ];
   programs.hyprland.enable = true;
   programs.zsh.enable = true;
+  programs.neovim = { enable = true; package = pkgs.neovim-nightly;}; 
+
+fonts.packages = with pkgs; [
+  (nerdfonts.override { fonts = [ "Meslo" "Terminus" ]; } )
+];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
