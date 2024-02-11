@@ -5,14 +5,28 @@
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "nixpkgs/nixos-23.11";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    home-manager = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, neovim-nightly-overlay, ... }:
+  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, neovim-nightly-overlay, ... }:
       let
-        system = "x86_64-linux";
+        systemSettings={
+          system = "x86_64-linux";
+          hostname = "homews";
+          timezone = "Europe/Zurich";
+          locale = "en_US.UTF-8";
+        };
+
+        userSettings = {
+          username = "arminveres";
+        };
 
         pkgs = import nixpkgs {
-          inherit system;
+          system = systemSettings.system;
+
           overlays = [ neovim-nightly-overlay.overlay ];
           config = {
             allowUnfree = true;
@@ -20,18 +34,31 @@
         };
 
         pkgs-stable = import nixpkgs-stable {
-          inherit system;
+          system = systemSettings.system;
           overlays = [ neovim-nightly-overlay.overlay ];
           config = {
             allowUnfree = true;
           };
         };
 
+        lib = nixpkgs.lib;
+
       in {
+      homeConfiguration = {
+        user = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [./nixos/home.nix];
+          extraSpecialArgs = {
+            inherit pkgs-stable;
+            inherit systemSettings;
+            inherit userSettings;
+          };
+        };
+      };
         nixosConfigurations = {
           myNixos = nixpkgs.lib.nixosSystem {
-            specialArgs = { 
-              inherit system;
+          system = systemSettings.system;
+            specialArgs = {
               inherit pkgs;
             };
             modules = [./nixos/configuration.nix];
