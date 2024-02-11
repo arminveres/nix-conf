@@ -5,16 +5,6 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
-
-  # Bootloader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/vda";
-  boot.loader.grub.useOSProber = true;
-
-  networking.hostName = "myNixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -30,22 +20,19 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
-#   # Enable the X11 windowing system.
-#   services.xserver.enable = true;
-# 
-#   # Enable the GNOME Desktop Environment.
-#   services.xserver.displayManager.gdm.enable = true;
-#   services.xserver.desktopManager.gnome.enable = true;
-  # Enable automatic login for the user.
-#  services.xserver.displayManager.autoLogin.enable = true;
-#  services.xserver.displayManager.autoLogin.user = "armin";
-
-services.xserver = {
-    enable = true;
-    displayManager.gdm.enable = true;
-    displayManager.autoLogin.enable = false;
-    desktopManager.gnome.enable = true;
-};
+ #   # Enable the X11 windowing system.
+ #   services.xserver.enable = true;
+ #
+ #   # Enable the GNOME Desktop Environment.
+ #   services.xserver.displayManager.gdm.enable = true;
+ #   services.xserver.desktopManager.gnome.enable = true;
+ 
+ services.xserver = {
+     enable = true;
+     displayManager.gdm.enable = true;
+     displayManager.autoLogin.enable = false;
+     desktopManager.gnome.enable = true;
+ };
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -81,11 +68,11 @@ services.xserver = {
     defaultUserShell = pkgs.zsh;
     users.armin = {
       isNormalUser = true;
-      description = "armin";
+      description = "Armin Veres";
       extraGroups = [ "networkmanager" "wheel" ];
       packages = with pkgs; [
         firefox
-      #  thunderbird
+        thunderbird
       ];
     };
   };
@@ -141,6 +128,8 @@ fonts.packages = with pkgs; [
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   nix.gc = {
     automatic = true;

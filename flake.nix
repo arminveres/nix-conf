@@ -44,24 +44,24 @@
         lib = nixpkgs.lib;
 
       in {
-      homeConfiguration = {
-        user = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = [./nixos/home.nix];
-          extraSpecialArgs = {
-            inherit pkgs-stable;
-            inherit systemSettings;
-            inherit userSettings;
+        homeConfiguration = {
+          user = home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            modules = [./nixos/home.nix];
+            extraSpecialArgs = {
+              inherit pkgs-stable;
+              inherit systemSettings;
+              inherit userSettings;
+            };
           };
         };
-      };
         nixosConfigurations = {
-          myNixos = nixpkgs.lib.nixosSystem {
+          vm = nixpkgs.lib.nixosSystem {
           system = systemSettings.system;
             specialArgs = {
               inherit pkgs;
             };
-            modules = [./nixos/configuration.nix];
+            modules = [./nixos/hosts/vm-hw.nix ./nixos/configuration.nix];
           };
         };
       };
