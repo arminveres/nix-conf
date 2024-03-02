@@ -63,6 +63,13 @@
             };
             modules = [./nixos/hosts/vm-hw.nix ./nixos/configuration.nix];
           };
+          x1c = nixpkgs.lib.nixosSystem {
+          system = systemSettings.system;
+            specialArgs = {
+              inherit pkgs;
+            };
+            modules = [./nixos/hosts/x1c-hw.nix ./nixos/configuration.nix];
+          };
         };
       };
 }
