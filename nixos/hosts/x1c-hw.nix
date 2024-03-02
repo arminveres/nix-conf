@@ -21,11 +21,6 @@
 
   boot.initrd.luks.devices."nixos-root".device = "/dev/disk/by-uuid/bab4e80f-a02e-437f-b0f0-d02fd63c1b90";
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/3848-1BA3";
-      fsType = "vfat";
-    };
-
   fileSystems."/home" =
     { device = "/dev/disk/by-uuid/29285a7b-506f-45f7-9dbd-ada855efd0e9";
       fsType = "btrfs";
@@ -42,6 +37,11 @@
     { device = "/dev/disk/by-uuid/29285a7b-506f-45f7-9dbd-ada855efd0e9";
       fsType = "btrfs";
       options = [ "subvol=@log" ];
+    };
+
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/56F4-0EAF";
+      fsType = "vfat";
     };
 
   swapDevices = [ ];

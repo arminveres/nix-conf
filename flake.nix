@@ -68,7 +68,17 @@
             specialArgs = {
               inherit pkgs;
             };
-            modules = [./nixos/hosts/x1c-hw.nix ./nixos/configuration.nix];
+            modules = [
+              { 
+                boot.loader.systemd-boot.enable = true;
+                boot.loader.efi = {
+                  canTouchEfiVariables = true;
+                  efiSysMountPoint = "/boot";
+                };
+              }
+              ./nixos/hosts/x1c-hw.nix
+              ./nixos/configuration.nix
+            ];
           };
         };
       };
