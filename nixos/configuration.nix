@@ -40,6 +40,8 @@
     variant = "";
   };
 
+  zramSwap.enable = true;
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -66,7 +68,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
     defaultUserShell = pkgs.zsh;
-    users.armin = {
+    users.arminveres = {
       isNormalUser = true;
       description = "Armin Veres";
       extraGroups = [ "networkmanager" "wheel" ];
@@ -105,16 +107,25 @@
     unzip
     lazygit
     lazydocker
+    wofi
+    waybar
+    swaynotificationcenter
+    python3
+
   ];
   programs.hyprland.enable = true;
   programs.zsh.enable = true;
   programs.neovim = { enable = true; package = pkgs.neovim-nightly;}; 
 
-fonts.packages = with pkgs; [
-  (nerdfonts.override { fonts = [ "Meslo" "Terminus" ]; } )
-];
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "Meslo" "Terminus" ]; } )
+  ];
 
-  zramSwap.enable = true;
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -128,6 +139,11 @@ fonts.packages = with pkgs; [
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+
+  security.pam.services = {
+    login.fprintAuth = true;
+    gdm-fingerprint.fprintAuth = true;
+  };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 

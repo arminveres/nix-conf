@@ -14,4 +14,12 @@
   xdg.mime.enable = true;
   xdg.mimeApps.enable = true;
 
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Colloid-Orange-Dark";
+      package = pkgs.colloid-gtk-theme;
+    };
+  };
+  home.sessionVariable.GTK_THEME = "Colloid-Orange-Dark"
 }
