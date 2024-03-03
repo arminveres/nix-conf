@@ -20,64 +20,56 @@
           locale = "en_US.UTF-8";
         };
 
-        userSettings = {
-          username = "arminveres";
-        };
+        userSettings = { username = "arminveres"; };
 
         pkgs = import nixpkgs {
           system = systemSettings.system;
 
           overlays = [ neovim-nightly-overlay.overlay ];
-          config = {
-            allowUnfree = true;
-          };
+          config = { allowUnfree = true; };
         };
 
         pkgs-stable = import nixpkgs-stable {
           system = systemSettings.system;
           overlays = [ neovim-nightly-overlay.overlay ];
-          config = {
-            allowUnfree = true;
-          };
+          config = { allowUnfree = true; };
         };
 
         lib = nixpkgs.lib;
 
       in {
-        homeConfiguration = {
-          user = home-manager.lib.homeManagerConfiguration {
-            inherit pkgs;
-            modules = [./nixos/home.nix];
-            extraSpecialArgs = {
-              inherit pkgs-stable;
-              inherit systemSettings;
-              inherit userSettings;
-            };
-          };
-        };
         nixosConfigurations = {
-          vm = nixpkgs.lib.nixosSystem {
+          vm = lib.nixosSystem {
           system = systemSettings.system;
-            specialArgs = {
-              inherit pkgs;
-            };
+            specialArgs = { inherit pkgs; };
             modules = [./nixos/hosts/vm-hw.nix ./nixos/configuration.nix];
           };
-          x1c = nixpkgs.lib.nixosSystem {
+          x1c = lib.nixosSystem {
           system = systemSettings.system;
-            specialArgs = {
-              inherit pkgs;
-            };
+          specialArgs = { inherit pkgs; };
             modules = [
-              { 
+              { # TODO(aver): move his to special x1c config
                 boot.loader.systemd-boot.enable = true;
                 boot.loader.efi = {
                   canTouchEfiVariables = true;
                   efiSysMountPoint = "/boot";
                 };
+                services.fprintd = {
+                  enable = true;
+                  package = pkgs.fprintd-tod;
+                  tod.enable = true;
+                  tod.driver = pkgs.libfprint-2-tod1-goodix;
+                };
               }
               ./nixos/hosts/x1c-hw.nix
               ./nixos/configuration.nix
+              home-manager.nixosModules.home-manager
+              {
+                home-manager.users.arminveres = import ./nixos/home.nix;
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.extraSpecialArgs = { inherit pkgs-stable systemSettings userSettings; };
+              }
             ];
           };
         };

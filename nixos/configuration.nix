@@ -110,6 +110,7 @@
     wofi
     waybar
     swaynotificationcenter
+    swaylock
     python3
 
   ];
@@ -143,6 +144,9 @@
   security.pam.services = {
     login.fprintAuth = true;
     gdm-fingerprint.fprintAuth = true;
+    swaylock = {
+      fprintAuth = true;
+    };
   };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
