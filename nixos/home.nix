@@ -14,6 +14,9 @@
     neovide
     kanshi
     wlogout
+    pulseaudio
+    pavucontrol
+    wdisplays
   ];
 
   home.username = userSettings.username;
@@ -59,10 +62,8 @@
   };
   home.sessionVariables = { GTK_THEME = "Colloid-Dark"; };
 
-  services = {
-    gpg-agent = {
-      enable = true;
-      enableSshSupport = true;
-    };
+  services.gpg-agent = {
+    enable = true;
+    enableSshSupport = true;
   };
 }
