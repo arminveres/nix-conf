@@ -5,7 +5,8 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usbhid" "usb_storage" "sd_mod" ];
@@ -14,7 +15,8 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/29285a7b-506f-45f7-9dbd-ada855efd0e9";
+    {
+      device = "/dev/disk/by-uuid/29285a7b-506f-45f7-9dbd-ada855efd0e9";
       fsType = "btrfs";
       options = [ "subvol=@" ];
     };
@@ -22,25 +24,29 @@
   boot.initrd.luks.devices."nixos-root".device = "/dev/disk/by-uuid/bab4e80f-a02e-437f-b0f0-d02fd63c1b90";
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/29285a7b-506f-45f7-9dbd-ada855efd0e9";
+    {
+      device = "/dev/disk/by-uuid/29285a7b-506f-45f7-9dbd-ada855efd0e9";
       fsType = "btrfs";
       options = [ "subvol=@home" ];
     };
 
   fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/29285a7b-506f-45f7-9dbd-ada855efd0e9";
+    {
+      device = "/dev/disk/by-uuid/29285a7b-506f-45f7-9dbd-ada855efd0e9";
       fsType = "btrfs";
       options = [ "subvol=@nix" ];
     };
 
   fileSystems."/var/log" =
-    { device = "/dev/disk/by-uuid/29285a7b-506f-45f7-9dbd-ada855efd0e9";
+    {
+      device = "/dev/disk/by-uuid/29285a7b-506f-45f7-9dbd-ada855efd0e9";
       fsType = "btrfs";
       options = [ "subvol=@log" ];
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/56F4-0EAF";
+    {
+      device = "/dev/disk/by-uuid/56F4-0EAF";
       fsType = "vfat";
     };
 
@@ -55,4 +61,40 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi = {
+    canTouchEfiVariables = true;
+    efiSysMountPoint = "/boot";
+  };
+
+  # ===============================================================================================
+  # Laptop specific services
+  # ===============================================================================================
+
+  powerManagement.enable = true;
+  powerManagement.powertop.enable = true;
+  services.thermald.enable = true;
+
+
+  services.fprintd = {
+    enable = true;
+    # package = pkgs.fprintd-tod;
+    # package = pkgs.fprintd-tod;
+    # tod.enable = true;
+    # tod.driver = pkgs.libfprint-2-tod1-goodix;
+  };
+
+  security.pam.services = {
+    login.fprintAuth = true;
+    gdm-fingerprint.fprintAuth = true;
+    swaylock.fprintAuth = true;
+  };
+
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", MODE="0666", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/class/backlight/%k/brightness"
+    ACTION=="add", SUBSYSTEM=="backlight", RUN+="${pkgs.coreutils}/bin/chgrp video /sys/class/backlight/%k/brightness"
+    ACTION=="add", SUBSYSTEM=="backlight", RUN+="${pkgs.coreutils}/bin/chmod g+w /sys/class/backlight/%k/brightness"
+  '';
+
 }

@@ -20,19 +20,13 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
- #   # Enable the X11 windowing system.
- #   services.xserver.enable = true;
- #
- #   # Enable the GNOME Desktop Environment.
- #   services.xserver.displayManager.gdm.enable = true;
- #   services.xserver.desktopManager.gnome.enable = true;
- 
- services.xserver = {
-     enable = true;
-     displayManager.gdm.enable = true;
-     displayManager.autoLogin.enable = false;
-     desktopManager.gnome.enable = true;
- };
+
+  services.xserver = {
+    enable = true;
+    displayManager.gdm.enable = true;
+    displayManager.autoLogin.enable = false;
+    desktopManager.gnome.enable = true;
+  };
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -71,7 +65,7 @@
     users.arminveres = {
       isNormalUser = true;
       description = "Armin Veres";
-      extraGroups = [ "networkmanager" "wheel" ];
+      extraGroups = [ "networkmanager" "wheel" "video" ];
       packages = with pkgs; [
         firefox
         thunderbird
@@ -89,8 +83,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    python3
     wget
-    kitty
     alacritty
     git
     btop
@@ -111,15 +105,21 @@
     waybar
     swaynotificationcenter
     swaylock
-    python3
-
+    swayosd
+    xdg-desktop-portal-hyprland
+    hyprland-protocols
+    cliphist
+    powertop
   ];
-  programs.hyprland.enable = true;
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
   programs.zsh.enable = true;
-  programs.neovim = { enable = true; package = pkgs.neovim-nightly;}; 
+  programs.neovim = { enable = true; package = pkgs.neovim-nightly; };
 
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "Meslo" "Terminus" ]; } )
+    (nerdfonts.override { fonts = [ "Meslo" "Terminus" "Iosevka" ]; })
   ];
 
   programs.steam = {
@@ -127,6 +127,9 @@
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
   };
+
+  programs.nix-ld.enable = true;
+  programs.light.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -141,12 +144,6 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
-  security.pam.services = {
-    login.fprintAuth = true;
-    gdm-fingerprint.fprintAuth = true;
-    swaylock = {
-      fprintAuth = true;
-    };
   };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -154,7 +151,7 @@
   nix.gc = {
     automatic = true;
     dates = "daily";
-    options = "--delete-older-than 14d";
+    options = "--delete-older-than 7d";
   };
 
   # Open ports in the firewall.

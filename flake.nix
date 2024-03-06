@@ -9,69 +9,58 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprland.url = "github:hyprwm/Hyprland";
   };
 
   outputs = { self, nixpkgs, nixpkgs-stable, home-manager, neovim-nightly-overlay, ... }:
-      let
-        systemSettings={
-          system = "x86_64-linux";
-          hostname = "homews";
-          timezone = "Europe/Zurich";
-          locale = "en_US.UTF-8";
-        };
+    let
+      systemSettings = {
+        system = "x86_64-linux";
+        hostname = "homews";
+        timezone = "Europe/Zurich";
+        locale = "en_US.UTF-8";
+      };
 
-        userSettings = { username = "arminveres"; };
+      userSettings = { username = "arminveres"; };
 
-        pkgs = import nixpkgs {
-          system = systemSettings.system;
+      pkgs = import nixpkgs {
+        system = systemSettings.system;
 
-          overlays = [ neovim-nightly-overlay.overlay ];
-          config = { allowUnfree = true; };
-        };
+        overlays = [ neovim-nightly-overlay.overlay ];
+        config = { allowUnfree = true; };
+      };
 
-        pkgs-stable = import nixpkgs-stable {
-          system = systemSettings.system;
-          overlays = [ neovim-nightly-overlay.overlay ];
-          config = { allowUnfree = true; };
-        };
+      pkgs-stable = import nixpkgs-stable {
+        system = systemSettings.system;
+        overlays = [ neovim-nightly-overlay.overlay ];
+        config = { allowUnfree = true; };
+      };
 
-        lib = nixpkgs.lib;
+      lib = nixpkgs.lib;
 
-      in {
-        nixosConfigurations = {
-          vm = lib.nixosSystem {
-          system = systemSettings.system;
-            specialArgs = { inherit pkgs; };
-            modules = [./nixos/hosts/vm-hw.nix ./nixos/configuration.nix];
-          };
-          x1c = lib.nixosSystem {
+    in
+    {
+      nixosConfigurations = {
+        vm = lib.nixosSystem {
           system = systemSettings.system;
           specialArgs = { inherit pkgs; };
-            modules = [
-              { # TODO(aver): move his to special x1c config
-                boot.loader.systemd-boot.enable = true;
-                boot.loader.efi = {
-                  canTouchEfiVariables = true;
-                  efiSysMountPoint = "/boot";
-                };
-                services.fprintd = {
-                  enable = true;
-                  package = pkgs.fprintd-tod;
-                  tod.enable = true;
-                  tod.driver = pkgs.libfprint-2-tod1-goodix;
-                };
-              }
-              ./nixos/hosts/x1c-hw.nix
-              ./nixos/configuration.nix
-              home-manager.nixosModules.home-manager
-              {
-                home-manager.users.arminveres = import ./nixos/home.nix;
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-                home-manager.extraSpecialArgs = { inherit pkgs-stable systemSettings userSettings; };
-              }
-            ];
-          };
+          modules = [ ./nixos/hosts/vm-hw.nix ./nixos/configuration.nix ];
+        };
+        x1c = lib.nixosSystem {
+          system = systemSettings.system;
+          specialArgs = { inherit pkgs; };
+          modules = [
+            ./nixos/hosts/x1c-hw.nix
+            ./nixos/configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.users.arminveres = import ./nixos/home.nix;
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = { inherit pkgs-stable systemSettings userSettings; };
+            }
+          ];
         };
       };
+    };
 }
