@@ -1,7 +1,10 @@
 { config, pkgs, pkgs-stable, systemSettings, userSettings, ... }:
 
 {
-  programs.home-manager.enable = true;
+  programs = {
+    home-manager.enable = true;
+  };
+
 
   home.packages = with pkgs; [
     dconf
@@ -17,6 +20,10 @@
     pulseaudio
     pavucontrol
     wdisplays
+    mission-center
+    gh
+    eza
+    rustup
   ];
 
   home.username = userSettings.username;

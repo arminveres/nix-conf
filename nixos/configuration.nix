@@ -73,10 +73,7 @@
       isNormalUser = true;
       description = "Armin Veres";
       extraGroups = [ "networkmanager" "wheel" "video" ];
-      packages = with pkgs; [
-        firefox
-        thunderbird
-      ];
+      # packages = with pkgs; [ ];
     };
   };
 
@@ -90,6 +87,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    firefox
+    thunderbird
     python3
     wget
     alacritty
@@ -97,7 +96,6 @@
     btop
     stow
     tmux
-    rustup
     binutils
     gcc
     xxd
@@ -115,6 +113,7 @@
     swayosd
     xdg-desktop-portal-hyprland
     hyprland-protocols
+    hyprpaper
     cliphist
     powertop
   ];
@@ -137,6 +136,8 @@
 
   programs.nix-ld.enable = true;
   programs.light.enable = true;
+
+  programs.direnv.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
