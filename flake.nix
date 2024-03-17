@@ -44,17 +44,17 @@
         vm = lib.nixosSystem {
           system = systemSettings.system;
           specialArgs = { inherit pkgs; };
-          modules = [ ./nixos/hosts/vm-hw.nix ./nixos/configuration.nix ];
+          modules = [ ./hosts/vm-hw.nix ./configuration.nix ];
         };
         x1c = lib.nixosSystem {
           system = systemSettings.system;
           specialArgs = { inherit pkgs; };
           modules = [
-            ./nixos/hosts/x1c-hw.nix
-            ./nixos/configuration.nix
+            ./hosts/x1c-hw.nix
+            ./configuration.nix
             home-manager.nixosModules.home-manager
             {
-              home-manager.users.arminveres = import ./nixos/home.nix;
+              home-manager.users.arminveres = import ./home.nix;
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = { inherit pkgs-stable systemSettings userSettings; };
