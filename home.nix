@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-stable, systemSettings, userSettings, ... }:
+{ config, pkgs, pkgs-stable, systemSettings, userSettings, split-monitor-workspaces, ... }:
 
 {
   programs = {
@@ -24,6 +24,7 @@
     gh
     eza
     rustup
+    tldr
   ];
 
   home.username = userSettings.username;
@@ -72,5 +73,13 @@
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
+  };
+
+  wayland.windowManager.hyprland = {
+    # ...
+    plugins = [
+      split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
+    ];
+    # ...
   };
 }

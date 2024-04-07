@@ -10,9 +10,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland.url = "github:hyprwm/Hyprland";
+    split-monitor-workspaces = {
+      url = "github:Duckonaut/split-monitor-workspaces";
+      inputs.hyprland.follows = "hyprland";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, neovim-nightly-overlay, ... }:
+  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, neovim-nightly-overlay, split-monitor-workspaces, ... }:
     let
       systemSettings = {
         system = "x86_64-linux";
@@ -57,7 +61,7 @@
               home-manager.users.arminveres = import ./home.nix;
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = { inherit pkgs-stable systemSettings userSettings; };
+              home-manager.extraSpecialArgs = { inherit pkgs-stable systemSettings userSettings split-monitor-workspaces; };
             }
           ];
         };
@@ -72,7 +76,7 @@
               home-manager.users.arminveres = import ./home.nix;
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = { inherit pkgs-stable systemSettings userSettings; };
+              home-manager.extraSpecialArgs = { inherit pkgs-stable systemSettings userSettings split-monitor-workspaces; };
             }
           ];
         };
