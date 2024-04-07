@@ -11,7 +11,13 @@
 
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
-    hyprland.url = "github:hyprwm/Hyprland";
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+    };
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
     split-monitor-workspaces = {
       url = "github:Duckonaut/split-monitor-workspaces";
       inputs.hyprland.follows = "hyprland";
@@ -65,7 +71,7 @@
 
         x1c = lib.nixosSystem {
           system = systemSettings.system;
-          specialArgs = { inherit pkgs; };
+          specialArgs = { inherit pkgs inputs; };
           modules = [
             ./hosts/x1c-hw.nix
             ./configuration.nix
@@ -80,7 +86,7 @@
         };
         desktop = lib.nixosSystem {
           system = systemSettings.system;
-          specialArgs = { inherit pkgs; };
+          specialArgs = { inherit pkgs inputs; };
           modules = [
             ./hosts/desktop-hw.nix
             ./configuration.nix

@@ -2,11 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  nix.optimise.automatic = true;
   nix.gc = {
     automatic = true;
     dates = "daily";
@@ -113,6 +114,7 @@
     swaylock
     swayosd
     xdg-desktop-portal-hyprland
+    xdg-desktop-portal-gtk
     hyprland-protocols
     hyprpaper
     hyprshot
@@ -126,7 +128,6 @@
 
   programs.hyprland = {
     enable = true;
-    xwayland.enable = true;
   };
 
   programs.zsh.enable = true;
