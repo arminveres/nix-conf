@@ -40,17 +40,28 @@
   home.homeDirectory = "/home/" + userSettings.username;
   home.stateVersion = "23.11";
 
-  xdg.enable = true;
-  xdg.userDirs = {
+  xdg = {
     enable = true;
-    createDirectories = true;
-  };
-  xdg.mime.enable = true;
-  xdg.mimeApps.enable = true;
-  xdg.configFile = {
-    "gtk-4.0/assets".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
-    "gtk-4.0/gtk.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
-    "gtk-4.0/gtk-dark.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
+    userDirs = {
+      enable = true;
+      createDirectories = true;
+    };
+    mime.enable = true;
+    mimeApps.enable = true;
+    mimeApps.defaultApplications = {
+      "x-scheme-handler/mailto" = "userapp-Thunderbird-MLTWL2.desktop";
+      "message/rfc822" = "userapp-Thunderbird-MLTWL2.desktop";
+      "x-scheme-handler/mid" = "userapp-Thunderbird-MLTWL2.desktop";
+    };
+    mimeApps.associations.added = {
+      "x-scheme-handler/mailto" = "userapp-Thunderbird-MLTWL2.desktop";
+      "x-scheme-handler/mid" = "userapp-Thunderbird-MLTWL2.desktop";
+    };
+    configFile = {
+      "gtk-4.0/assets".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
+      "gtk-4.0/gtk.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
+      "gtk-4.0/gtk-dark.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
+    };
   };
 
   dconf = {
@@ -94,13 +105,13 @@
     ];
     extraConfig = ''
       # See https://wiki.hyprland.org/Configuring/Monitors/
-      monitor=DP-1,3440x1440@1440,0x0,1.0
+      monitor=DP-1,3440x1440@1440,0x0,1.0,bitdepth,10,vrr,1
       monitor=DP-2,1920x1200@60,3440x0,1.0,transform,3
 
       workspace=DP-0,1
       workspace=DP-1,11
 
-      env = XCURSOR_SIZE,24
+      # env = XCURSOR_SIZE,24
 
       # For all categories, see https://wiki.hyprland.org/Configuring/Variables/
       input {
@@ -190,11 +201,11 @@
           kb_options = ctrl:swapcaps,altwin:swap_lalt_lwin
       }
 
-      plugin {
-          split-monitor-workspaces {
-              count = 9
-          }
-      }
+      # plugin {
+      #     split-monitor-workspaces {
+      #         count = 9
+      #     }
+      # }
 
       # =================================================================================================
       # Keybinds
@@ -333,12 +344,24 @@
       windowrulev2=workspace 4 silent,class:^(Spotify)$
       windowrulev2=workspace 4 silent,class:^(blueman-manager)$
       windowrulev2=workspace 4 silent,class:^(easyeffects)$
-      windowrulev2=workspace 6 silent,class:^(steam)$
+      windowrulev2=workspace 5 silent,class:^(steam)$
+      windowrulev2=workspace 6 silent,class:^(thunderbird)$
       windowrulev2=workspace 9 silent,class:^(signal)$
       windowrulev2=workspace 9 silent,class:^(Signal)$
       # teams
       windowrulev2=workspace 9 silent,title:^(Microsoft Teams*)$
       windowrulev2=tile,title:^(Microsoft Teams*)$
+
+      workspace = 1, monitor:DP-1
+      workspace = 2, monitor:DP-1
+      workspace = 3, monitor:DP-1
+      workspace = 4, monitor:DP-1
+      workspace = 5, monitor:DP-1
+      workspace = 6, monitor:DP-2
+      workspace = 7, monitor:DP-2
+      workspace = 8, monitor:DP-2
+      workspace = 9, monitor:DP-2
+      workspace = 10, monitor:DP-2
 
       # =================================================================================================
       # Autostart Application

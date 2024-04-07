@@ -160,6 +160,8 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
+  services.zerotierone.enable = true;
+
   security.sudo = {
     enable = true;
     extraRules = [{
