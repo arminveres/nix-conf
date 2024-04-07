@@ -1,10 +1,17 @@
-{ inputs, config, pkgs, pkgs-stable, systemSettings, userSettings, split-monitor-workspaces, ... }:
+{ inputs
+, config
+, pkgs
+, pkgs-stable
+, systemSettings
+, userSettings
+, split-monitor-workspaces
+, ...
+}:
 
 {
   programs = {
     home-manager.enable = true;
   };
-
 
   home.packages = with pkgs; [
     dconf
@@ -25,6 +32,8 @@
     eza
     rustup
     tldr
+    nextcloud-client
+    gamemode
   ];
 
   home.username = userSettings.username;

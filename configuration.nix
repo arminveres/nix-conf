@@ -121,6 +121,7 @@
     powertop
     cnijfilter2
     canon-cups-ufr2
+    linuxKernel.packages.linux_6_6.xone
   ];
 
   programs.hyprland = {
