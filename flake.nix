@@ -61,6 +61,21 @@
             }
           ];
         };
+        desktop = lib.nixosSystem {
+          system = systemSettings.system;
+          specialArgs = { inherit pkgs; };
+          modules = [
+            ./hosts/desktop-hw.nix
+            ./configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.users.arminveres = import ./home.nix;
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = { inherit pkgs-stable systemSettings userSettings; };
+            }
+          ];
+        };
       };
     };
 }
