@@ -115,15 +115,19 @@
     xdg-desktop-portal-hyprland
     hyprland-protocols
     hyprpaper
+    hyprshot
+    hyprpicker
     cliphist
     powertop
     cnijfilter2
     canon-cups-ufr2
   ];
+
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
   };
+
   programs.zsh.enable = true;
   programs.neovim = { enable = true; package = pkgs.neovim-nightly; };
 

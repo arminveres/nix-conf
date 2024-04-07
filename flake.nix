@@ -4,19 +4,30 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "nixpkgs/nixos-23.11";
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+
     hyprland.url = "github:hyprwm/Hyprland";
     split-monitor-workspaces = {
       url = "github:Duckonaut/split-monitor-workspaces";
       inputs.hyprland.follows = "hyprland";
     };
+
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, neovim-nightly-overlay, split-monitor-workspaces, ... }:
+  outputs =
+    { self
+    , nixpkgs
+    , nixpkgs-stable
+    , home-manager
+    , neovim-nightly-overlay
+    , split-monitor-workspaces
+    , ...
+    }@inputs:
     let
       systemSettings = {
         system = "x86_64-linux";
@@ -45,11 +56,13 @@
     in
     {
       nixosConfigurations = {
-        vm = lib.nixosSystem {
+
+        /* vm = lib.nixosSystem {
           system = systemSettings.system;
           specialArgs = { inherit pkgs; };
           modules = [ ./hosts/vm-hw.nix ./configuration.nix ];
-        };
+        }; */
+
         x1c = lib.nixosSystem {
           system = systemSettings.system;
           specialArgs = { inherit pkgs; };
@@ -61,7 +74,7 @@
               home-manager.users.arminveres = import ./home.nix;
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = { inherit pkgs-stable systemSettings userSettings split-monitor-workspaces; };
+              home-manager.extraSpecialArgs = { inherit inputs pkgs-stable systemSettings userSettings split-monitor-workspaces; };
             }
           ];
         };
@@ -76,7 +89,7 @@
               home-manager.users.arminveres = import ./home.nix;
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = { inherit pkgs-stable systemSettings userSettings split-monitor-workspaces; };
+              home-manager.extraSpecialArgs = { inherit inputs pkgs-stable systemSettings userSettings split-monitor-workspaces; };
             }
           ];
         };
