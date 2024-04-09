@@ -124,6 +124,9 @@
     cnijfilter2
     canon-cups-ufr2
     linuxKernel.packages.linux_6_6.xone
+    wl-clipboard
+    hyprlock
+    hypridle
   ];
 
   programs.hyprland = {
