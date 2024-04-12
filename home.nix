@@ -13,7 +13,13 @@
 
   home.packages = with pkgs; [
     dconf
-    colloid-gtk-theme
+    (
+      colloid-gtk-theme.override {
+        themeVariants = [ "orange" ];
+        colorVariants = [ "dark" ];
+        tweaks = [ "black" "rimless" "normal" ];
+      }
+    )
     colloid-icon-theme
     gnome.adwaita-icon-theme
     signal-desktop
@@ -31,10 +37,12 @@
     rustup
     tldr
     nextcloud-client
+    spotify
+    gnome.nautilus
     # TODO(aver): move games into separate dir
     gamemode
     mangohud
-    corectrl
+    qmk
   ];
 
   home.username = userSettings.username;
@@ -65,11 +73,6 @@
       "x-scheme-handler/mailto" = "userapp-Thunderbird-MLTWL2.desktop";
       "x-scheme-handler/mid" = "userapp-Thunderbird-MLTWL2.desktop";
     };
-    configFile = {
-      "gtk-4.0/assets".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
-      "gtk-4.0/gtk.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
-      "gtk-4.0/gtk-dark.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
-    };
   };
 
   dconf = {
@@ -84,7 +87,7 @@
   gtk = {
     enable = true;
     theme = {
-      name = "Colloid-Dark";
+      name = "Colloid-Orange-Dark";
       package = pkgs.colloid-gtk-theme;
     };
     iconTheme = {
@@ -96,13 +99,8 @@
       package = pkgs.gnome.adwaita-icon-theme;
     };
   };
-  home.sessionVariables = { GTK_THEME = "Colloid-Dark"; };
+  home.sessionVariables = { GTK_THEME = "Colloid-Orange-Dark"; };
 
-  # services.gpg-agent = {
-  #   enable = true;
-  #   enableSshSupport = true;
-  # };
-  services.ssh-agent.enable = true;
 
   wayland.windowManager.hyprland = {
     enable = true;

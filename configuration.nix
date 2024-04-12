@@ -33,7 +33,6 @@
     enable = true;
     displayManager.gdm.enable = true;
     displayManager.autoLogin.enable = false;
-    desktopManager.gnome.enable = true;
   };
 
   # Configure keymap in X11
@@ -127,6 +126,14 @@
     wl-clipboard
     hyprlock
     hypridle
+    nvtopPackages.amd
+    radeontop
+    pkg-config
+    openssl
+    baobab
+    # Polkit
+    pkgs.polkit
+    pkgs.polkit_gnome
   ];
 
   programs.hyprland = {
@@ -154,15 +161,12 @@
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
 
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  programs.ssh.startAgent = true;
 
   services.zerotierone.enable = true;
 
@@ -192,5 +196,54 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
+
+  # TODO(aver): move to separate nix file
+  programs.corectrl.enable = true;
+  programs.corectrl.gpuOverclock.enable = true;
+
+  hardware.keyboard.qmk.enable = true;
+  hardware.keyboard.zsa.enable = true;
+
+  services.gnome.gnome-keyring.enable = true;
+
+  systemd = {
+    user.services = {
+      polkit-gnome-authentication-agent-1 = {
+        description = "polkit-gnome-authentication-agent-1";
+        wantedBy = [ "graphical-session.target" ];
+        wants = [ "graphical-session.target" ];
+        after = [ "graphical-session.target" ];
+        serviceConfig = {
+          Type = "simple";
+          ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+          Restart = "on-failure";
+          RestartSec = 1;
+          TimeoutStopSec = 10;
+        };
+      };
+    };
+    extraConfig = ''
+      DefaultTimeoutStopSec=10s
+    '';
+  };
+  security.polkit.enable = true;
+
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+      if (
+        subject.isInGroup("users")
+          && (
+            action.id == "org.freedesktop.login1.reboot" ||
+            action.id == "org.freedesktop.login1.reboot-multiple-sessions" ||
+            action.id == "org.freedesktop.login1.power-off" ||
+            action.id == "org.freedesktop.login1.power-off-multiple-sessions"
+          )
+        )
+      {
+        return polkit.Result.YES;
+      }
+    })
+  '';
+
 
 }
