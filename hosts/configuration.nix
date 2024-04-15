@@ -52,10 +52,6 @@
 
   zramSwap.enable = true;
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-  services.printing.drivers = [ pkgs.cnijfilter2 pkgs.canon-cups-ufr2 ];
-
   # Enable sound with pipewire.
   sound.enable = true;
   hardware.pulseaudio.enable = false;
@@ -129,9 +125,6 @@
     hyprpicker
     cliphist
     powertop
-    cnijfilter2
-    canon-cups-ufr2
-    linuxKernel.packages.linux_6_6.xone
     wl-clipboard
     hyprlock
     hypridle
@@ -246,5 +239,5 @@
 
   imports = [ ../modules ];
   gaming.enable = true;
-
+  printing.enable = true;
 }

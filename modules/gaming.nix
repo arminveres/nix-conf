@@ -5,6 +5,10 @@
   };
 
   config = lib.mkIf config.gaming.enable {
+    environment.systemPackages = with pkgs; [
+      linuxKernel.packages.linux_6_6.xone
+    ];
+
     programs.steam = {
       enable = true;
       remotePlay.openFirewall = true;
