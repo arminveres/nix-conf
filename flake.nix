@@ -1,9 +1,17 @@
 {
-  description = "A simple NixOS flake with Neovim nightly";
+  description = "A NixOS flake with support for Linux and Darwin";
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "nixpkgs/nixos-23.11";
+    nixos-hardware.url = "github:nixos/nixos-hardware/master"; # Hardware Specific Configurations
+
+    # MacOS Package Management
+    nix-darwin = {
+      url = "github:lnl7/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -26,79 +34,37 @@
   };
 
   outputs =
-    { self
-    , nixpkgs
-    , nixpkgs-stable
-    , home-manager
-    , neovim-nightly-overlay
-    , split-monitor-workspaces
-    , ...
-    }@inputs:
+    inputs@{ self, nixpkgs, nixpkgs-stable, nixos-hardware, nix-darwin, home-manager, neovim-nightly-overlay, split-monitor-workspaces, ... }:
     let
       systemSettings = {
         system = "x86_64-linux";
-        hostname = "homews";
         timezone = "Europe/Zurich";
         locale = "en_US.UTF-8";
       };
-
       userSettings = { username = "arminveres"; };
-
       pkgs = import nixpkgs {
         system = systemSettings.system;
-
         overlays = [ neovim-nightly-overlay.overlay ];
         config = { allowUnfree = true; };
       };
-
       pkgs-stable = import nixpkgs-stable {
         system = systemSettings.system;
         overlays = [ neovim-nightly-overlay.overlay ];
         config = { allowUnfree = true; };
       };
-
-      lib = nixpkgs.lib;
-
     in
     {
-      nixosConfigurations = {
-
-        /* vm = lib.nixosSystem {
-          system = systemSettings.system;
-          specialArgs = { inherit pkgs; };
-          modules = [ ./hosts/vm-hw.nix ./configuration.nix ];
-        }; */
-
-        x1c = lib.nixosSystem {
-          system = systemSettings.system;
-          specialArgs = { inherit pkgs inputs; };
-          modules = [
-            ./hosts/x1c-hw.nix
-            ./configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.users.arminveres = import ./home.nix;
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = { inherit inputs pkgs-stable systemSettings userSettings split-monitor-workspaces; };
-            }
-          ];
-        };
-        desktop = lib.nixosSystem {
-          system = systemSettings.system;
-          specialArgs = { inherit pkgs inputs; };
-          modules = [
-            ./hosts/desktop-hw.nix
-            ./configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.users.arminveres = import ./home.nix;
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = { inherit inputs pkgs-stable systemSettings userSettings split-monitor-workspaces; };
-            }
-          ];
-        };
-      };
+      # NOTE(aver): We let Home Manager be managed through flakes, therefore no `homeConfigurations`
+      # needed here
+      nixosConfigurations = (
+        import ./hosts {
+          inherit (nixpkgs) lib;
+          inherit inputs nixpkgs pkgs pkgs-stable nixos-hardware systemSettings userSettings
+            home-manager split-monitor-workspaces;
+        }
+      );
+      darwinConfigurations = (import ./darwin {
+        inherit self inputs nixpkgs home-manager nix-darwin userSettings neovim-nightly-overlay;
+      });
     };
 }

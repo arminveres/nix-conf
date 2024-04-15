@@ -1,5 +1,4 @@
 { inputs
-, config
 , pkgs
 , userSettings
 , split-monitor-workspaces
@@ -7,30 +6,30 @@
 }:
 
 {
+  home.username = "${userSettings.username}";
+  home.homeDirectory = "/home/${userSettings.username}";
+  home.stateVersion = "23.11";
+
   programs = {
     home-manager.enable = true;
   };
 
+  imports = [ ./modules ];
+  gaming.enable = true;
+  hyprlandwm.enable = true;
+
   home.packages = with pkgs; [
-    dconf
-    (
-      colloid-gtk-theme.override {
-        themeVariants = [ "orange" ];
-        colorVariants = [ "dark" ];
-        tweaks = [ "black" "rimless" "normal" ];
-      }
-    )
-    colloid-icon-theme
+    (colloid-gtk-theme.override {
+      themeVariants = [ "orange" ];
+      colorVariants = [ "dark" ];
+      tweaks = [ "black" "rimless" "normal" ];
+    })
     gnome.adwaita-icon-theme
+    dconf
     signal-desktop
     beeper
     discord
     neovide
-    kanshi
-    wlogout
-    pulseaudio
-    pavucontrol
-    wdisplays
     mission-center
     gh
     eza
@@ -39,15 +38,8 @@
     nextcloud-client
     spotify
     gnome.nautilus
-    # TODO(aver): move games into separate dir
-    gamemode
-    mangohud
     qmk
   ];
-
-  home.username = userSettings.username;
-  home.homeDirectory = "/home/" + userSettings.username;
-  home.stateVersion = "23.11";
 
   xdg = {
     enable = true;
@@ -103,17 +95,6 @@
       package = pkgs.gnome.adwaita-icon-theme;
     };
   };
+
   home.sessionVariables = { GTK_THEME = "Colloid-Orange-Dark"; };
-
-
-  wayland.windowManager.hyprland = {
-    enable = true;
-    systemd.enable = true;
-    xwayland.enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-    plugins = [
-      split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
-    ];
-    extraConfig = (builtins.readFile ./hyprland.conf);
-  };
 }

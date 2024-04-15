@@ -2,17 +2,26 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }:
+{ inputs, pkgs, systemSettings, userSettings, split-monitor-workspaces, ... }:
 
 {
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  nix.optimise.automatic = true;
-  nix.gc = {
-    automatic = true;
-    dates = "daily";
-    options = "--delete-older-than 7d";
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.${userSettings.username} = (import ../home);
+    extraSpecialArgs = { inherit inputs systemSettings userSettings split-monitor-workspaces; };
   };
+
+  nix = {
+    settings.experimental-features = [ "nix-command" "flakes" ];
+    optimise.automatic = true;
+    gc = {
+      automatic = true;
+      dates = "daily";
+      options = "--delete-older-than 7d";
+    };
+  };
+
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -24,15 +33,18 @@
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  time.timeZone = "Europe/Zurich";
+  time.timeZone = "${systemSettings.timezone}";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = "${systemSettings.locale}";
+
+  services.displayManager = {
+    autoLogin.enable = false;
+  };
 
   services.xserver = {
     enable = true;
     displayManager.gdm.enable = true;
-    displayManager.autoLogin.enable = false;
   };
 
   # Configure keymap in X11
@@ -42,10 +54,6 @@
   };
 
   zramSwap.enable = true;
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-  services.printing.drivers = [ pkgs.cnijfilter2 pkgs.canon-cups-ufr2 ];
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -70,11 +78,10 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
     defaultUserShell = pkgs.zsh;
-    users.arminveres = {
+    users.${userSettings.username} = {
       isNormalUser = true;
       description = "Armin Veres";
       extraGroups = [ "networkmanager" "wheel" "video" ];
-      # packages = with pkgs; [ ];
     };
   };
 
@@ -107,25 +114,12 @@
     unzip
     lazygit
     lazydocker
-    wofi
-    waybar
-    swaynotificationcenter
-    swaylock
-    swayosd
     xdg-desktop-portal-hyprland
     xdg-desktop-portal-gtk
     hyprland-protocols
-    hyprpaper
-    hyprshot
-    hyprpicker
     cliphist
     powertop
-    cnijfilter2
-    canon-cups-ufr2
-    linuxKernel.packages.linux_6_6.xone
     wl-clipboard
-    hyprlock
-    hypridle
     nvtopPackages.amd
     radeontop
     pkg-config
@@ -146,12 +140,6 @@
   fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "Meslo" "Terminus" "Iosevka" ]; })
   ];
-
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = true;
-  };
 
   programs.nix-ld.enable = true;
   programs.light.enable = true;
@@ -197,10 +185,6 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
 
-  # TODO(aver): move to separate nix file
-  programs.corectrl.enable = true;
-  programs.corectrl.gpuOverclock.enable = true;
-
   hardware.keyboard.qmk.enable = true;
   hardware.keyboard.zsa.enable = true;
 
@@ -245,5 +229,7 @@
     })
   '';
 
-
+  system.activationScripts.script.text = ''
+    cp /home/${userSettings.username}/nix-conf/.assets/profile.jpg /var/lib/AccountsService/icons/orion
+  '';
 }
