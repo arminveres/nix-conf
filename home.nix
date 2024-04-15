@@ -53,6 +53,10 @@
     enable = true;
     portal = {
       enable = true;
+      configPackages = [
+        pkgs.xdg-desktop-portal-gtk
+        pkgs.xdg-desktop-portal-hyprland
+      ];
       extraPortals = [
         pkgs.xdg-desktop-portal-gtk
         pkgs.xdg-desktop-portal-hyprland
@@ -110,6 +114,6 @@
     plugins = [
       split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
     ];
-    extraConfig = builtins.readFile ./hyprland.conf;
+    extraConfig = (builtins.readFile ./hyprland.conf);
   };
 }
