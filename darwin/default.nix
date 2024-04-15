@@ -1,24 +1,27 @@
-{ self
-, inputs
-, nixpkgs
-, pkgs
-, pkgs-stable
+{ inputs
 , nix-darwin
-, systemSettings
+, nixpkgs
 , userSettings
 , home-manager
-, split-monitor-workspaces
+, neovim-nightly-overlay
 , ...
 }:
 let
-  lib = nixpkgs.lib;
-  system = "aarch64_darwin";
+  system = "aarch64-darwin";
+  pkgs = import nixpkgs {
+    system = system;
+    overlays = [ neovim-nightly-overlay.overlay ];
+    config = { allowUnfree = true; };
+  };
 in
 {
   armins-macbook = nix-darwin.lib.darwinSystem {
     inherit system;
-    modules = [ ./configuration.nix ./hardware-configuration.nix ];
-    specialArgs = { inherit inputs pkgs; };
+    modules = [
+      ./configuration.nix
+      # ./hardware-configuration.nix
+    ];
+    specialArgs = { inherit inputs pkgs nix-darwin; };
   };
-  darwinPackages = self.darwinConfigurations.armins-macbook.pkgs;
+  darwinPackages = nix-darwin.darwinConfigurations.armins-macbook.pkgs;
 }

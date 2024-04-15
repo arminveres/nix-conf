@@ -7,7 +7,7 @@
     nixos-hardware.url = "github:nixos/nixos-hardware/master"; # Hardware Specific Configurations
 
     # MacOS Package Management
-    darwin = {
+    nix-darwin = {
       url = "github:lnl7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -34,7 +34,7 @@
   };
 
   outputs =
-    inputs@{ self, nixpkgs, nixpkgs-stable, nixos-hardware, darwin, home-manager, neovim-nightly-overlay, split-monitor-workspaces, ... }:
+    inputs@{ self, nixpkgs, nixpkgs-stable, nixos-hardware, nix-darwin, home-manager, neovim-nightly-overlay, split-monitor-workspaces, ... }:
     let
       systemSettings = {
         system = "x86_64-linux";
@@ -44,7 +44,6 @@
       userSettings = { username = "arminveres"; };
       pkgs = import nixpkgs {
         system = systemSettings.system;
-
         overlays = [ neovim-nightly-overlay.overlay ];
         config = { allowUnfree = true; };
       };
@@ -64,11 +63,8 @@
             home-manager split-monitor-workspaces;
         }
       );
-      darwinConfigurations = (
-        import ./darwin {
-          inherit (nixpkgs) lib;
-          inherit inputs nixpkgs home-manager darwin;
-        }
-      );
+      darwinConfigurations = (import ./darwin {
+        inherit self inputs nixpkgs home-manager nix-darwin userSettings neovim-nightly-overlay;
+      });
     };
 }
