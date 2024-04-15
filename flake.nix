@@ -63,6 +63,7 @@
             home-manager split-monitor-workspaces;
         }
       );
+      # NOTE(aver): don't inherit pkgs and system, as it is not a x86_64-linux based system
       darwinConfigurations = (import ./darwin {
         inherit self inputs nixpkgs home-manager nix-darwin userSettings neovim-nightly-overlay;
       });

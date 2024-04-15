@@ -17,6 +17,7 @@
   imports = [ ./modules ];
   gaming.enable = true;
   hyprlandwm.enable = true;
+  neovim.enable = true;
 
   home.packages = with pkgs; [
     (colloid-gtk-theme.override {
