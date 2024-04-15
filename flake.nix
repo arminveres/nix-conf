@@ -23,6 +23,10 @@
       inputs.hyprland.follows = "hyprland";
     };
 
+    colloid-gtk-theme = {
+      url = "github:arminveres/colloid-gtk-theme";
+    };
+
   };
 
   outputs =
@@ -32,6 +36,7 @@
     , home-manager
     , neovim-nightly-overlay
     , split-monitor-workspaces
+    , colloid-gtk-theme
     , ...
     }@inputs:
     let
@@ -95,7 +100,10 @@
               home-manager.users.arminveres = import ./home.nix;
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = { inherit inputs pkgs-stable systemSettings userSettings split-monitor-workspaces; };
+              home-manager.extraSpecialArgs = {
+                inherit inputs pkgs-stable systemSettings
+                  userSettings split-monitor-workspaces colloid-gtk-theme;
+              };
             }
           ];
         };

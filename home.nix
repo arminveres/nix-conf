@@ -3,6 +3,7 @@
 , pkgs
 , userSettings
 , split-monitor-workspaces
+, colloid-gtk-theme
 , ...
 }:
 
@@ -14,7 +15,7 @@
   home.packages = with pkgs; [
     dconf
     (
-      colloid-gtk-theme.override {
+      colloid-gtk-theme {
         themeVariants = [ "orange" ];
         colorVariants = [ "dark" ];
         tweaks = [ "black" "rimless" "normal" ];
@@ -73,6 +74,11 @@
       "x-scheme-handler/mailto" = "userapp-Thunderbird-MLTWL2.desktop";
       "x-scheme-handler/mid" = "userapp-Thunderbird-MLTWL2.desktop";
     };
+    # configFile = {
+    #   "gtk-4.0/assets".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
+    #   "gtk-4.0/gtk.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
+    #   "gtk-4.0/gtk-dark.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
+    # };
   };
 
   dconf = {
@@ -88,7 +94,7 @@
     enable = true;
     theme = {
       name = "Colloid-Orange-Dark";
-      package = pkgs.colloid-gtk-theme;
+      package = colloid-gtk-theme;
     };
     iconTheme = {
       name = "Adwaita";
