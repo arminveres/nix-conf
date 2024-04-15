@@ -1,9 +1,17 @@
 {
-  description = "A simple NixOS flake with Neovim nightly";
+  description = "A NixOS flake with support for Linux and Darwin";
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "nixpkgs/nixos-23.11";
+    nixos-hardware.url = "github:nixos/nixos-hardware/master"; # Hardware Specific Configurations
+
+    # MacOS Package Management
+    darwin = {
+      url = "github:lnl7/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -29,6 +37,8 @@
     { self
     , nixpkgs
     , nixpkgs-stable
+    , nixos-hardware
+    , darwin
     , home-manager
     , neovim-nightly-overlay
     , split-monitor-workspaces
@@ -37,7 +47,6 @@
     let
       systemSettings = {
         system = "x86_64-linux";
-        hostname = "homews";
         timezone = "Europe/Zurich";
         locale = "en_US.UTF-8";
       };
@@ -62,12 +71,6 @@
     in
     {
       nixosConfigurations = {
-
-        /* vm = lib.nixosSystem {
-          system = systemSettings.system;
-          specialArgs = { inherit pkgs; };
-          modules = [ ./hosts/vm-hw.nix ./configuration.nix ];
-        }; */
 
         x1c = lib.nixosSystem {
           system = systemSettings.system;
