@@ -2,17 +2,26 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ inputs, pkgs, systemSettings, userSettings, ... }:
+{ inputs, pkgs, systemSettings, userSettings, split-monitor-workspaces, ... }:
 
 {
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  nix.optimise.automatic = true;
-  nix.gc = {
-    automatic = true;
-    dates = "daily";
-    options = "--delete-older-than 7d";
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.${userSettings.username} = (import ../home);
+    extraSpecialArgs = { inherit inputs systemSettings userSettings split-monitor-workspaces; };
   };
+
+  nix = {
+    settings.experimental-features = [ "nix-command" "flakes" ];
+    optimise.automatic = true;
+    gc = {
+      automatic = true;
+      dates = "daily";
+      options = "--delete-older-than 7d";
+    };
+  };
+
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -235,7 +244,7 @@
     })
   '';
 
-  imports = [ ../modules/gaming.nix ];
+  imports = [ ../modules ];
   gaming.enable = true;
 
 }
