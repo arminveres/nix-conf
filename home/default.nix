@@ -30,11 +30,6 @@
     beeper
     discord
     neovide
-    kanshi
-    wlogout
-    pulseaudio
-    pavucontrol
-    wdisplays
     mission-center
     gh
     eza

@@ -6,12 +6,11 @@
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  environment.systemPackages = with pkgs;
-    [
-      neovim
-      neovide
-      gh
-    ];
+  environment.systemPackages = with pkgs; [
+    neovim
+    neovide
+    gh
+  ];
 
 
   # Auto upgrade nix package and the daemon service.

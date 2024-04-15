@@ -5,6 +5,25 @@
   };
 
   config = lib.mkIf config.hyprlandwm.enable {
+    home.packages = with pkgs; [
+      playerctl
+      kanshi
+      wlogout
+      pulseaudio
+      pavucontrol
+      wdisplays
+      hyprlock
+      hypridle
+      hyprland-protocols
+      hyprpaper
+      hyprshot
+      hyprpicker
+      wofi
+      waybar
+      swaynotificationcenter
+      swaylock
+      swayosd
+    ];
 
     wayland.windowManager.hyprland = {
       enable = true;

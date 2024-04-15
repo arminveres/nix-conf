@@ -38,10 +38,13 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "${systemSettings.locale}";
 
+  services.displayManager = {
+    autoLogin.enable = false;
+  };
+
   services.xserver = {
     enable = true;
     displayManager.gdm.enable = true;
-    displayManager.autoLogin.enable = false;
   };
 
   # Configure keymap in X11
@@ -111,22 +114,12 @@
     unzip
     lazygit
     lazydocker
-    wofi
-    waybar
-    swaynotificationcenter
-    swaylock
-    swayosd
     xdg-desktop-portal-hyprland
     xdg-desktop-portal-gtk
     hyprland-protocols
-    hyprpaper
-    hyprshot
-    hyprpicker
     cliphist
     powertop
     wl-clipboard
-    hyprlock
-    hypridle
     nvtopPackages.amd
     radeontop
     pkg-config
