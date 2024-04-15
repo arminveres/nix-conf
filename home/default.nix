@@ -1,5 +1,4 @@
 { inputs
-, config
 , pkgs
 , userSettings
 , split-monitor-workspaces
@@ -7,24 +6,25 @@
 }:
 
 {
-  home.username = userSettings.username;
-  home.homeDirectory = "/home/" + userSettings.username;
+  home.username = "${userSettings.username}";
+  home.homeDirectory = "/home/${userSettings.username}";
   home.stateVersion = "23.11";
   programs = {
     home-manager.enable = true;
   };
 
+  imports = [ ./modules ];
+
+  gaming.enable = true;
+
   home.packages = with pkgs; [
-    dconf
-    (
-      colloid-gtk-theme.override {
-        themeVariants = [ "orange" ];
-        colorVariants = [ "dark" ];
-        tweaks = [ "black" "rimless" "normal" ];
-      }
-    )
-    colloid-icon-theme
+    (colloid-gtk-theme.override {
+      themeVariants = [ "orange" ];
+      colorVariants = [ "dark" ];
+      tweaks = [ "black" "rimless" "normal" ];
+    })
     gnome.adwaita-icon-theme
+    dconf
     signal-desktop
     beeper
     discord
@@ -42,12 +42,8 @@
     nextcloud-client
     spotify
     gnome.nautilus
-    # TODO(aver): move games into separate dir
-    gamemode
-    mangohud
     qmk
   ];
-
 
   xdg = {
     enable = true;

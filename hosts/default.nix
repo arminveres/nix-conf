@@ -20,11 +20,8 @@ in
 {
   desktop = lib.nixosSystem {
     inherit system;
-    specialArgs = { inherit pkgs inputs; };
+    specialArgs = { inherit inputs pkgs systemSettings userSettings; };
     modules = [
-      # home-manager.nixosModules.home-manager
-      ./desktop-hw.nix
-      ./configuration.nix
       home-manager.nixosModules.home-manager
       {
         home-manager = {
@@ -34,6 +31,8 @@ in
           extraSpecialArgs = { inherit inputs pkgs-stable systemSettings userSettings split-monitor-workspaces; };
         };
       }
+      ./desktop-hw.nix
+      ./configuration.nix
     ];
   };
   x1c = lib.nixosSystem

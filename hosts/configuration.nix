@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, systemSettings, userSettings, ... }:
+{ inputs, pkgs, systemSettings, userSettings, ... }:
 
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -147,12 +147,6 @@
     (nerdfonts.override { fonts = [ "Meslo" "Terminus" "Iosevka" ]; })
   ];
 
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = true;
-  };
-
   programs.nix-ld.enable = true;
   programs.light.enable = true;
 
@@ -196,10 +190,6 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
-
-  # TODO(aver): move to separate nix file
-  programs.corectrl.enable = true;
-  programs.corectrl.gpuOverclock.enable = true;
 
   hardware.keyboard.qmk.enable = true;
   hardware.keyboard.zsa.enable = true;
@@ -245,7 +235,7 @@
     })
   '';
 
-  # home-manager.useGlobalPkgs = true;
-  # home-manager.useUserPackages = true;
+  imports = [ ../modules/gaming.nix ];
+  gaming.enable = true;
 
 }

@@ -34,32 +34,20 @@
   };
 
   outputs =
-    { self
-    , nixpkgs
-    , nixpkgs-stable
-    , nixos-hardware
-    , darwin
-    , home-manager
-    , neovim-nightly-overlay
-    , split-monitor-workspaces
-    , ...
-    }@inputs:
+    inputs@{ self, nixpkgs, nixpkgs-stable, nixos-hardware, darwin, home-manager, neovim-nightly-overlay, split-monitor-workspaces, ... }:
     let
       systemSettings = {
         system = "x86_64-linux";
         timezone = "Europe/Zurich";
         locale = "en_US.UTF-8";
       };
-
       userSettings = { username = "arminveres"; };
-
       pkgs = import nixpkgs {
         system = systemSettings.system;
 
         overlays = [ neovim-nightly-overlay.overlay ];
         config = { allowUnfree = true; };
       };
-
       pkgs-stable = import nixpkgs-stable {
         system = systemSettings.system;
         overlays = [ neovim-nightly-overlay.overlay ];
