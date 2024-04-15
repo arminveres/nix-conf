@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }:
+{ pkgs, systemSettings, userSettings, ... }:
 
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -24,10 +24,10 @@
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  time.timeZone = "Europe/Zurich";
+  time.timeZone = "${systemSettings.timezone}";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = "${systemSettings.locale}";
 
   services.xserver = {
     enable = true;
@@ -70,7 +70,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
     defaultUserShell = pkgs.zsh;
-    users.arminveres = {
+    users.${userSettings.username} = {
       isNormalUser = true;
       description = "Armin Veres";
       extraGroups = [ "networkmanager" "wheel" "video" ];
@@ -245,5 +245,7 @@
     })
   '';
 
+  # home-manager.useGlobalPkgs = true;
+  # home-manager.useUserPackages = true;
 
 }

@@ -65,43 +65,22 @@
         overlays = [ neovim-nightly-overlay.overlay ];
         config = { allowUnfree = true; };
       };
-
-      lib = nixpkgs.lib;
-
     in
     {
-      nixosConfigurations = {
-
-        x1c = lib.nixosSystem {
-          system = systemSettings.system;
-          specialArgs = { inherit pkgs inputs; };
-          modules = [
-            ./hosts/x1c-hw.nix
-            ./configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.users.arminveres = import ./home.nix;
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = { inherit inputs pkgs-stable systemSettings userSettings split-monitor-workspaces; };
-            }
-          ];
-        };
-        desktop = lib.nixosSystem {
-          system = systemSettings.system;
-          specialArgs = { inherit pkgs inputs; };
-          modules = [
-            ./hosts/desktop-hw.nix
-            ./configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.users.arminveres = import ./home.nix;
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = { inherit inputs pkgs-stable systemSettings userSettings split-monitor-workspaces; };
-            }
-          ];
-        };
-      };
+      # NOTE(aver): We let Home Manager be managed through flakes, therefore no `homeConfigurations`
+      # needed here
+      nixosConfigurations = (
+        import ./hosts {
+          inherit (nixpkgs) lib;
+          inherit inputs nixpkgs pkgs pkgs-stable nixos-hardware systemSettings userSettings
+            home-manager split-monitor-workspaces;
+        }
+      );
+      darwinConfigurations = (
+        import ./darwin {
+          inherit (nixpkgs) lib;
+          inherit inputs nixpkgs home-manager darwin;
+        }
+      );
     };
 }

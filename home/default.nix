@@ -7,6 +7,9 @@
 }:
 
 {
+  home.username = userSettings.username;
+  home.homeDirectory = "/home/" + userSettings.username;
+  home.stateVersion = "23.11";
   programs = {
     home-manager.enable = true;
   };
@@ -45,9 +48,6 @@
     qmk
   ];
 
-  home.username = userSettings.username;
-  home.homeDirectory = "/home/" + userSettings.username;
-  home.stateVersion = "23.11";
 
   xdg = {
     enable = true;
