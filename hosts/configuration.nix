@@ -79,7 +79,6 @@
       isNormalUser = true;
       description = "Armin Veres";
       extraGroups = [ "networkmanager" "wheel" "video" ];
-      # packages = with pkgs; [ ];
     };
   };
 
@@ -237,7 +236,7 @@
     })
   '';
 
-  imports = [ ../modules ];
-  gaming.enable = true;
-  printing.enable = true;
+  system.activationScripts.script.text = ''
+    cp /home/${userSettings.username}/nix-conf/.assets/profile.jpg /var/lib/AccountsService/icons/orion
+  '';
 }
