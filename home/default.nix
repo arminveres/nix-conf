@@ -37,6 +37,8 @@
     spotify
     gnome.nautilus
     qmk
+    syncthing
+    syncthingtray
   ];
 
   xdg = {
