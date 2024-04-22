@@ -128,6 +128,7 @@
     # Polkit
     pkgs.polkit
     pkgs.polkit_gnome
+    glxinfo
   ];
 
   programs.hyprland = {

@@ -9,14 +9,21 @@
       linuxKernel.packages.linux_6_6.xone
     ];
 
-    programs.steam = {
-      enable = true;
-      remotePlay.openFirewall = true;
-      dedicatedServer.openFirewall = true;
-    };
+    programs = {
+      steam = {
+        enable = true;
+        remotePlay.openFirewall = true;
+        dedicatedServer.openFirewall = true;
+        gamescopeSession.enable = true;
+      };
 
-    # TODO(aver): move to separate nix file
-    programs.corectrl.enable = true;
-    programs.corectrl.gpuOverclock.enable = true;
+      gamemode.enable = true;
+
+      # TODO(aver): move to separate nix file
+      corectrl = {
+        enable = true;
+        gpuOverclock.enable = true;
+      };
+    };
   };
 }

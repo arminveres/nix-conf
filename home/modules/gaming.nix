@@ -7,8 +7,9 @@
   config = lib.mkIf config.gaming.enable {
     home.packages = with pkgs; [
       # TODO(aver): move games into separate dir
-      gamemode
+      gamescope
       mangohud
+      heroic # heroic game launcher
     ];
   };
 }
