@@ -97,4 +97,5 @@
   };
 
   home.sessionVariables = { GTK_THEME = "Colloid-Orange-Dark"; };
+  home.file.".face".source = .assets/profile.jpg;
 }

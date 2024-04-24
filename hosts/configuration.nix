@@ -238,7 +238,4 @@
     })
   '';
 
-  system.activationScripts.script.text = ''
-    cp /home/${userSettings.username}/nix-conf/.assets/profile.jpg /var/lib/AccountsService/icons/orion
-  '';
 }
