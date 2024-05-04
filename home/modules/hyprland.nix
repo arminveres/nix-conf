@@ -266,10 +266,12 @@
           "workspace 9 silent,title:^(Microsoft Teams*)$"
           "tile,title:^(Microsoft Teams*)$"
           # add steam games to ws 6
-          "fullscreen,class:^steam_app\d+$"
-          "monitor 1,class:^steam_app\d+$"
-          "workspace 6,class:^steam_app\d+$"
+          "workspace 6 silent,class:^(steam_app_*)$"
+          "fullscreen,class:^(steam_app_*)$"
+          "monitor 1,class:^(steam_app_*)$"
         ];
+
+        # workspace = [ "name:code" ];
 
         exec-once = [
           # "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"

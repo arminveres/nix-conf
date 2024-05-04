@@ -10,6 +10,7 @@
       gamescope
       mangohud
       heroic # heroic game launcher
+      protonup
     ];
   };
 }
