@@ -81,7 +81,7 @@
     users.${userSettings.username} = {
       isNormalUser = true;
       description = "Armin Veres";
-      extraGroups = [ "networkmanager" "wheel" "video" ];
+      extraGroups = [ "networkmanager" "wheel" "video" "dialout" ];
     };
   };
 
@@ -126,8 +126,8 @@
     openssl
     baobab
     # Polkit
-    pkgs.polkit
-    pkgs.polkit_gnome
+    polkit
+    polkit_gnome
     glxinfo
   ];
 
@@ -139,7 +139,15 @@
   programs.neovim = { enable = true; package = pkgs.neovim-nightly; };
 
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "Meslo" "Terminus" "Iosevka" ]; })
+    (nerdfonts.override {
+      fonts = [
+        "Meslo"
+        "Terminus"
+        "Iosevka"
+        "IosevkaTerm"
+        "ZedMono"
+      ];
+    })
   ];
 
   programs.nix-ld.enable = true;
@@ -162,12 +170,10 @@
   security.sudo = {
     enable = true;
     extraRules = [{
-      commands = [
-        {
-          command = "/run/current-system/sw/bin/nixos-rebuild";
-          options = [ "NOPASSWD" ];
-        }
-      ];
+      commands = [{
+        command = "/run/current-system/sw/bin/nixos-rebuild";
+        options = [ "NOPASSWD" ];
+      }];
       groups = [ "wheel" ];
     }];
   };
