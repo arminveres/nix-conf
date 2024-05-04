@@ -12,7 +12,9 @@
         ];
       };
     };
+    latex.enable = true;
   };
+
   hardware.opengl = {
     driSupport = true;
     extraPackages = with pkgs;[
