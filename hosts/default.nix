@@ -18,7 +18,7 @@ let
   system = systemSettings.system;
 in
 {
-  desktop = lib.nixosSystem {
+  nixos-desktop = lib.nixosSystem {
     inherit system;
     specialArgs = { inherit inputs pkgs systemSettings userSettings split-monitor-workspaces; };
     modules = [
@@ -29,7 +29,7 @@ in
     ];
   };
 
-  x1c = lib.nixosSystem {
+  nixos-x1c = lib.nixosSystem {
     inherit system;
     specialArgs = { inherit inputs pkgs systemSettings userSettings split-monitor-workspaces; };
     modules = [

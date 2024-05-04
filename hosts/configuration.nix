@@ -129,6 +129,7 @@
     polkit
     polkit_gnome
     glxinfo
+    nh
   ];
 
   programs.hyprland = {
