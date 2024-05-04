@@ -31,6 +31,11 @@
       inputs.hyprland.follows = "hyprland";
     };
 
+    # hyprsplit = {
+    #   url = "github:shezdy/hyprsplit";
+    #   inputs.hyprland.follows = "hyprland";
+    # };
+
   };
 
   outputs =

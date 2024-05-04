@@ -198,8 +198,8 @@
           "$mainMod SHIFT, 9, split-movetoworkspacesilent, 9"
           "$mainMod SHIFT, 0, split-movetoworkspacesilent, 10"
 
-          "$mainMod, o, split-changemonitor, +1"
-          # $mainMod SHIFT, o, split-changemonitor, -1
+          "$mainMod SHIFT, o, split-changemonitor, +1"
+          "$mainMod, o, focusmonitor, +1"
 
           # Scroll through existing workspaces with mainMod + scroll
           "$mainMod, mouse_down, workspace, e+1"
@@ -265,7 +265,12 @@
           "workspace 9 silent,class:^(Discord)$"
           "workspace 9 silent,title:^(Microsoft Teams*)$"
           "tile,title:^(Microsoft Teams*)$"
+          # add steam games to ws 6
+          "fullscreen,class:^steam_app\d+$"
+          "monitor 1,class:^steam_app\d+$"
+          "workspace 6,class:^steam_app\d+$"
         ];
+
         exec-once = [
           # "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
           # "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
