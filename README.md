@@ -1,9 +1,12 @@
 # nix-conf
+
 NixOS Configuration files
 
 ## Setup
 
 `sudo nixos-rebuild switch --flake '.#myNixos'`
+or with nix helper
+`nh os switch '.#myNixos'`
 
 ## Bare-setup with BTRFS and LUKS
 
@@ -14,6 +17,7 @@ Adjusted from [c8h4](https://c8h4.io/nixos-btrfs):
 ```bash
 fdisk /dev/sdX
 ```
+
 ```
 fdisk> g
 fdisk> n

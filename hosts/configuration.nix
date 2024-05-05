@@ -138,6 +138,7 @@
 
   programs.zsh.enable = true;
   programs.neovim = { enable = true; package = pkgs.neovim-nightly; };
+  programs.thunar.enable = true;
 
   fonts.packages = with pkgs; [
     (nerdfonts.override {

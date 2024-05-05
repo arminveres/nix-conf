@@ -26,5 +26,4 @@
     driSupport32Bit = true;
     extraPackages32 = with pkgs;[ driversi686Linux.amdvlk ];
   };
-  services.xserver.videoDrivers = [ "amdgpu" ];
 }

@@ -1,7 +1,6 @@
 { inputs
 , pkgs
 , userSettings
-, split-monitor-workspaces
 , ...
 }:
 
@@ -35,10 +34,11 @@
     tldr
     nextcloud-client
     spotify
-    gnome.nautilus
     qmk
     syncthing
     syncthingtray
+    obsidian
+    fastfetch
   ];
 
   xdg = {

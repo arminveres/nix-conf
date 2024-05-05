@@ -118,7 +118,7 @@
         };
         plugin = {
           split-monitor-workspaces = {
-            count = 10;
+            count = 9;
           };
         };
 
@@ -266,9 +266,9 @@
           "workspace 9 silent,title:^(Microsoft Teams*)$"
           "tile,title:^(Microsoft Teams*)$"
           # add steam games to ws 6
-          "workspace 6 silent,class:^(steam_app_*)$"
-          "fullscreen,class:^(steam_app_*)$"
-          "monitor 1,class:^(steam_app_*)$"
+          "workspace 6 silent,class:^steam_app_*$"
+          "monitor 0,class:^(steam_app_*)$"
+          # "fullscreen,class:^(steam_app_*)$"
         ];
 
         # workspace = [ "name:code" ];
@@ -296,9 +296,11 @@
           "cliphist store"
           "nextcloud --backgroud"
           "corectrl"
+
+          # TODO(aver): remove this after waybar fixes it itself
+          "ln -s $XDG_RUNTIME_DIR/hypr/* /tmp/hypr"
         ];
       } // config.hyprlandwm.displayConfig;
-      # extraConfig = (builtins.readFile ./hyprland.conf);
     };
   };
 }
