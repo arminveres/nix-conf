@@ -37,6 +37,7 @@ in
       ./configuration.nix
       ./x1c/hardware-configuration.nix
       ./x1c/configuration.nix
+      nixos-hardware.nixosModules.lenovo-thinkpad-x1-9th-gen
     ];
   };
 }

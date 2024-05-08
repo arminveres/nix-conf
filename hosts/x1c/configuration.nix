@@ -1,6 +1,5 @@
 { userSettings, ... }: {
   imports = [ ../../modules ];
-  gaming.enable = true;
   printing.enable = true;
   home-manager.users.${userSettings.username} = {
     gaming.enable = false;
@@ -10,5 +9,8 @@
         monitor = [ ",preferred,auto,1.0" ];
       };
     };
+    latex.enable = true;
+    services.blueman-applet.enable = true;
   };
+  services.blueman.enable = true;
 }

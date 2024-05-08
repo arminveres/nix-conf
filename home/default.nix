@@ -32,13 +32,14 @@
     eza
     rustup
     tldr
-    nextcloud-client
     spotify
     qmk
     syncthing
     syncthingtray
     obsidian
     fastfetch
+    nextcloud-client
+    libreoffice
   ];
 
   xdg = {
@@ -64,11 +65,14 @@
       "x-scheme-handler/mailto" = "userapp-Thunderbird-MLTWL2.desktop";
       "message/rfc822" = "userapp-Thunderbird-MLTWL2.desktop";
       "x-scheme-handler/mid" = "userapp-Thunderbird-MLTWL2.desktop";
+      "application/pdf" = "firefox.desktop";
     };
     mimeApps.associations.added = {
       "x-scheme-handler/mailto" = "userapp-Thunderbird-MLTWL2.desktop";
       "x-scheme-handler/mid" = "userapp-Thunderbird-MLTWL2.desktop";
+      "application/pdf" = "firefox.desktop";
     };
+    mimeApps.associations.removed = {};
   };
 
   dconf = {

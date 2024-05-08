@@ -92,6 +92,10 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  environment.sessionVariables = {
+    FLAKE = "/home/${userSettings.username}/nix-conf";
+  };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -130,6 +134,8 @@
     polkit_gnome
     glxinfo
     nh
+    lsb-release
+    libnotify # enable notify-send
   ];
 
   programs.hyprland = {
@@ -179,6 +185,8 @@
       groups = [ "wheel" ];
     }];
   };
+
+  services.fwupd.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
