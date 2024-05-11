@@ -33,6 +33,7 @@
     rustup
     tldr
     spotify
+    # gnome.nautilus
     qmk
     syncthing
     syncthingtray

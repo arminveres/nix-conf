@@ -1,4 +1,4 @@
-{ pkgs, lib, config, inputs, split-monitor-workspaces, ... }:
+{ pkgs, lib, ... }:
 {
   imports = [
     ./gaming.nix
