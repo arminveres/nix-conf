@@ -19,9 +19,8 @@
 
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
-    };
+    # hyprland.url = "github:hyprwm/Hyprland";
+    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
@@ -30,16 +29,29 @@
       url = "github:Duckonaut/split-monitor-workspaces";
       inputs.hyprland.follows = "hyprland";
     };
-
+    # hy3 = {
+    #   url = "github:outfoxxed/hy3";
+    #   inputs.hyprland.follows = "hyprland";
+    # };
     # hyprsplit = {
     #   url = "github:shezdy/hyprsplit";
     #   inputs.hyprland.follows = "hyprland";
     # };
-
   };
 
+
+
   outputs =
-    inputs@{ self, nixpkgs, nixpkgs-stable, nixos-hardware, nix-darwin, home-manager, neovim-nightly-overlay, split-monitor-workspaces, ... }:
+    inputs@{ self
+    , nixpkgs
+    , nixpkgs-stable
+    , nixos-hardware
+    , nix-darwin
+    , home-manager
+    , neovim-nightly-overlay
+    , split-monitor-workspaces
+    , ...
+    }:
     let
       systemSettings = {
         system = "x86_64-linux";
@@ -64,8 +76,7 @@
       nixosConfigurations = (
         import ./hosts {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs pkgs pkgs-stable nixos-hardware systemSettings userSettings
-            home-manager split-monitor-workspaces;
+          inherit inputs nixpkgs pkgs pkgs-stable nixos-hardware systemSettings userSettings home-manager split-monitor-workspaces;
         }
       );
       # NOTE(aver): don't inherit pkgs and system, as it is not a x86_64-linux based system

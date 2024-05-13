@@ -1,5 +1,4 @@
-{ pkgs, lib, config, inputs, split-monitor-workspaces, ... }:
-{
+{ pkgs, lib, config, inputs, split-monitor-workspaces, ... }: {
   options = {
     hyprlandwm.enable = lib.mkEnableOption "enables Home-Manager Hyprland module";
     hyprlandwm.displayConfig = lib.mkOption { };
@@ -118,7 +117,7 @@
         };
         plugin = {
           split-monitor-workspaces = {
-            count = 9;
+            count = 10;
           };
         };
 
