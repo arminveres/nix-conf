@@ -2,6 +2,7 @@
   imports = [ ../../modules ];
   gaming.enable = true;
   home-manager.users.${userSettings.username} = {
+    neovim.enable = true;
     gaming.enable = true;
     hyprlandwm = {
       enable = true;
