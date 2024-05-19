@@ -1,6 +1,8 @@
 { userSettings, ... }: {
   imports = [ ../../modules ];
   printing.enable = true;
+  fm.enable = true;
+
   home-manager.users.${userSettings.username} = {
     gaming.enable = false;
     hyprlandwm = {
