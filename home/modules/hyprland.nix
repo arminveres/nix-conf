@@ -37,7 +37,7 @@
       settings = {
         env = [
           "XCURSOR_SIZE,24"
-          "SSH_AUTH_SOCK,$XDG_RUNTIME_DIR/ssh-agent"
+          "SSH_AUTH_SOCK,$XDG_RUNTIME_DIR/keyring/ssh"
           "QT_QPA_PLATFORM,wayland"
         ];
 
@@ -205,18 +205,13 @@
           "$mainMod, mouse_up, workspace, e-1"
 
           # Sink volume raise optionally with --device
-          ", XF86AudioRaiseVolume, exec, swayosd-client --output-volume raise"
+          ", XF86AudioRaiseVolume, exec, swayosd-client --output-volume +5"
           # Sink volume lower optionally with --device
-          ", XF86AudioLowerVolume, exec,  swayosd-client --output-volume lower"
+          ", XF86AudioLowerVolume, exec,  swayosd-client --output-volume -5"
           # Sink volume toggle mute
           ", XF86AudioMute, exec, swayosd-client --output-volume mute-toggle"
           # Source volume toggle mute
           ", XF86AudioMicMute, exec, swayosd-client --input-volume mute-toggle"
-
-          # Volume raise with custom value
-          ", XF86AudioRaiseVolume, exec, swayosd-client --output-volume 5"
-          # Volume lower with custom value
-          ", XF86AudioLowerVolume, exec, swayosd-client --output-volume -5"
 
           # Capslock (If you don't want to use the backend)
           ", --release Caps_Lock, exec, swayosd-client --caps-lock"
@@ -240,8 +235,6 @@
           ", XF86AudioNext,     exec, playerctl next"
           ", XF86AudioPrev,     exec, playerctl previous"
           ", XF86AudioMute,     exec, pactl set-sink-mute @DEFAULT_SINK@ toggle"
-          ", XF86AudioLowerVolume,     exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
-          ", XF86AudioRaiseVolume,     exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
         ];
 
         # Bind to mouse
@@ -294,10 +287,10 @@
           "kanshi"
           "cliphist store"
           "nextcloud --backgroud"
-          "corectrl"
 
           # TODO(aver): remove this after waybar fixes it itself
           "ln -s $XDG_RUNTIME_DIR/hypr/* /tmp/hypr"
+          "thunar --daemon"
         ];
       } // config.hyprlandwm.displayConfig;
     };

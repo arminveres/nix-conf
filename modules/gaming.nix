@@ -7,7 +7,12 @@
   config = lib.mkIf config.gaming.enable {
     environment.systemPackages = with pkgs; [
       linuxKernel.packages.linux_6_6.xone
+      lact
     ];
+    systemd.packages = with pkgs; [
+      lact
+    ];
+    systemd.services.lactd.wantedBy = [ "multi-user.target" ];
 
     programs = {
       steam = {

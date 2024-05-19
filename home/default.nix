@@ -73,7 +73,7 @@
       "x-scheme-handler/mid" = "userapp-Thunderbird-MLTWL2.desktop";
       "application/pdf" = "firefox.desktop";
     };
-    mimeApps.associations.removed = {};
+    mimeApps.associations.removed = { };
   };
 
   dconf = {
@@ -103,4 +103,6 @@
 
   home.sessionVariables = { GTK_THEME = "Colloid-Orange-Dark"; };
   home.file.".face".source = .assets/profile.jpg;
+
+  programs.mpv.enable = true;
 }
