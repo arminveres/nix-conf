@@ -171,6 +171,7 @@
           "$mainMod CONTROL, l, layoutmsg, removemaster"
           "$mainMod CONTROL, j, layoutmsg, orientationleft"
           "$mainMod CONTROL, k, layoutmsg, orientationright"
+          "$mainMod CONTROL, c, layoutmsg, orientationcenter"
 
           # Switch workspaces with mainMod + [0-9]
           "$mainMod, 1, split-workspace, 1"
@@ -263,12 +264,8 @@
           # "fullscreen,class:^(steam_app_*)$"
         ];
 
-        # workspace = [ "name:code" ];
 
         exec-once = [
-          # "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
-          # "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
-
           "export \"$(/run/wrappers/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)\""
           "/run/wrappers/bin/gnome-keyring-daemon --daemonize --login"
           "polkit-agent-helper-1"
@@ -287,10 +284,10 @@
           "kanshi"
           "cliphist store"
           "nextcloud --backgroud"
+          "thunar --daemon"
 
           # TODO(aver): remove this after waybar fixes it itself
           "ln -s $XDG_RUNTIME_DIR/hypr/* /tmp/hypr"
-          "thunar --daemon"
         ];
       } // config.hyprlandwm.displayConfig;
     };

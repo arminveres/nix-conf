@@ -138,6 +138,7 @@
     nh
     lsb-release
     libnotify # enable notify-send
+    networkmanagerapplet
   ];
 
   programs.hyprland = {
@@ -145,7 +146,6 @@
   };
 
   programs.zsh.enable = true;
-  programs.neovim = { enable = true; package = pkgs.neovim-nightly; };
 
   fonts.packages = with pkgs; [
     (nerdfonts.override {
@@ -154,7 +154,6 @@
         "Terminus"
         "Iosevka"
         "IosevkaTerm"
-        "ZedMono"
       ];
     })
   ];

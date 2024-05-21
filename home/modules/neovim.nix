@@ -6,6 +6,11 @@
 
   # FIXME(aver): does not work on submodules
   config = lib.mkIf config.neovim.enable {
+    programs.neovim = {
+      enable = true;
+      package = pkgs.neovim-nightly;
+    };
+
     home.packages = with pkgs;[
       cppcheck
       marksman
