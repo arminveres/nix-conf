@@ -148,6 +148,11 @@
   programs.zsh.enable = true;
 
   fonts.packages = with pkgs; [
+    tamzen
+    dina-font
+    spleen
+    envypn-font
+    terminus_font
     (nerdfonts.override {
       fonts = [
         "Meslo"
@@ -158,7 +163,10 @@
     })
   ];
 
-  programs.nix-ld.enable = true;
+  programs.nix-ld = {
+    enable = true;
+    package = pkgs.nix-ld-rs;
+  };
   programs.light.enable = true;
 
   programs.direnv.enable = true;
