@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ inputs, nixpkgs, pkgs, lib, ... }:
 {
   imports = [
     ./gaming.nix

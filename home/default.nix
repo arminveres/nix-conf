@@ -1,4 +1,5 @@
 { inputs
+, nixpkgs
 , pkgs
 , userSettings
 , ...

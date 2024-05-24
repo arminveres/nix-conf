@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ inputs, nixpkgs, pkgs, lib, config, ... }:
 {
   options = {
     neovim.enable = lib.mkEnableOption "enables Home-Manager NeoVim module";
@@ -8,7 +8,7 @@
   config = lib.mkIf config.neovim.enable {
     programs.neovim = {
       enable = true;
-      package = pkgs.neovim-nightly;
+      package = pkgs.neovim;
     };
 
     home.packages = with pkgs;[
