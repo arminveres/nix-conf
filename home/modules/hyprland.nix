@@ -6,23 +6,25 @@
 
   config = lib.mkIf config.hyprlandwm.enable {
     home.packages = with pkgs; [
-      playerctl
-      kanshi
-      wlogout
-      pulseaudio
-      pavucontrol
-      wdisplays
-      hyprlock
+      fuzzel
+      hyprcursor
       hypridle
       hyprland-protocols
+      hyprlock
       hyprpaper
-      hyprshot
       hyprpicker
-      wofi
-      waybar
-      swaynotificationcenter
+      hyprshot
+      kanshi
+      pavucontrol
+      playerctl
+      pulseaudio
       swaylock
+      swaynotificationcenter
       swayosd
+      waybar
+      wdisplays
+      wlogout
+      wofi
     ];
 
     wayland.windowManager.hyprland = {
@@ -35,8 +37,15 @@
       ];
       # https://github.com/nix-community/home-manager/blob/master/tests/modules/services/window-managers/hyprland/simple-config.nix
       settings = {
+        xwayland = {
+          force_zero_scaling = true;
+        };
         env = [
-          "XCURSOR_SIZE,24"
+          "GDK_SCALE,1.25"
+          "QT_SCALE,1.25"
+          # "XCURSOR_SIZE,32"
+          "HYPRCURSOR_SIZE,24"
+          "HYPRCURSOR_THEME,Adwaita"
           "SSH_AUTH_SOCK,$XDG_RUNTIME_DIR/keyring/ssh"
           "QT_QPA_PLATFORM,wayland"
         ];
@@ -62,7 +71,8 @@
         };
         misc = {
           # set adaptive sync rate, 0=off, 1=on, 2=fullscreen only
-          vrr = 1;
+          vrr = 2;
+          vfr = true;
           # we need to set this, otherwise turning dpms off results in off displays
           key_press_enables_dpms = true;
         };
@@ -134,7 +144,7 @@
           "$mainMod, V, togglefloating,"
           "$mainMod, t, pin," # only floating
           "$mainMod, c, centerwindow," # only floating
-          "$mainMod, R, exec, wofi --show drun --allow-images"
+          "$mainMod, R, exec, fuzzel"
           "$mainMod, P, pseudo," # dwindle
           # $mainMod, J, togglesplit, # dwindle
           "$mainMod CONTROL, o, exec, ~/.local/bin/rofi-pactl-output"

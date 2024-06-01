@@ -23,6 +23,7 @@
       };
 
       gamemode.enable = true;
+      gamescope.enable = true;
 
       # TODO(aver): move to separate nix file
       corectrl = {
