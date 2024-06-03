@@ -106,4 +106,5 @@
   home.file.".face".source = .assets/profile.jpg;
 
   programs.mpv.enable = true;
+  programs.zathura.enable = true;
 }

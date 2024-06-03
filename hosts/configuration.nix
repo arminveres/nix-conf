@@ -155,6 +155,7 @@
     libnotify # enable notify-send
     networkmanagerapplet
     cachix
+    libheif
   ];
 
   programs.hyprland = {
