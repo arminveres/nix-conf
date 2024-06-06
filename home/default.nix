@@ -75,6 +75,7 @@
       "application/pdf" = "firefox.desktop";
     };
     mimeApps.associations.removed = { };
+    configFile."mimeapps.list".force = true;
   };
 
   dconf = {
