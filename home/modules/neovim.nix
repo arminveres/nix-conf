@@ -12,6 +12,7 @@
     };
 
     home.packages = with pkgs;[
+      # neovide
       cppcheck
       marksman
       tree-sitter

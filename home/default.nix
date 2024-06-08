@@ -27,7 +27,6 @@
     signal-desktop
     beeper
     discord
-    neovide
     mission-center
     gh
     eza
