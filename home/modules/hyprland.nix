@@ -25,6 +25,7 @@
       wdisplays
       wlogout
       wofi
+      xcur2png
     ];
 
     wayland.windowManager.hyprland = {
@@ -41,8 +42,8 @@
           force_zero_scaling = true;
         };
         env = [
-          "GDK_SCALE,1.25"
-          "QT_SCALE,1.25"
+          "GDK_SCALE,1"
+          "QT_SCALE,1"
           # "XCURSOR_SIZE,32"
           "HYPRCURSOR_SIZE,24"
           "HYPRCURSOR_THEME,Adwaita"
@@ -71,7 +72,7 @@
         };
         misc = {
           # set adaptive sync rate, 0=off, 1=on, 2=fullscreen only
-          vrr = 2;
+          vrr = 1;
           vfr = true;
           # we need to set this, otherwise turning dpms off results in off displays
           key_press_enables_dpms = true;

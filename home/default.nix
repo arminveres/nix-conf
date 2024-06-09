@@ -22,37 +22,34 @@
       colorVariants = [ "dark" ];
       tweaks = [ "black" "rimless" "normal" ];
     })
-    gnome.adwaita-icon-theme
-    dconf
-    signal-desktop
-    beeper
-    discord
-    mission-center
-    gh
-    eza
-    rustup
-    tldr
-    spotify
     # gnome.nautilus
+    gnome.gnome-calculator
+    beeper
+    dconf
+    eza
+    fastfetch
+    gh
+    gnome.adwaita-icon-theme
+    libreoffice
+    mission-center
+    nextcloud-client
+    obsidian
     qmk
+    rustup
+    signal-desktop
+    spotify
     syncthing
     syncthingtray
-    obsidian
-    fastfetch
-    nextcloud-client
-    libreoffice
+    tldr
+    webcord
   ];
 
   xdg = {
     enable = true;
     portal = {
       enable = true;
-      configPackages = [
-        pkgs.xdg-desktop-portal-gtk
-        pkgs.xdg-desktop-portal-hyprland
-      ];
       extraPortals = [
-        pkgs.xdg-desktop-portal-gtk
+        pkgs.xdg-desktop-portal-gnome
         pkgs.xdg-desktop-portal-hyprland
       ];
     };
