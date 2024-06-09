@@ -50,7 +50,6 @@
     , nix-darwin
     , home-manager
     , neovim-nightly
-    , split-monitor-workspaces
     , ...
     }:
     let
@@ -77,7 +76,7 @@
       nixosConfigurations = (
         import ./hosts {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs pkgs pkgs-stable nixos-hardware systemSettings userSettings home-manager split-monitor-workspaces;
+          inherit inputs nixpkgs pkgs pkgs-stable nixos-hardware systemSettings userSettings home-manager;
         }
       );
       # NOTE(aver): don't inherit pkgs and system, as it is not a x86_64-linux based system

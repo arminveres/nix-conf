@@ -2,14 +2,19 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ inputs, pkgs, systemSettings, userSettings, split-monitor-workspaces, ... }:
+{ inputs
+, pkgs
+, systemSettings
+, userSettings
+, ...
+}:
 
 {
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
     users.${userSettings.username} = (import ../home);
-    extraSpecialArgs = { inherit inputs systemSettings userSettings split-monitor-workspaces; };
+    extraSpecialArgs = { inherit inputs systemSettings userSettings; };
   };
 
   nix = {

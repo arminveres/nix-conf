@@ -10,7 +10,6 @@
 , systemSettings
 , userSettings
 , home-manager
-, split-monitor-workspaces
 , ...
 }:
 let
@@ -20,7 +19,7 @@ in
 {
   nixos-desktop = lib.nixosSystem {
     inherit system;
-    specialArgs = { inherit inputs pkgs systemSettings userSettings split-monitor-workspaces; };
+    specialArgs = { inherit inputs pkgs systemSettings userSettings; };
     modules = [
       home-manager.nixosModules.home-manager
       ./configuration.nix
@@ -31,7 +30,7 @@ in
 
   nixos-x1c = lib.nixosSystem {
     inherit system;
-    specialArgs = { inherit inputs pkgs systemSettings userSettings split-monitor-workspaces; };
+    specialArgs = { inherit inputs pkgs systemSettings userSettings; };
     modules = [
       home-manager.nixosModules.home-manager
       ./configuration.nix

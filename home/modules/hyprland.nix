@@ -1,4 +1,4 @@
-{ pkgs, lib, config, inputs, split-monitor-workspaces, ... }: {
+{ pkgs, lib, config, inputs, ... }: {
   options = {
     hyprlandwm.enable = lib.mkEnableOption "enables Home-Manager Hyprland module";
     hyprlandwm.displayConfig = lib.mkOption { };
@@ -34,7 +34,7 @@
       xwayland.enable = true;
       package = inputs.hyprland.packages.${pkgs.system}.hyprland;
       plugins = [
-        split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
+        inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
       ];
       # https://github.com/nix-community/home-manager/blob/master/tests/modules/services/window-managers/hyprland/simple-config.nix
       settings = {
