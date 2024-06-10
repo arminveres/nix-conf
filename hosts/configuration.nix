@@ -115,7 +115,7 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.sessionVariables = {
-    FLAKE = "/home/${userSettings.username}/nix-conf";
+    FLAKE = "/home/${userSettings.username}/nix-conf?submodules=1";
   };
 
   # List packages installed in system profile. To search, run:
@@ -140,8 +140,6 @@
     unzip
     lazygit
     lazydocker
-    xdg-desktop-portal-hyprland
-    xdg-desktop-portal-gtk
     hyprland-protocols
     cliphist
     powertop

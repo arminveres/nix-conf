@@ -18,6 +18,7 @@
     latex.enable = true;
   };
 
+  # NOTE(aver): possibly superfluous, as achieved by nixos-hardware
   hardware.opengl = {
     driSupport = true;
     extraPackages = with pkgs;[

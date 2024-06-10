@@ -5,16 +5,19 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
-  boot.initrd.kernelModules = [ "amdgpu" ];
+  # WARN(aver): this is replaced by nixos hardware modules
+  # boot.initrd.kernelModules = [ "amdgpu" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/c1d5f5f4-7de2-401e-88d9-f847348a923a";
+    {
+      device = "/dev/disk/by-uuid/c1d5f5f4-7de2-401e-88d9-f847348a923a";
       fsType = "btrfs";
       options = [ "subvol=@" ];
     };
@@ -22,24 +25,28 @@
   boot.initrd.luks.devices."nixos-root".device = "/dev/disk/by-uuid/b82dc1fc-3f38-4531-a3f9-523d4a51794f";
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/84F0-EB8B";
+    {
+      device = "/dev/disk/by-uuid/84F0-EB8B";
       fsType = "vfat";
     };
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/c1d5f5f4-7de2-401e-88d9-f847348a923a";
+    {
+      device = "/dev/disk/by-uuid/c1d5f5f4-7de2-401e-88d9-f847348a923a";
       fsType = "btrfs";
       options = [ "subvol=@home" ];
     };
 
   fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/c1d5f5f4-7de2-401e-88d9-f847348a923a";
+    {
+      device = "/dev/disk/by-uuid/c1d5f5f4-7de2-401e-88d9-f847348a923a";
       fsType = "btrfs";
       options = [ "subvol=@nix" ];
     };
 
   fileSystems."/var/log" =
-    { device = "/dev/disk/by-uuid/c1d5f5f4-7de2-401e-88d9-f847348a923a";
+    {
+      device = "/dev/disk/by-uuid/c1d5f5f4-7de2-401e-88d9-f847348a923a";
       fsType = "btrfs";
       options = [ "subvol=@log" ];
     };

@@ -18,7 +18,6 @@
       pavucontrol
       playerctl
       pulseaudio
-      swaylock
       swaynotificationcenter
       swayosd
       waybar
