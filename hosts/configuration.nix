@@ -121,6 +121,12 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    binutils
+    gcc
+    cmake
+    gnumake
+    xxd
+
     firefox
     thunderbird
     python3
@@ -130,9 +136,7 @@
     btop
     stow
     tmux
-    binutils
-    gcc
-    xxd
+
     nodejs
     zoxide
     ripgrep
@@ -140,7 +144,6 @@
     unzip
     lazygit
     lazydocker
-    hyprland-protocols
     cliphist
     powertop
     wl-clipboard
@@ -159,10 +162,27 @@
     networkmanagerapplet
     cachix
     libheif
+    pavucontrol
+    pasystray
+
+    hyprland-protocols
   ];
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = [
+      inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland
+      pkgs.xdg-desktop-portal-gtk
+    ];
+    configPackages = [ inputs.hyprland.packages.${pkgs.system}.hyprland ];
+    xdgOpenUsePortal = true;
+  };
 
   programs.hyprland = {
     enable = true;
+    xwayland.enable = true;
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    portalPackage = inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
   };
 
   programs.zsh.enable = true;

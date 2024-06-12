@@ -10,8 +10,10 @@
       enable = true;
       displayConfig = {
         monitor = [
-          "DP-1, 3440x1440@160, 0x0, 1"
-          "DP-2, 1920x1200@60,  3440x0, 1, transform, 3"
+          # "HDMI-A-2,    3840x2160@120,  0x0,    1.25"
+          # "HDMI-A-1,    3840x2160@120,  0x0,    1.25"
+          "DP-1,        3440x1440@160,  0x0,    1,  bitdepth,   10"
+          "DP-2,        1920x1200@60,   3440x0, 1,  transform,  3"
         ];
       };
     };
@@ -30,4 +32,9 @@
     driSupport32Bit = true;
     extraPackages32 = with pkgs;[ driversi686Linux.amdvlk ];
   };
+
+  environment.systemPackages = with pkgs; [
+    ddcui
+  ];
+
 }

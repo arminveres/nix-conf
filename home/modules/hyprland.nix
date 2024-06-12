@@ -5,6 +5,7 @@
   };
 
   config = lib.mkIf config.hyprlandwm.enable {
+
     home.packages = with pkgs; [
       fuzzel
       hyprcursor
@@ -24,17 +25,37 @@
       wdisplays
       wlogout
       wofi
+      xwaylandvideobridge
       xcur2png
+      gthumb
+
+      xdg-utils
+
+      wlr-randr
+      grim
+      slurp
     ];
+
+    home.file.".config/hypr/hyprlock.conf".source = ../../dotfiles/hypr/.config/hypr/hyprlock.conf;
+    home.file.".config/hypr/hypridle.conf".source = ../../dotfiles/hypr/.config/hypr/hypridle.conf;
+    home.file.".config/hypr/hyprpaper.conf".source = ../../dotfiles/hypr/.config/hypr/hyprpaper.conf;
+
+    home.sessionVariables.NIXOS_OZONE_WL = "1";
+    home.sessionVariables.WLR_NO_HARDWARE_CURSORS = "1";
+
 
     wayland.windowManager.hyprland = {
       enable = true;
-      systemd.enable = true;
-      xwayland.enable = true;
       package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+      xwayland.enable = true;
+
+      systemd.enable = true;
+      systemd.variables = [ "--all" ];
+
       plugins = [
-        inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
+        # inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
       ];
+
       # https://github.com/nix-community/home-manager/blob/master/tests/modules/services/window-managers/hyprland/simple-config.nix
       settings = {
         xwayland = {
@@ -43,7 +64,7 @@
         env = [
           "GDK_SCALE,1"
           "QT_SCALE,1"
-          # "XCURSOR_SIZE,32"
+          "XCURSOR_SIZE,24"
           "HYPRCURSOR_SIZE,24"
           "HYPRCURSOR_THEME,Adwaita"
           "SSH_AUTH_SOCK,$XDG_RUNTIME_DIR/keyring/ssh"
@@ -114,6 +135,8 @@
           # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
           new_is_master = true;
           new_on_top = true;
+          # orientation = "center";
+          # always_center_master = true;
         };
         gestures = {
           # See https://wiki.hyprland.org/Configuring/Variables/ for more
@@ -184,31 +207,31 @@
           "$mainMod CONTROL, c, layoutmsg, orientationcenter"
 
           # Switch workspaces with mainMod + [0-9]
-          "$mainMod, 1, split-workspace, 1"
-          "$mainMod, 2, split-workspace, 2"
-          "$mainMod, 3, split-workspace, 3"
-          "$mainMod, 4, split-workspace, 4"
-          "$mainMod, 5, split-workspace, 5"
-          "$mainMod, 6, split-workspace, 6"
-          "$mainMod, 7, split-workspace, 7"
-          "$mainMod, 8, split-workspace, 8"
-          "$mainMod, 9, split-workspace, 9"
-          "$mainMod, 0, split-workspace, 10"
+          "$mainMod, 1, workspace, 1"
+          "$mainMod, 2, workspace, 2"
+          "$mainMod, 3, workspace, 3"
+          "$mainMod, 4, workspace, 4"
+          "$mainMod, 5, workspace, 5"
+          "$mainMod, 6, workspace, 6"
+          "$mainMod, 7, workspace, 7"
+          "$mainMod, 8, workspace, 8"
+          "$mainMod, 9, workspace, 9"
+          "$mainMod, 0, workspace, 10"
 
           # Move active window to a workspace with mainMod + SHIFT + [0-9] bind = $mainMod SHIFT, 1, movetoworkspace, 1
           # To bring focus to moved workspace use without 'silent'
-          "$mainMod SHIFT, 1, split-movetoworkspacesilent, 1"
-          "$mainMod SHIFT, 2, split-movetoworkspacesilent, 2"
-          "$mainMod SHIFT, 3, split-movetoworkspacesilent, 3"
-          "$mainMod SHIFT, 4, split-movetoworkspacesilent, 4"
-          "$mainMod SHIFT, 5, split-movetoworkspacesilent, 5"
-          "$mainMod SHIFT, 6, split-movetoworkspacesilent, 6"
-          "$mainMod SHIFT, 7, split-movetoworkspacesilent, 7"
-          "$mainMod SHIFT, 8, split-movetoworkspacesilent, 8"
-          "$mainMod SHIFT, 9, split-movetoworkspacesilent, 9"
-          "$mainMod SHIFT, 0, split-movetoworkspacesilent, 10"
+          "$mainMod SHIFT, 1, movetoworkspacesilent, 1"
+          "$mainMod SHIFT, 2, movetoworkspacesilent, 2"
+          "$mainMod SHIFT, 3, movetoworkspacesilent, 3"
+          "$mainMod SHIFT, 4, movetoworkspacesilent, 4"
+          "$mainMod SHIFT, 5, movetoworkspacesilent, 5"
+          "$mainMod SHIFT, 6, movetoworkspacesilent, 6"
+          "$mainMod SHIFT, 7, movetoworkspacesilent, 7"
+          "$mainMod SHIFT, 8, movetoworkspacesilent, 8"
+          "$mainMod SHIFT, 9, movetoworkspacesilent, 9"
+          "$mainMod SHIFT, 0, movetoworkspacesilent, 10"
 
-          "$mainMod SHIFT, o, split-changemonitor, +1"
+          # "$mainMod SHIFT, o, split-changemonitor, +1"
           "$mainMod, o, focusmonitor, +1"
 
           # Scroll through existing workspaces with mainMod + scroll
@@ -246,6 +269,8 @@
           ", XF86AudioNext,     exec, playerctl next"
           ", XF86AudioPrev,     exec, playerctl previous"
           ", XF86AudioMute,     exec, pactl set-sink-mute @DEFAULT_SINK@ toggle"
+          # ", XF86AudioLowerVolume,     exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
+          # ", XF86AudioRaiseVolume,     exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
         ];
 
         # Bind to mouse
@@ -257,21 +282,32 @@
         ];
 
         windowrulev2 = [
-          "workspace 4 silent,class:^(Spotify)$"
-          "workspace 4 silent,class:^(blueman-manager)$"
-          "workspace 4 silent,class:^(easyeffects)$"
-          "workspace 5 silent,class:^(steam)$"
-          "workspace 6 silent,class:^(thunderbird)$"
-          "workspace 9 silent,class:^(signal)$"
-          "workspace 9 silent,class:^(Signal)$"
-          "workspace 9 silent,class:^(discord)$"
-          "workspace 9 silent,class:^(Discord)$"
-          "workspace 9 silent,title:^(Microsoft Teams*)$"
-          "tile,title:^(Microsoft Teams*)$"
+          "workspace 4 silent,  class:^Spotify$"
+          "workspace 4 silent,  class:^blueman-manager$"
+          "workspace 4 silent,  class:^easyeffects$"
+          "workspace 5 silent,  class:^steam$"
+          "workspace 6 silent,  class:^thunderbird$"
+          "workspace 9 silent,  class:^signal$"
+          "workspace 9 silent,  class:^Signal$"
+          "workspace 9 silent,  class:^discord$"
+          "workspace 9 silent,  class:^Discord$"
+          "workspace 9 silent,  class:^WebCord$"
+          "workspace 9 silent,  title:^Microsoft Teams*$"
+          "tile,                title:^Microsoft Teams*$"
+
           # add steam games to ws 6
-          "workspace 6 silent,class:^steam_app_*$"
-          "monitor 0,class:^(steam_app_*)$"
-          # "fullscreen,class:^(steam_app_*)$"
+          "workspace 6 silent,  class:^steam_app_*$"
+          # "monitor 0,           class:^steam_app_*$"
+          "fullscreen,          class:^steam_app_*$"
+
+          # screen sharing
+          "opacity 0.0 override,class:^(xwaylandvideobridge)$"
+          "noanim,class:^(xwaylandvideobridge)$"
+          "noinitialfocus,class:^(xwaylandvideobridge)$"
+          "maxsize 1 1,class:^(xwaylandvideobridge)$"
+          "noblur,class:^(xwaylandvideobridge)$"
+
+          "float, class:^org.gnome.Calculator$"
         ];
 
 
@@ -280,11 +316,10 @@
           "/run/wrappers/bin/gnome-keyring-daemon --daemonize --login"
           "polkit-agent-helper-1"
 
-          # "systemctl start --user polkit-gnome-authentication-agent-1"
           "hyprpaper"
+          "hypridle"
           "swaync"
           "waybar"
-          # swayidle -w
           "udiskie --tray --notify"
           "nm-applet"
           "pasystray"
@@ -295,6 +330,9 @@
           "cliphist store"
           "nextcloud --backgroud"
           "thunar --daemon"
+          "xwaylandvideobridge"
+
+          # "corectrl"
 
           # TODO(aver): remove this after waybar fixes it itself
           "ln -s $XDG_RUNTIME_DIR/hypr/* /tmp/hypr"

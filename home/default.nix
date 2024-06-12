@@ -15,14 +15,16 @@
       colorVariants = [ "dark" ];
       tweaks = [ "black" "rimless" "normal" ];
     })
-    # gnome.nautilus
+
+    gnome.nautilus
     gnome.gnome-calculator
+    gnome.adwaita-icon-theme
+
     beeper
     dconf
     eza
     fastfetch
     gh
-    gnome.adwaita-icon-theme
     libreoffice
     mission-center
     nextcloud-client
@@ -34,23 +36,15 @@
     syncthing
     syncthingtray
     tldr
+    fzf
+
     webcord
     vesktop
-    fzf
+    discord
   ];
 
   xdg = {
     enable = true;
-    portal = {
-      enable = true;
-      extraPortals = [
-        inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland
-        pkgs.xdg-desktop-portal-gtk
-      ];
-      configPackages = [
-        inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland
-      ];
-    };
     userDirs = {
       enable = true;
       createDirectories = true;
@@ -75,9 +69,14 @@
 
   dconf = {
     enable = true;
-    settings = {
-      "org/gnome/desktop/interface" = { color-scheme = "prefer-dark"; };
-    };
+    settings = { "org/gnome/desktop/interface" = { color-scheme = "prefer-dark"; }; };
+  };
+  home.pointerCursor = {
+    gtk.enable = true;
+    name = "Adwaita";
+    package = pkgs.gnome.adwaita-icon-theme;
+    size = 24;
+
   };
 
   gtk = {
@@ -87,10 +86,6 @@
       package = pkgs.colloid-gtk-theme;
     };
     iconTheme = {
-      name = "Adwaita";
-      package = pkgs.gnome.adwaita-icon-theme;
-    };
-    cursorTheme = {
       name = "Adwaita";
       package = pkgs.gnome.adwaita-icon-theme;
     };
