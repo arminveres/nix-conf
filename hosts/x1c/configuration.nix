@@ -4,6 +4,7 @@
   fm.enable = true;
 
   home-manager.users.${userSettings.username} = {
+    neovim.enable = true;
     gaming.enable = false;
     hyprlandwm = {
       enable = true;
