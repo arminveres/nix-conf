@@ -122,6 +122,15 @@
           ];
         };
 
+        workspace = [
+          "1, monitor:DP-1, default:true"
+          "2, monitor:DP-1, default:true"
+          "3, monitor:DP-1, default:true"
+          "4, monitor:DP-1, default:true"
+          "5, monitor:DP-1, default:true"
+          "10, monitor:DP-2"
+        ];
+
         binds = {
           # together with previous workspace works like in AwesomeWM
           allow_workspace_cycles = true;
@@ -133,7 +142,7 @@
         };
         master = {
           # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
-          new_is_master = true;
+          new_status = "master";
           new_on_top = true;
           # orientation = "center";
           # always_center_master = true;
