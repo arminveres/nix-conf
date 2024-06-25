@@ -29,7 +29,6 @@
     mission-center
     nextcloud-client
     obsidian
-    qmk
     rustup
     signal-desktop
     spotify
