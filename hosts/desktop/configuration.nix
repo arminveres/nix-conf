@@ -22,10 +22,11 @@
 
   # NOTE(aver): possibly superfluous, as achieved by nixos-hardware
   hardware.opengl = {
-    driSupport = true;
+    # WARN(aver): option deprecated, ord broken?
+    # driSupport = true;
     extraPackages = with pkgs;[
       amdvlk
-      # add OpenCL support
+      # add OpenCL support, or just rely on the amgpu module from `nixos-hardware`
       # rocmPackages.clr.icd
       # clinfo
     ];
