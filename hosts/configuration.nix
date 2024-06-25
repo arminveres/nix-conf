@@ -166,8 +166,12 @@
     pasystray
 
     hyprland-protocols
+
+    protonmail-bridge
+    protonmail-bridge-gui
   ];
 
+  # TODO(aver): move this into submodule
   xdg.portal = {
     enable = true;
     extraPortals = [

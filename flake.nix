@@ -20,7 +20,6 @@
     neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
 
     # NOTE(aver): Don't use the default flake input, as it breaks when building with split-monitor-workspaces
-    # hyprland.url = "github:hyprwm/Hyprland";
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins";

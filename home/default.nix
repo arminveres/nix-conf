@@ -41,6 +41,7 @@
     webcord
     vesktop
     discord
+    zoom-us
   ];
 
   xdg = {
