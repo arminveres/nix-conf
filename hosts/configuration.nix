@@ -225,7 +225,10 @@
   services.openssh.enable = true;
   programs.ssh.startAgent = true;
 
-  services.zerotierone.enable = true;
+  services.zerotierone = {
+    enable = true;
+    localConf = { settings = { }; };
+  };
 
   security.sudo = {
     enable = true;
