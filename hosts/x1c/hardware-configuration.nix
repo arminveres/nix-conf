@@ -110,11 +110,6 @@
     tod.driver = pkgs.libfprint-2-tod1-elan;
   };
 
-  security.pam.services = {
-    login.fprintAuth = true;
-    gdm-fingerprint.fprintAuth = true;
-    swaylock.fprintAuth = true;
-  };
 
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", MODE="0666", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/class/backlight/%k/brightness"
