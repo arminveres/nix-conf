@@ -8,8 +8,12 @@
     gaming.enable = false;
     hyprlandwm = {
       enable = true;
-      displayConfig = {
+      hostConfig = {
         monitor = [ ",preferred,auto,1.0" ];
+        decoration = {
+          blur.enabled = false;
+          drop_shadow = false;
+        };
       };
     };
     latex.enable = true;

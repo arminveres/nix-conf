@@ -8,13 +8,17 @@
     gaming.enable = true;
     hyprlandwm = {
       enable = true;
-      displayConfig = {
+      hostConfig = {
         monitor = [
           # "HDMI-A-2,    3840x2160@120,  0x0,    1.25"
           # "HDMI-A-1,    3840x2160@120,  0x0,    1.25"
           "DP-1,        3440x1440@160,  0x0,    1,  bitdepth,   10"
           "DP-2,        1920x1200@60,   3440x0, 1,  transform,  3"
         ];
+        decoration = {
+          blur.enabled = true;
+          drop_shadow = true;
+        };
       };
     };
     latex.enable = true;
