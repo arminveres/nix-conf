@@ -32,8 +32,6 @@
     rustup
     signal-desktop
     spotify
-    syncthing
-    syncthingtray
     tldr
     fzf
 
@@ -135,5 +133,12 @@
         popd
       '';
   };
+
+
+  services.syncthing = {
+    enable = true;
+    tray.enable = true;
+  };
+
 
 }

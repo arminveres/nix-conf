@@ -144,7 +144,6 @@
     unzip
     lazygit
     lazydocker
-    cliphist
     powertop
     wl-clipboard
     nvtopPackages.amd

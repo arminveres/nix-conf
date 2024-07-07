@@ -43,6 +43,7 @@
     home.sessionVariables.NIXOS_OZONE_WL = "1";
     home.sessionVariables.WLR_NO_HARDWARE_CURSORS = "1";
 
+    services.cliphist.enable = true;
 
     wayland.windowManager.hyprland = {
       enable = true;
@@ -343,7 +344,7 @@
             "tmux new -s daemon -d"
             "swayosd-server"
             "kanshi"
-            "cliphist store"
+            # "cliphist store"
             "nextcloud --background"
             "thunar --daemon"
             "protonmail-bridge-gui"
