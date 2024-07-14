@@ -25,7 +25,7 @@ in
       ./configuration.nix
       ./desktop/hardware-configuration.nix
       ./desktop/configuration.nix
-      nixos-hardware.nixosModules.common-cpu-intel
+      nixos-hardware.nixosModules.common-cpu-intel-cpu-only
       nixos-hardware.nixosModules.common-gpu-amd
     ];
   };
