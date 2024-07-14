@@ -116,6 +116,7 @@
 
   environment.sessionVariables = {
     FLAKE = "/home/${userSettings.username}/nix-conf?submodules=1";
+    PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
   };
 
   # List packages installed in system profile. To search, run:
@@ -126,6 +127,8 @@
     cmake
     gnumake
     xxd
+    mold
+    pkg-config
 
     firefox
     thunderbird
