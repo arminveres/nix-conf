@@ -103,7 +103,7 @@
     users.${userSettings.username} = {
       isNormalUser = true;
       description = "Armin Veres";
-      extraGroups = [ "networkmanager" "wheel" "video" "dialout" ];
+      extraGroups = [ "networkmanager" "wheel" "video" "dialout" "docker" ];
     };
   };
 
@@ -168,6 +168,7 @@
 
     protonmail-bridge
     protonmail-bridge-gui
+    docker-compose
   ];
 
   # TODO(aver): move this into submodule
@@ -247,6 +248,14 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+  networking.firewall.allowedUDPPortRanges = [
+    { from = 6000; to = 9999; } # needed for my thesis to make the connections
+    { from = 51413; to = 51413; } # qbittorrent
+  ];
+  networking.firewall.allowedTCPPortRanges = [
+    { from = 5000; to = 9999; } # needed for my thesis to make the connections
+    { from = 51413; to = 51413; } # qbittorrent
+  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -299,5 +308,10 @@
       }
     })
   '';
+
+  virtualisation.docker = {
+    enable = true;
+    storageDriver = "btrfs";
+  };
 
 }
