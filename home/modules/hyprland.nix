@@ -125,20 +125,6 @@
             ];
           };
 
-          workspace = [
-            "1, monitor:DP-1, default:true"
-            "2, monitor:DP-1"
-            "3, monitor:DP-1"
-            "4, monitor:DP-1"
-            "5, monitor:DP-1"
-            "6, monitor:DP-1"
-            "7, monitor:DP-1"
-            "8, monitor:DP-1"
-            "9, monitor:DP-1"
-            # use this as a kind of scratchpad
-            "10, monitor:DP-2, default:true"
-          ];
-
           binds = {
             # together with previous workspace works like in AwesomeWM
             allow_workspace_cycles = true;
@@ -302,8 +288,16 @@
             "workspace 4 silent,  class:^Spotify$"
             "workspace 4 silent,  class:^blueman-manager$"
             "workspace 4 silent,  class:^easyeffects$"
+
             "workspace 5 silent,  class:^steam$"
+            # add steam games to ws 6
+            "workspace 5 silent,  class:^steam_app_$"
+            # "monitor 0,           class:^steam_app_*$"
+            "fullscreen,          class:^steam_app_$"
+
             "workspace 6 silent,  class:^thunderbird$"
+            "workspace 6 silent,  class:^ch.proton.bridge-gui$"
+
             "workspace 9 silent,  class:^signal$"
             "workspace 9 silent,  class:^Signal$"
             "workspace 9 silent,  class:^discord$"
@@ -311,19 +305,6 @@
             "workspace 9 silent,  class:^WebCord$"
             "workspace 9 silent,  title:^Microsoft Teams*$"
             "tile,                title:^Microsoft Teams*$"
-
-            # add steam games to ws 6
-            "workspace 6 silent,  class:^steam_app_*$"
-            # "monitor 0,           class:^steam_app_*$"
-            "fullscreen,          class:^steam_app_*$"
-
-            # # screen sharing
-            # "opacity 0.0 override,class:^(xwaylandvideobridge)$"
-            # "noanim,class:^(xwaylandvideobridge)$"
-            # "noinitialfocus,class:^(xwaylandvideobridge)$"
-            # "maxsize 1 1,class:^(xwaylandvideobridge)$"
-            # "noblur,class:^(xwaylandvideobridge)$"
-
             "float, class:^org.gnome.Calculator$"
           ];
 
@@ -347,7 +328,7 @@
             # "cliphist store"
             "nextcloud --background"
             "thunar --daemon"
-            "protonmail-bridge-gui"
+            "protonmail-bridge-gui --no-window"
 
             # "xwaylandvideobridge"
             # replaced by `lact`
