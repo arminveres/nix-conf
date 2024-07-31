@@ -128,6 +128,7 @@
     xxd
     mold
     pkg-config
+    lshw
 
     firefox
     thunderbird

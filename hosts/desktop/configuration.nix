@@ -1,7 +1,9 @@
 { userSettings, pkgs, ... }: {
   imports = [ ../../modules/core ];
+
   gaming.enable = true;
   fm.enable = true;
+  bluetooth.enable = true;
 
   home-manager.users.${userSettings.username} = {
     neovim.enable = true;
