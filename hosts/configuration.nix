@@ -13,7 +13,7 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.${userSettings.username} = (import ../home);
+    users.${userSettings.username} = (import ../modules/home);
     extraSpecialArgs = { inherit inputs systemSettings userSettings; };
   };
 

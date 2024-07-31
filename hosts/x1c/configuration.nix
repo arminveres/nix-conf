@@ -1,5 +1,5 @@
 { userSettings, ... }: {
-  imports = [ ../../modules ];
+  imports = [ ../../modules/core ];
   printing.enable = true;
   fm.enable = true;
 

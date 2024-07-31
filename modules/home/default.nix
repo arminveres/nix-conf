@@ -137,7 +137,8 @@
 
   services.syncthing = {
     enable = true;
-    tray.enable = true;
+    # disable as it does not correctly start as requested
+    tray.enable = false;
   };
 
 

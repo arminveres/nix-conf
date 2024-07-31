@@ -1,5 +1,5 @@
 { userSettings, pkgs, ... }: {
-  imports = [ ../../modules ];
+  imports = [ ../../modules/core ];
   gaming.enable = true;
   fm.enable = true;
 

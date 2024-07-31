@@ -36,9 +36,9 @@
       slurp
     ];
 
-    home.file.".config/hypr/hyprlock.conf".source = ../../dotfiles/hypr/.config/hypr/hyprlock.conf;
-    home.file.".config/hypr/hypridle.conf".source = ../../dotfiles/hypr/.config/hypr/hypridle.conf;
-    home.file.".config/hypr/hyprpaper.conf".source = ../../dotfiles/hypr/.config/hypr/hyprpaper.conf;
+    home.file.".config/hypr/hyprlock.conf".source = ../../../dotfiles/hypr/.config/hypr/hyprlock.conf;
+    home.file.".config/hypr/hypridle.conf".source = ../../../dotfiles/hypr/.config/hypr/hypridle.conf;
+    home.file.".config/hypr/hyprpaper.conf".source = ../../../dotfiles/hypr/.config/hypr/hyprpaper.conf;
 
     home.sessionVariables.NIXOS_OZONE_WL = "1";
     home.sessionVariables.WLR_NO_HARDWARE_CURSORS = "1";
