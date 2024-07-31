@@ -39,7 +39,7 @@
   };
 
   # NOTE(aver): possibly superfluous, as achieved by nixos-hardware
-  hardware.opengl = {
+  hardware.graphics = {
     # WARN(aver): option deprecated, ord broken?
     # driSupport = true;
     extraPackages = with pkgs;[
@@ -48,8 +48,8 @@
       # rocmPackages.clr.icd
       # clinfo
     ];
-    driSupport32Bit = true;
     extraPackages32 = with pkgs;[ driversi686Linux.amdvlk ];
+    enable32Bit = true;
   };
 
   environment.systemPackages = with pkgs; [

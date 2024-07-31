@@ -16,9 +16,9 @@
       tweaks = [ "black" "rimless" "normal" ];
     })
 
-    gnome.nautilus
-    gnome.gnome-calculator
-    gnome.adwaita-icon-theme
+    nautilus
+    gnome-calculator
+    adwaita-icon-theme
 
     beeper
     dconf
@@ -72,7 +72,7 @@
   home.pointerCursor = {
     gtk.enable = true;
     name = "Adwaita";
-    package = pkgs.gnome.adwaita-icon-theme;
+    package = pkgs.adwaita-icon-theme;
     size = 24;
 
   };
@@ -85,7 +85,7 @@
     };
     iconTheme = {
       name = "Adwaita";
-      package = pkgs.gnome.adwaita-icon-theme;
+      package = pkgs.adwaita-icon-theme;
     };
   };
 
