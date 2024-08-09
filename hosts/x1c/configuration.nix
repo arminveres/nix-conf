@@ -31,6 +31,30 @@
           # use this as a kind of scratchpad
           "10, monitor:DP-2, default:true"
         ];
+
+        windowrulev2 = [
+          "workspace 4 silent,  class:^Spotify$"
+          "workspace 4 silent,  class:^blueman-manager$"
+          "workspace 4 silent,  class:^easyeffects$"
+
+          "workspace 5 silent,  class:^steam$"
+          # add steam games to ws 6
+          "workspace 5 silent,  class:^steam_app_\d*$"
+          "monitor 1,           class:^steam_app_\d*$"
+          "fullscreen,          class:^steam_app_\d*$"
+
+          "workspace 6 silent,  class:^thunderbird$"
+          "workspace 6 silent,  class:^ch.proton.bridge-gui$"
+
+          "workspace 9 silent,  class:^signal$"
+          "workspace 9 silent,  class:^Signal$"
+          "workspace 9 silent,  class:^discord$"
+          "workspace 9 silent,  class:^Discord$"
+          "workspace 9 silent,  class:^WebCord$"
+          "workspace 9 silent,  title:^Microsoft Teams*$"
+          "tile,                title:^Microsoft Teams*$"
+          "float, class:^org.gnome.Calculator$"
+        ];
       };
     };
     latex.enable = true;

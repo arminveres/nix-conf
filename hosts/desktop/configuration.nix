@@ -22,19 +22,48 @@
           drop_shadow = true;
         };
         workspace = [
-          "1, monitor:DP-1, default:true"
-          "2, monitor:DP-1"
-          "3, monitor:DP-1"
-          "4, monitor:DP-1"
-          "5, monitor:DP-1"
-          "6, monitor:DP-1"
-          "7, monitor:DP-1"
-          "8, monitor:DP-1"
-          "9, monitor:DP-1"
-          # use this as a kind of scratchpad
-          "10, monitor:DP-2, default:true"
+          # code
+          "1,   monitor:DP-1, default:true"
+          # web
+          "2,   monitor:DP-1"
+          # mail + research
+          "3,   monitor:DP-1"
+          # steam
+          "4,   monitor:DP-1"
+          "5,   monitor:DP-1"
+          # messages
+          "6,   monitor:DP-2, layoutopt:orientation:top, default:true"
+          # sound + bluetooth
+          "7,   monitor:DP-2, layoutopt:orientation:top"
+          "8,   monitor:DP-2, layoutopt:orientation:top"
+          "9,   monitor:DP-2, layoutopt:orientation:top"
+          "10,  monitor:DP-2, layoutopt:orientation:top"
         ];
 
+        windowrulev2 = [
+          "workspace 3 silent,  class:^easyeffects$"
+          "workspace 3 silent,  class:^thunderbird$"
+          "workspace 3 silent,  class:^ch.proton.bridge-gui$"
+
+          "workspace 4 silent,  class:^steam$"
+          # add steam games to ws 6
+          "workspace 5 silent,  class:^steam_app_\d*$"
+          "monitor 1,           class:^steam_app_\d*$"
+          "fullscreen,          class:^steam_app_\d*$"
+
+          "workspace 6 silent,  class:^signal$"
+          "workspace 6 silent,  class:^Signal$"
+          "workspace 6 silent,  class:^discord$"
+          "workspace 6 silent,  class:^Discord$"
+          "workspace 6 silent,  class:^WebCord$"
+          "workspace 6 silent,  title:^Microsoft Teams*$"
+          "tile,                title:^Microsoft Teams*$"
+
+          "workspace 7 silent,  class:^Spotify$"
+          "workspace 7 silent,  class:^blueman-manager$"
+
+          "float, class:^org.gnome.Calculator$"
+        ];
       };
     };
     latex.enable = true;

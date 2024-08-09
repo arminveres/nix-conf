@@ -165,7 +165,7 @@
           bind = [
             "$mainMod, return, exec, alacritty"
             "$mainMod SHIFT, c, killactive,"
-            "$mainMod, b, exec, thunar"
+            "$mainMod, b, exec, nautilus" # or thunar
             "$mainMod, i, exec, firefox"
             "$mainMod, V, togglefloating,"
             "$mainMod, t, pin," # only floating
@@ -283,31 +283,6 @@
             "$mainMod, mouse:272, movewindow"
             "$mainMod, mouse:273, resizewindow"
           ];
-
-          windowrulev2 = [
-            "workspace 4 silent,  class:^Spotify$"
-            "workspace 4 silent,  class:^blueman-manager$"
-            "workspace 4 silent,  class:^easyeffects$"
-
-            "workspace 5 silent,  class:^steam$"
-            # add steam games to ws 6
-            "workspace 5 silent,  class:^steam_app_$"
-            # "monitor 0,           class:^steam_app_*$"
-            "fullscreen,          class:^steam_app_$"
-
-            "workspace 6 silent,  class:^thunderbird$"
-            "workspace 6 silent,  class:^ch.proton.bridge-gui$"
-
-            "workspace 9 silent,  class:^signal$"
-            "workspace 9 silent,  class:^Signal$"
-            "workspace 9 silent,  class:^discord$"
-            "workspace 9 silent,  class:^Discord$"
-            "workspace 9 silent,  class:^WebCord$"
-            "workspace 9 silent,  title:^Microsoft Teams*$"
-            "tile,                title:^Microsoft Teams*$"
-            "float, class:^org.gnome.Calculator$"
-          ];
-
 
           exec-once = [
             "export \"$(/run/wrappers/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)\""
