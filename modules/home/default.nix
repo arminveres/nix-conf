@@ -48,21 +48,6 @@
       createDirectories = true;
     };
     mime.enable = true;
-    mimeApps.enable = true;
-    mimeApps.defaultApplications = {
-      "x-scheme-handler/mailto" = "userapp-Thunderbird-MLTWL2.desktop";
-      "message/rfc822" = "userapp-Thunderbird-MLTWL2.desktop";
-      "x-scheme-handler/mid" = "userapp-Thunderbird-MLTWL2.desktop";
-      "application/pdf" = "firefox.desktop";
-      "text/markdown" = "nvim.desktop";
-    };
-    mimeApps.associations.added = {
-      "x-scheme-handler/mailto" = "userapp-Thunderbird-MLTWL2.desktop";
-      "x-scheme-handler/mid" = "userapp-Thunderbird-MLTWL2.desktop";
-      "application/pdf" = "org.pwmt.zathura-pdf-mupdf.desktop;firefox.desktop";
-    };
-    mimeApps.associations.removed = { };
-    configFile."mimeapps.list".force = true;
   };
 
   dconf = {
@@ -123,7 +108,8 @@
              tmux \
              waybar \
              fuzzel \
-             zsh
+             zsh \
+             xdg
         popd
 
         pushd /home/${userSettings.username}/nix-conf/dotfiles/dotfiles-secret
