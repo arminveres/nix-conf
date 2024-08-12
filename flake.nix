@@ -56,6 +56,7 @@
         system = "x86_64-linux";
         timezone = "Europe/Zurich";
         locale = "en_US.UTF-8";
+        kernelVersion = "6_9";
       };
       userSettings = { username = "arminveres"; };
       pkgs = import nixpkgs {

@@ -1,11 +1,11 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, systemSettings, ... }: {
   options = {
     gaming.enable = lib.mkEnableOption "enables Nix Gaming module";
   };
 
   config = lib.mkIf config.gaming.enable {
     environment.systemPackages = with pkgs; [
-      linuxKernel.packages.linux_6_6.xone
+      linuxKernel.packages."linux_${systemSettings.kernelVersion}".xone
       lact
     ];
     systemd.packages = with pkgs; [

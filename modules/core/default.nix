@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, systemSettings, ... }: {
   imports = [
     ./gaming.nix
     ./printing.nix
