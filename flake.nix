@@ -25,32 +25,9 @@
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
-    split-monitor-workspaces = {
-      url = "github:Duckonaut/split-monitor-workspaces";
-      inputs.hyprland.follows = "hyprland";
-    };
-    # hy3 = {
-    #   url = "github:outfoxxed/hy3";
-    #   inputs.hyprland.follows = "hyprland";
-    # };
-    # hyprsplit = {
-    #   url = "github:shezdy/hyprsplit";
-    #   inputs.hyprland.follows = "hyprland";
-    # };
   };
 
-
-
-  outputs =
-    inputs@{ self
-    , nixpkgs
-    , nixpkgs-stable
-    , nixos-hardware
-    , nix-darwin
-    , home-manager
-    , neovim-nightly
-    , ...
-    }:
+  outputs = inputs@{ self, nixpkgs, nixpkgs-stable, nixos-hardware, nix-darwin, home-manager, neovim-nightly, ... }:
     let
       systemSettings = {
         system = "x86_64-linux";

@@ -4,10 +4,7 @@
 { config, lib, pkgs, modulesPath, systemSettings, ... }:
 
 {
-  imports =
-    [
-      (modulesPath + "/installer/scan/not-detected.nix")
-    ];
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot.kernelPackages = pkgs."linuxPackages_${systemSettings.kernelVersion}";
 

@@ -64,8 +64,6 @@
             force_zero_scaling = true;
           };
           env = [
-            "GDK_SCALE,1"
-            "QT_SCALE,1"
             "XCURSOR_SIZE,24"
             "HYPRCURSOR_SIZE,24"
             "HYPRCURSOR_THEME,Adwaita"
@@ -94,7 +92,7 @@
           };
           misc = {
             # set adaptive sync rate, 0=off, 1=on, 2=fullscreen only
-            vrr = 1;
+            vrr = 2;
             vfr = true;
             # we need to set this, otherwise turning dpms off results in off displays
             key_press_enables_dpms = true;
@@ -105,8 +103,6 @@
             shadow_range = 4;
             shadow_render_power = 3;
             "col.shadow" = "rgba(1a1a1aee)";
-            # blur.enabled = false;
-            # drop_shadow = false;
           };
 
           animations = {
@@ -146,15 +142,8 @@
             workspace_swipe = true;
           };
 
-          # only swap keys for the builtin laptop keyboard
-          device = {
-            name = "at-translated-set-2-keyboard";
-            kb_options = "ctrl:swapcaps,altwin:swap_lalt_lwin";
-          };
           plugin = {
-            split-monitor-workspaces = {
-              count = 10;
-            };
+            # split-monitor-workspaces = { count = 10; };
           };
 
           # =================================================================================================

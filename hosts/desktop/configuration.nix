@@ -8,14 +8,17 @@
   home-manager.users.${userSettings.username} = {
     neovim.enable = true;
     gaming.enable = true;
+    latex.enable = true;
+    services.blueman-applet.enable = true;
+
     hyprlandwm = {
       enable = true;
       hostConfig = {
         monitor = [
-          # "HDMI-A-2,    3840x2160@120,  0x0,    1.25"
-          # "HDMI-A-1,    3840x2160@120,  0x0,    1.25"
-          "DP-1,        3440x1440@160,  0x0,    1,  bitdepth,   10"
-          "DP-2,        1920x1200@60,   3440x0, 1,  transform,  3"
+          # NOTE(aver): since the scaling is 1.25 the transformation needs to be adjusted as well:
+          # 3840/1.25=3072
+          "DP-1,  3840x2160@240,  0x0,    1.25"
+          "DP-2,  1920x1200@60,   3072x0, 1,  transform,  3"
         ];
         decoration = {
           blur.enabled = true;
@@ -64,15 +67,22 @@
 
           "float, class:^org.gnome.Calculator$"
         ];
+
+        env = [
+          "XCURSOR_SIZE,24"
+          "HYPRCURSOR_SIZE,24"
+          "HYPRCURSOR_THEME,Adwaita"
+          "SSH_AUTH_SOCK,$XDG_RUNTIME_DIR/keyring/ssh"
+          "QT_QPA_PLATFORM,wayland"
+          "GDK_SCALE,1.25"
+          "QT_SCALE,1.25"
+        ];
       };
     };
-    latex.enable = true;
   };
 
   # NOTE(aver): possibly superfluous, as achieved by nixos-hardware
   hardware.graphics = {
-    # WARN(aver): option deprecated, ord broken?
-    # driSupport = true;
     extraPackages = with pkgs;[
       amdvlk
       # add OpenCL support, or just rely on the amgpu module from `nixos-hardware`
@@ -84,7 +94,10 @@
   };
 
   environment.systemPackages = with pkgs; [
+    vulkan-tools
     ddcui
   ];
+
+  environment.variables.AMD_VULKAN_ICD = "RADV";
 
 }

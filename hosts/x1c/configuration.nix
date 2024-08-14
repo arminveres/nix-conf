@@ -10,10 +10,28 @@
   home-manager.users.${userSettings.username} = {
     neovim.enable = true;
     gaming.enable = false;
+    latex.enable = true;
+    services.blueman-applet.enable = true;
+
     hyprlandwm = {
       enable = true;
       hostConfig = {
         monitor = [ ",preferred,auto,1.0" ];
+
+        # only swap keys for the builtin laptop keyboard
+        device = {
+          name = "at-translated-set-2-keyboard";
+          kb_options = "ctrl:swapcaps,altwin:swap_lalt_lwin";
+        };
+
+        env = [
+          "XCURSOR_SIZE,24"
+          "HYPRCURSOR_SIZE,24"
+          "HYPRCURSOR_THEME,Adwaita"
+          "SSH_AUTH_SOCK,$XDG_RUNTIME_DIR/keyring/ssh"
+          "QT_QPA_PLATFORM,wayland"
+        ];
+
         decoration = {
           blur.enabled = false;
           drop_shadow = false;
@@ -57,7 +75,5 @@
         ];
       };
     };
-    latex.enable = true;
-    services.blueman-applet.enable = true;
   };
 }
