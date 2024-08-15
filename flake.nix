@@ -17,17 +17,20 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
-
     # NOTE(aver): Don't use the default flake input, as it breaks when building with split-monitor-workspaces
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
+
+    # Some additional overlays
+    neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
+    nixd-git.url = "github:nix-community/nixd";
+
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-stable, nixos-hardware, nix-darwin, home-manager, neovim-nightly, ... }:
+  outputs = inputs@{ self, nixpkgs, nixpkgs-stable, nixos-hardware, nix-darwin, home-manager, ... }:
     let
       systemSettings = {
         system = "x86_64-linux";
@@ -38,12 +41,18 @@
       userSettings = { username = "arminveres"; };
       pkgs = import nixpkgs {
         system = systemSettings.system;
-        overlays = [ neovim-nightly.overlays.default ];
+        overlays = [
+          inputs.neovim-nightly.overlays.default
+          inputs.nixd-git.overlays.default
+        ];
         config = { allowUnfree = true; };
       };
       pkgs-stable = import nixpkgs-stable {
         system = systemSettings.system;
-        overlays = [ neovim-nightly.overlays.default ];
+        overlays = [
+          inputs.neovim-nightly.overlays.default
+          inputs.nixd-git.overlays.default
+        ];
         config = { allowUnfree = true; };
       };
     in
@@ -58,7 +67,7 @@
       );
       # NOTE(aver): don't inherit pkgs and system, as it is not a x86_64-linux based system
       darwinConfigurations = (import ./darwin {
-        inherit self inputs nixpkgs home-manager nix-darwin userSettings neovim-nightly;
+        inherit self inputs nixpkgs home-manager nix-darwin userSettings;
       });
     };
 }

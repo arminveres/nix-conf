@@ -17,6 +17,7 @@
       bear # add to generate compile_commands.json, if necessary
       marksman
       tree-sitter
+      nixd # official nix lsp
     ];
   };
 }

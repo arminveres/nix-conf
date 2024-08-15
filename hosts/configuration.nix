@@ -146,7 +146,10 @@
     fd
     unzip
     lazygit
+
     lazydocker
+    docker-compose
+
     powertop
     wl-clipboard
     nvtopPackages.amd
@@ -171,7 +174,7 @@
 
     protonmail-bridge
     protonmail-bridge-gui
-    docker-compose
+
   ];
 
   # TODO(aver): move this into submodule

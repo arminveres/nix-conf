@@ -5,7 +5,6 @@
 { inputs
 , nixpkgs
 , pkgs
-, pkgs-stable
 , nixos-hardware
 , systemSettings
 , userSettings

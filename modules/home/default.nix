@@ -26,6 +26,7 @@
     fastfetch
     gh
     libreoffice
+    okular
     mission-center
     nextcloud-client
     obsidian

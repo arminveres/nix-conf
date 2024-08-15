@@ -6,11 +6,13 @@
   config = lib.mkIf config.gaming.enable {
     environment.systemPackages = with pkgs; [
       linuxKernel.packages."linux_${systemSettings.kernelVersion}".xone
-      lact
+      # vkbasalt # A Vulkan post processing layer for Linux
+      # this may be missing for some games on steam
+      SDL2
     ];
 
-    systemd.packages = with pkgs; [ lact ];
-    systemd.services.lactd.wantedBy = [ "multi-user.target" ];
+    # systemd.packages = with pkgs; [ lact ];
+    # systemd.services.lactd.wantedBy = [ "multi-user.target" ];
 
     programs = {
       steam = {
