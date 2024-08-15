@@ -294,9 +294,7 @@
             "thunar --daemon"
             "protonmail-bridge-gui --no-window"
 
-            # "xwaylandvideobridge"
-            # replaced by `lact`
-            # "corectrl"
+            "corectrl"
 
             # TODO(aver): remove this after waybar fixes it itself
             "ln -s $XDG_RUNTIME_DIR/hypr/* /tmp/hypr"

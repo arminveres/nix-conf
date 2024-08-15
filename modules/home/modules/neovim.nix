@@ -18,6 +18,7 @@
       marksman
       tree-sitter
       nixd # official nix lsp
+      nixpkgs-fmt
     ];
   };
 }

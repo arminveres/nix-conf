@@ -29,30 +29,27 @@
           "1,   monitor:DP-1, default:true"
           # web
           "2,   monitor:DP-1"
-          # mail + research
-          "3,   monitor:DP-1"
           # steam
+          "3,   monitor:DP-1"
+          # research
           "4,   monitor:DP-1"
           "5,   monitor:DP-1"
           # messages
           "6,   monitor:DP-2, layoutopt:orientation:top, default:true"
-          # sound + bluetooth
+          # mail
           "7,   monitor:DP-2, layoutopt:orientation:top"
+          # sound + bluetooth
           "8,   monitor:DP-2, layoutopt:orientation:top"
           "9,   monitor:DP-2, layoutopt:orientation:top"
           "10,  monitor:DP-2, layoutopt:orientation:top"
         ];
 
         windowrulev2 = [
-          "workspace 3 silent,  class:^easyeffects$"
-          "workspace 3 silent,  class:^thunderbird$"
-          "workspace 3 silent,  class:^ch.proton.bridge-gui$"
-
-          "workspace 4 silent,  class:^steam$"
+          "workspace 3 silent,  class:^steam$"
           # add steam games to ws 6
-          "workspace 5 silent,  class:^steam_app_\d*$"
-          "monitor 1,           class:^steam_app_\d*$"
-          "fullscreen,          class:^steam_app_\d*$"
+          "workspace 5 silent,  class:(steam_app_*)"
+          "monitor 1,           class:(steam_app_*)"
+          "fullscreen,          class:(steam_app_*)"
 
           "workspace 6 silent,  class:^signal$"
           "workspace 6 silent,  class:^Signal$"
@@ -62,8 +59,14 @@
           "workspace 6 silent,  title:^Microsoft Teams*$"
           "tile,                title:^Microsoft Teams*$"
 
-          "workspace 7 silent,  class:^Spotify$"
-          "workspace 7 silent,  class:^blueman-manager$"
+          "workspace 7 silent,  class:^ch.proton.bridge-gui$"
+          "workspace 7 silent,  class:^thunderbird$"
+
+          "workspace 8 silent,  class:^Spotify$"
+          "workspace 8 silent,  class:^blueman-manager$"
+          "workspace 8 silent,  class:^easyeffects$"
+
+          "workspace 9 silent,  class:^org.corectrl.CoreCtrl$"
 
           "float, class:^org.gnome.Calculator$"
         ];

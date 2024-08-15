@@ -40,6 +40,8 @@
     vesktop
     discord
     zoom-us
+
+    imagemagick
   ];
 
   xdg = {

@@ -16,38 +16,45 @@
 
   fileSystems."/" =
     {
-      device = "/dev/disk/by-uuid/c1d5f5f4-7de2-401e-88d9-f847348a923a";
+      device = "/dev/disk/by-uuid/366ee1f4-b2d8-417a-b583-affb05aa44af";
       fsType = "btrfs";
       options = [ "subvol=@" ];
     };
 
-  boot.initrd.luks.devices."nixos-root".device = "/dev/disk/by-uuid/b82dc1fc-3f38-4531-a3f9-523d4a51794f";
-
   fileSystems."/boot" =
     {
-      device = "/dev/disk/by-uuid/84F0-EB8B";
+      device = "/dev/disk/by-uuid/A889-EAEE";
       fsType = "vfat";
+      options = [ "fmask=0022" "dmask=0022" ];
     };
 
   fileSystems."/home" =
     {
-      device = "/dev/disk/by-uuid/c1d5f5f4-7de2-401e-88d9-f847348a923a";
+      device = "/dev/disk/by-uuid/366ee1f4-b2d8-417a-b583-affb05aa44af";
       fsType = "btrfs";
       options = [ "subvol=@home" ];
     };
 
   fileSystems."/nix" =
     {
-      device = "/dev/disk/by-uuid/c1d5f5f4-7de2-401e-88d9-f847348a923a";
+      device = "/dev/disk/by-uuid/366ee1f4-b2d8-417a-b583-affb05aa44af";
       fsType = "btrfs";
       options = [ "subvol=@nix" ];
     };
 
+
   fileSystems."/var/log" =
     {
-      device = "/dev/disk/by-uuid/c1d5f5f4-7de2-401e-88d9-f847348a923a";
+      device = "/dev/disk/by-uuid/366ee1f4-b2d8-417a-b583-affb05aa44af";
       fsType = "btrfs";
       options = [ "subvol=@log" ];
+    };
+
+  fileSystems."/var/lib/docker/btrfs" =
+    {
+      device = "/@/var/lib/docker/btrfs";
+      fsType = "none";
+      options = [ "bind" ];
     };
 
   swapDevices = [ ];
@@ -71,5 +78,4 @@
     canTouchEfiVariables = true;
     efiSysMountPoint = "/boot";
   };
-
 }
