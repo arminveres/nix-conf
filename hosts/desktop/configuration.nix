@@ -46,6 +46,7 @@
 
         windowrulev2 = [
           "workspace 3 silent,  class:^steam$"
+          "workspace 3 silent,  class:^heroic$"
           # add steam games to ws 6
           "workspace 5 silent,  class:(steam_app_*)"
           "monitor 1,           class:(steam_app_*)"

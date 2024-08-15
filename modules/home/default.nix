@@ -18,6 +18,7 @@
 
     nautilus
     gnome-calculator
+    gnome-disk-utility
     adwaita-icon-theme
 
     beeper

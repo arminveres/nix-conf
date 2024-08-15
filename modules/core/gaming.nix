@@ -31,5 +31,7 @@
         gpuOverclock.enable = true;
       };
     };
+
+    hardware.xone.enable = true;
   };
 }
