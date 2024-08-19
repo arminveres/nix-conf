@@ -4,11 +4,13 @@
   gaming.enable = true;
   fm.enable = true;
   bluetooth.enable = true;
+  docker.enable = true;
 
   home-manager.users.${userSettings.username} = {
     neovim.enable = true;
     gaming.enable = true;
     latex.enable = true;
+
     services.blueman-applet.enable = true;
 
     hyprlandwm = {

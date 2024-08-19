@@ -2,14 +2,8 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ inputs
-, pkgs
-, systemSettings
-, userSettings
-, ...
-}:
+{ inputs, pkgs, systemSettings, userSettings, ... }: {
 
-{
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
@@ -102,7 +96,7 @@
     users.${userSettings.username} = {
       isNormalUser = true;
       description = "Armin Veres";
-      extraGroups = [ "networkmanager" "wheel" "video" "dialout" "docker" ];
+      extraGroups = [ "networkmanager" "wheel" "video" "dialout" ];
     };
   };
 
@@ -146,9 +140,6 @@
     fd
     unzip
     lazygit
-
-    lazydocker
-    docker-compose
 
     powertop
     wl-clipboard
@@ -255,11 +246,11 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
   networking.firewall.allowedUDPPortRanges = [
-    { from = 6000; to = 9999; } # needed for my thesis to make the connections
+    # { from = 6000; to = 9999; } # NOTE(aver): needed for my thesis to make the connections
     { from = 51413; to = 51413; } # qbittorrent
   ];
   networking.firewall.allowedTCPPortRanges = [
-    { from = 5000; to = 9999; } # needed for my thesis to make the connections
+    # { from = 5000; to = 9999; } # NOTE(aver): needed for my thesis to make the connections
     { from = 51413; to = 51413; } # qbittorrent
   ];
 
@@ -314,10 +305,4 @@
       }
     })
   '';
-
-  virtualisation.docker = {
-    enable = true;
-    storageDriver = "btrfs";
-  };
-
 }

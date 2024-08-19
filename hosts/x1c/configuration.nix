@@ -6,6 +6,7 @@
   power-management.enable = true;
   fingerprint.enable = true;
   bluetooth.enable = true;
+  docker.enable = true;
 
   home-manager.users.${userSettings.username} = {
     neovim.enable = true;
