@@ -106,6 +106,7 @@
         ${pkgs.stow}/bin/stow -vt /home/${userSettings.username} \
              alacritty \
              nvim \
+             scripts \
              qmk \
              ripgrep \
              swaync \

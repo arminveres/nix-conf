@@ -115,6 +115,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    # build utilities
     binutils
     gcc
     cmake
@@ -125,7 +126,6 @@
     lshw
 
     firefox
-    thunderbird
     python3
     wget
     alacritty
@@ -160,12 +160,16 @@
     libheif
     pavucontrol
     pasystray
+    imagemagick
 
     hyprland-protocols
 
+    smartmontools
+
+    # email related packages
     protonmail-bridge
     protonmail-bridge-gui
-
+    thunderbird
   ];
 
   # TODO(aver): move this into submodule

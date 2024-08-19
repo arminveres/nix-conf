@@ -33,6 +33,8 @@
       };
     };
 
+    # TODO(aver): There should be a group called corectrl and if we add the users to that group, we
+    # don't need this snipped here, see: https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/hardware/corectrl.nix
     security.polkit.extraConfig = ''
       polkit.addRule(function(action, subject) {
           if ((action.id == "org.corectrl.helper.init" ||

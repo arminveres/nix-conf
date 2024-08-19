@@ -294,7 +294,7 @@
             "thunar --daemon"
             "protonmail-bridge-gui --no-window"
 
-            "corectrl"
+            "corectrl --minimize-systray"
 
             # TODO(aver): remove this after waybar fixes it itself
             "ln -s $XDG_RUNTIME_DIR/hypr/* /tmp/hypr"
