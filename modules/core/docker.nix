@@ -1,4 +1,4 @@
-{ pkgs, lib, config, userSettings, systemSettings, ... }: {
+{ pkgs, lib, config, systemSettings, ... }: {
   options = {
     docker.enable = lib.mkEnableOption "enables Nix Docker module";
   };
@@ -14,6 +14,6 @@
       storageDriver = "btrfs";
     };
 
-    users.users.${userSettings.username}.extraGroups = lib.mkAfter [ "docker" ];
+    users.users.${systemSettings.username}.extraGroups = lib.mkAfter [ "docker" ];
   };
 }

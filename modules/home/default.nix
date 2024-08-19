@@ -1,6 +1,6 @@
-{ inputs, pkgs, userSettings, lib, ... }: {
-  home.username = "${userSettings.username}";
-  home.homeDirectory = "/home/${userSettings.username}";
+{ inputs, pkgs, lib, systemSettings, ... }: {
+  home.username = "${systemSettings.username}";
+  home.homeDirectory = "/home/${systemSettings.username}";
   home.stateVersion = "23.11";
 
   programs = {
@@ -102,8 +102,8 @@
   home.activation = {
     dotfileSetup =
       lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        pushd /home/${userSettings.username}/nix-conf/dotfiles
-        ${pkgs.stow}/bin/stow -vt /home/${userSettings.username} \
+        pushd /home/${systemSettings.username}/nix-conf/dotfiles
+        ${pkgs.stow}/bin/stow -vt /home/${systemSettings.username} \
              alacritty \
              nvim \
              scripts \
@@ -117,8 +117,8 @@
              xdg
         popd
 
-        pushd /home/${userSettings.username}/nix-conf/dotfiles/dotfiles-secret
-        ${pkgs.stow}/bin/stow -vt /home/${userSettings.username} \
+        pushd /home/${systemSettings.username}/nix-conf/dotfiles/dotfiles-secret
+        ${pkgs.stow}/bin/stow -vt /home/${systemSettings.username} \
             git \
             ssh
         popd

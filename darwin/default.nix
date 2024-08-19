@@ -1,11 +1,4 @@
-{ inputs
-, nix-darwin
-, nixpkgs
-, userSettings
-, home-manager
-, neovim-nightly-overlay
-, ...
-}:
+{ inputs, nix-darwin, nixpkgs, home-manager, neovim-nightly-overlay, systemSettings, ... }:
 let
   system = "aarch64-darwin";
   pkgs = import nixpkgs {

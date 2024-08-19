@@ -1,4 +1,4 @@
-{ userSettings, pkgs, ... }: {
+{ pkgs, systemSettings, ... }: {
   imports = [ ../../modules/core ];
 
   gaming.enable = true;
@@ -6,7 +6,7 @@
   bluetooth.enable = true;
   docker.enable = true;
 
-  home-manager.users.${userSettings.username} = {
+  home-manager.users.${systemSettings.username} = {
     neovim.enable = true;
     gaming.enable = true;
     latex.enable = true;

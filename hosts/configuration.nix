@@ -2,13 +2,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ inputs, pkgs, systemSettings, userSettings, ... }: {
+{ inputs, pkgs, systemSettings, ... }: {
 
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.${userSettings.username} = (import ../modules/home);
-    extraSpecialArgs = { inherit inputs systemSettings userSettings; };
+    users.${systemSettings.username} = (import ../modules/home);
+    extraSpecialArgs = { inherit inputs systemSettings; };
   };
 
   nix = {
@@ -16,7 +16,7 @@
       experimental-features = [ "nix-command" "flakes" ];
 
       # NOTE(aver): enable nix-community binary caching
-      trusted-users = [ userSettings.username ];
+      trusted-users = [ systemSettings.username ];
       extra-substituters = [
         "https://nix-community.cachix.org"
         "https://hyprland.cachix.org"
@@ -93,7 +93,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
     defaultUserShell = pkgs.zsh;
-    users.${userSettings.username} = {
+    users.${systemSettings.username} = {
       isNormalUser = true;
       description = "Armin Veres";
       extraGroups = [ "networkmanager" "wheel" "video" "dialout" ];
@@ -108,7 +108,7 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.sessionVariables = {
-    FLAKE = "/home/${userSettings.username}/nix-conf?submodules=1";
+    FLAKE = "/home/${systemSettings.username}/nix-conf?submodules=1";
     PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
   };
 

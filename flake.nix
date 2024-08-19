@@ -26,7 +26,7 @@
 
     # Some additional overlays
     neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
-    nixd-git.url = "github:nix-community/nixd";
+    # nixd-git.url = "github:nix-community/nixd";
 
   };
 
@@ -37,23 +37,23 @@
         timezone = "Europe/Zurich";
         locale = "en_US.UTF-8";
         kernelVersion = "6_9";
+        username = "arminveres";
       };
-      userSettings = { username = "arminveres"; };
       pkgs = import nixpkgs {
         system = systemSettings.system;
+        config = { allowUnfree = true; };
         overlays = [
           inputs.neovim-nightly.overlays.default
-          inputs.nixd-git.overlays.default
+          # inputs.nixd-git.overlays.default
         ];
-        config = { allowUnfree = true; };
       };
       pkgs-stable = import nixpkgs-stable {
         system = systemSettings.system;
+        config = { allowUnfree = true; };
         overlays = [
           inputs.neovim-nightly.overlays.default
-          inputs.nixd-git.overlays.default
+          # inputs.nixd-git.overlays.default
         ];
-        config = { allowUnfree = true; };
       };
     in
     {
@@ -62,12 +62,10 @@
       nixosConfigurations = (
         import ./hosts {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs pkgs pkgs-stable nixos-hardware systemSettings userSettings home-manager;
+          inherit inputs nixpkgs pkgs pkgs-stable nixos-hardware systemSettings home-manager;
         }
       );
       # NOTE(aver): don't inherit pkgs and system, as it is not a x86_64-linux based system
-      darwinConfigurations = (import ./darwin {
-        inherit self inputs nixpkgs home-manager nix-darwin userSettings;
-      });
+      darwinConfigurations = (import ./darwin { inherit self inputs nixpkgs home-manager nix-darwin; });
     };
 }
