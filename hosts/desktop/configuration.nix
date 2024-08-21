@@ -59,6 +59,7 @@
           "workspace 6 silent,  class:^discord$"
           "workspace 6 silent,  class:^Discord$"
           "workspace 6 silent,  class:^WebCord$"
+          "workspace 6 silent,  class:^vesktop$"
           "workspace 6 silent,  title:^Microsoft Teams*$"
           "tile,                title:^Microsoft Teams*$"
 

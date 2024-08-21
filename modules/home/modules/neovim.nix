@@ -1,8 +1,6 @@
-{ inputs, nixpkgs, pkgs, lib, config, ... }:
+{ inputs, pkgs, lib, config, ... }:
 {
-  options = {
-    neovim.enable = lib.mkEnableOption "enables Home-Manager NeoVim module";
-  };
+  options.neovim.enable = lib.mkEnableOption "enables Home-Manager NeoVim module";
 
   # FIXME(aver): does not work on submodules
   config = lib.mkIf config.neovim.enable {
@@ -18,7 +16,7 @@
       marksman
       tree-sitter
       nixd # official nix lsp
-      nixpkgs-fmt
+      nixfmt
     ];
   };
 }

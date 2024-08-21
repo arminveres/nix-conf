@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "nixpkgs/nixos-23.11";
+    nixpkgs-stable.url = "nixpkgs/nixos-24.05";
     nixos-hardware.url = "github:nixos/nixos-hardware/master"; # Hardware Specific Configurations
 
     # MacOS Package Management
@@ -36,7 +36,7 @@
         system = "x86_64-linux";
         timezone = "Europe/Zurich";
         locale = "en_US.UTF-8";
-        kernelVersion = "6_9";
+        kernelVersion = "6_10";
         username = "arminveres";
       };
       pkgs = import nixpkgs {
@@ -55,17 +55,15 @@
           # inputs.nixd-git.overlays.default
         ];
       };
-    in
-    {
+    in {
       # NOTE(aver): We let Home Manager be managed through flakes, therefore no `homeConfigurations`
       # needed here
-      nixosConfigurations = (
-        import ./hosts {
-          inherit (nixpkgs) lib;
-          inherit inputs nixpkgs pkgs pkgs-stable nixos-hardware systemSettings home-manager;
-        }
-      );
+      nixosConfigurations = (import ./hosts {
+        inherit (nixpkgs) lib;
+        inherit inputs nixpkgs pkgs pkgs-stable nixos-hardware systemSettings home-manager;
+      });
       # NOTE(aver): don't inherit pkgs and system, as it is not a x86_64-linux based system
-      darwinConfigurations = (import ./darwin { inherit self inputs nixpkgs home-manager nix-darwin; });
+      darwinConfigurations =
+        (import ./darwin { inherit self inputs nixpkgs home-manager nix-darwin; });
     };
 }

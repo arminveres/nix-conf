@@ -37,10 +37,8 @@
     tldr
     fzf
 
-    webcord
-    vesktop
-    discord
     zoom-us
+    vesktop
 
     imagemagick
   ];
