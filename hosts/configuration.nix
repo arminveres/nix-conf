@@ -17,16 +17,12 @@
 
       # NOTE(aver): enable nix-community binary caching
       trusted-users = [ systemSettings.username ];
-      extra-substituters = [
-        "https://nix-community.cachix.org"
-        "https://hyprland.cachix.org"
-      ];
+      extra-substituters = [ "https://nix-community.cachix.org" "https://hyprland.cachix.org" ];
       extra-trusted-public-keys = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       ];
     };
-
 
     optimise.automatic = true;
     gc = {
@@ -35,7 +31,6 @@
       options = "--delete-older-than 7d";
     };
   };
-
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -52,9 +47,7 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "${systemSettings.locale}";
 
-  services.displayManager = {
-    autoLogin.enable = false;
-  };
+  services.displayManager = { autoLogin.enable = false; };
 
   services.xserver = {
     enable = true;
@@ -110,7 +103,9 @@
   environment.sessionVariables = {
     FLAKE = "/home/${systemSettings.username}/nix-conf?submodules=1";
     PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
+    NAUTILUS_4_EXTENSION_DIR = "${pkgs.nautilus-python}/lib/nautilus/extensions-4";
   };
+  environment.pathsToLink = [ "/share/nautilus-python/extensions" ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -133,6 +128,7 @@
     btop
     stow
     tmux
+    nautilus
 
     nodejs
     zoxide
@@ -183,6 +179,11 @@
     xdgOpenUsePortal = true;
   };
 
+  programs.nautilus-open-any-terminal = {
+    enable = true;
+    terminal = "alacritty";
+  };
+
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
@@ -198,14 +199,7 @@
     spleen
     envypn-font
     terminus_font
-    (nerdfonts.override {
-      fonts = [
-        "Meslo"
-        "Terminus"
-        "Iosevka"
-        "IosevkaTerm"
-      ];
-    })
+    (nerdfonts.override { fonts = [ "Meslo" "Terminus" "Iosevka" "IosevkaTerm" ]; })
   ];
 
   programs.nix-ld = {

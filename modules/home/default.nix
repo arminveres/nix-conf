@@ -16,12 +16,10 @@
       tweaks = [ "black" "rimless" "normal" ];
     })
 
-    nautilus
     gnome-calculator
     gnome-disk-utility
     adwaita-icon-theme
 
-    beeper
     dconf
     eza
     fastfetch
