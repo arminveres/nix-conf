@@ -5,6 +5,20 @@
 
   programs = {
     home-manager.enable = true;
+    mpv.enable = true;
+    zathura = {
+      enable = true;
+      options = {
+        selection-clipboard = "clipboard";
+        font = "Terminus 10";
+        scroll-step = 50;
+      };
+      mappings = {
+        "<C-/>" = "recolor";
+        "D" = "set first-page-column 1:1";
+        # "<C-d>" = "set first-page-column 1:2";
+      };
+    };
   };
 
   imports = [ ./modules ];
@@ -20,6 +34,7 @@
     gnome-disk-utility
     adwaita-icon-theme
 
+    # beeper
     dconf
     eza
     fastfetch
@@ -35,6 +50,8 @@
     tldr
     fzf
 
+    # webcord
+    # discord
     zoom-us
     vesktop
 
@@ -77,56 +94,38 @@
   home.sessionVariables = { GTK_THEME = "Colloid-Orange-Dark"; };
   home.file.".face".source = .assets/profile.jpg;
 
-  programs.mpv.enable = true;
-
-  programs.zathura = {
-    enable = true;
-    options = {
-      selection-clipboard = "clipboard";
-      font = "Terminus 10";
-      scroll-step = 50;
-    };
-    mappings = {
-      "<C-/>" = "recolor";
-      "D" = "set first-page-column 1:1";
-      # "<C-d>" = "set first-page-column 1:2";
-    };
-  };
-
   # NOTE(aver): a better way to automatically stow all my needs files, as in contrast to 
   # sourcing the file, where the files as un-writable
   home.activation = {
-    dotfileSetup =
-      lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        pushd /home/${systemSettings.username}/nix-conf/dotfiles
-        ${pkgs.stow}/bin/stow -vt /home/${systemSettings.username} \
-             alacritty \
-             nvim \
-             scripts \
-             qmk \
-             ripgrep \
-             swaync \
-             tmux \
-             waybar \
-             fuzzel \
-             zsh \
-             xdg
-        popd
+    dotfileSetup = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      pushd /home/${systemSettings.username}/nix-conf/dotfiles
+      ${pkgs.stow}/bin/stow -vt /home/${systemSettings.username} \
+           alacritty \
+           nvim \
+           scripts \
+           qmk \
+           ripgrep \
+           swaync \
+           tmux \
+           waybar \
+           fuzzel \
+           zsh \
+           hypr \
+           xdg
+      popd
 
-        pushd /home/${systemSettings.username}/nix-conf/dotfiles/dotfiles-secret
-        ${pkgs.stow}/bin/stow -vt /home/${systemSettings.username} \
-            git \
-            ssh
-        popd
-      '';
+      pushd /home/${systemSettings.username}/nix-conf/dotfiles/dotfiles-secret
+      ${pkgs.stow}/bin/stow -vt /home/${systemSettings.username} \
+          git \
+          ssh
+      popd
+    '';
   };
-
 
   services.syncthing = {
     enable = true;
     # disable as it does not correctly start as requested
     tray.enable = false;
   };
-
 
 }
