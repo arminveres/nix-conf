@@ -8,54 +8,55 @@
 
   boot.kernelPackages = pkgs."linuxPackages_${systemSettings.kernelVersion}";
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "ahci"
+    "nvme"
+    "usbhid"
+    "usb_storage"
+    "sd_mod"
+    "snd-usb-audio" # specific audio module related to Logitech Pro 2 LIGHTSPEED
+  ];
   # WARN(aver): this is replaced by nixos hardware modules
   # boot.initrd.kernelModules = [ "amdgpu" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    {
-      device = "/dev/disk/by-uuid/366ee1f4-b2d8-417a-b583-affb05aa44af";
-      fsType = "btrfs";
-      options = [ "subvol=@" ];
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/366ee1f4-b2d8-417a-b583-affb05aa44af";
+    fsType = "btrfs";
+    options = [ "subvol=@" ];
+  };
 
-  fileSystems."/boot" =
-    {
-      device = "/dev/disk/by-uuid/A889-EAEE";
-      fsType = "vfat";
-      options = [ "fmask=0022" "dmask=0022" ];
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/A889-EAEE";
+    fsType = "vfat";
+    options = [ "fmask=0022" "dmask=0022" ];
+  };
 
-  fileSystems."/home" =
-    {
-      device = "/dev/disk/by-uuid/366ee1f4-b2d8-417a-b583-affb05aa44af";
-      fsType = "btrfs";
-      options = [ "subvol=@home" ];
-    };
+  fileSystems."/home" = {
+    device = "/dev/disk/by-uuid/366ee1f4-b2d8-417a-b583-affb05aa44af";
+    fsType = "btrfs";
+    options = [ "subvol=@home" ];
+  };
 
-  fileSystems."/nix" =
-    {
-      device = "/dev/disk/by-uuid/366ee1f4-b2d8-417a-b583-affb05aa44af";
-      fsType = "btrfs";
-      options = [ "subvol=@nix" ];
-    };
+  fileSystems."/nix" = {
+    device = "/dev/disk/by-uuid/366ee1f4-b2d8-417a-b583-affb05aa44af";
+    fsType = "btrfs";
+    options = [ "subvol=@nix" ];
+  };
 
+  fileSystems."/var/log" = {
+    device = "/dev/disk/by-uuid/366ee1f4-b2d8-417a-b583-affb05aa44af";
+    fsType = "btrfs";
+    options = [ "subvol=@log" ];
+  };
 
-  fileSystems."/var/log" =
-    {
-      device = "/dev/disk/by-uuid/366ee1f4-b2d8-417a-b583-affb05aa44af";
-      fsType = "btrfs";
-      options = [ "subvol=@log" ];
-    };
-
-  fileSystems."/var/lib/docker/btrfs" =
-    {
-      device = "/@/var/lib/docker/btrfs";
-      fsType = "none";
-      options = [ "bind" ];
-    };
+  fileSystems."/var/lib/docker/btrfs" = {
+    device = "/@/var/lib/docker/btrfs";
+    fsType = "none";
+    options = [ "bind" ];
+  };
 
   swapDevices = [ ];
 

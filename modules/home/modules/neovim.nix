@@ -17,6 +17,7 @@
       tree-sitter
       nixd # official nix lsp
       nixfmt-classic
+      go
     ];
   };
 }

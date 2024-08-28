@@ -26,7 +26,6 @@
 
     # Some additional overlays
     neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
-
   };
 
   outputs = inputs@{ self, nixpkgs, nixpkgs-stable, nixos-hardware, nix-darwin, home-manager, ... }:
@@ -41,18 +40,12 @@
       pkgs = import nixpkgs {
         system = systemSettings.system;
         config = { allowUnfree = true; };
-        overlays = [
-          inputs.neovim-nightly.overlays.default
-          # inputs.nixd-git.overlays.default
-        ];
+        overlays = [ inputs.neovim-nightly.overlays.default ];
       };
       pkgs-stable = import nixpkgs-stable {
         system = systemSettings.system;
         config = { allowUnfree = true; };
-        overlays = [
-          inputs.neovim-nightly.overlays.default
-          # inputs.nixd-git.overlays.default
-        ];
+        overlays = [ inputs.neovim-nightly.overlays.default ];
       };
     in {
       # NOTE(aver): We let Home Manager be managed through flakes, therefore no `homeConfigurations`

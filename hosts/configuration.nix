@@ -118,7 +118,6 @@
     xxd
     mold
     pkg-config
-    lshw
 
     firefox
     python3
@@ -157,6 +156,9 @@
     pavucontrol
     pasystray
     imagemagick
+    lshw
+    usbutils
+    solaar
 
     hyprland-protocols
 

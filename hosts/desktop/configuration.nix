@@ -31,7 +31,7 @@
           "1,   monitor:DP-1, default:true"
           # web
           "2,   monitor:DP-1"
-          # steam
+          # games
           "3,   monitor:DP-1"
           # research
           "4,   monitor:DP-1"
@@ -51,8 +51,8 @@
           "workspace 3 silent,  class:^heroic$"
           # add steam games to ws 6
           "workspace 5 silent,  class:(steam_app_*)"
-          "monitor 1,           class:(steam_app_*)"
-          "fullscreen,          class:(steam_app_*)"
+          "monitor 0,           class:(steam_app_*)"
+          # "fullscreen,          class:(steam_app_*)"
 
           "workspace 6 silent,  class:^signal$"
           "workspace 6 silent,  class:^Signal$"
@@ -73,6 +73,7 @@
           "workspace 9 silent,  class:^org.corectrl.CoreCtrl$"
 
           "float, class:^org.gnome.Calculator$"
+          "float, title:^Friends List$"
         ];
 
         env = [
