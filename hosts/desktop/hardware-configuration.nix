@@ -6,21 +6,23 @@
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  boot.kernelPackages = pkgs."linuxPackages_${systemSettings.kernelVersion}";
+  boot = {
+    kernelPackages = pkgs."linuxPackages_${systemSettings.kernelVersion}";
 
-  boot.initrd.availableKernelModules = [
-    "xhci_pci"
-    "ahci"
-    "nvme"
-    "usbhid"
-    "usb_storage"
-    "sd_mod"
-    "snd-usb-audio" # specific audio module related to Logitech Pro 2 LIGHTSPEED
-  ];
-  # WARN(aver): this is replaced by nixos hardware modules
-  # boot.initrd.kernelModules = [ "amdgpu" ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+    initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
+    initrd.kernelModules = [
+      # "amdgpu" # WARN(aver): this is replaced by nixos hardware modules
+    ];
+
+    kernelModules = [ "kvm-intel" ];
+    # extraModulePackages = [ ];
+
+    loader.systemd-boot.enable = true;
+    loader.efi = {
+      canTouchEfiVariables = true;
+      efiSysMountPoint = "/boot";
+    };
+  };
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/366ee1f4-b2d8-417a-b583-affb05aa44af";
@@ -72,10 +74,4 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi = {
-    canTouchEfiVariables = true;
-    efiSysMountPoint = "/boot";
-  };
 }

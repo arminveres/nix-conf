@@ -97,21 +97,20 @@
 
   # NOTE(aver): possibly superfluous, as achieved by nixos-hardware
   hardware.graphics = {
-    extraPackages = with pkgs;[
-      amdvlk
-      # add OpenCL support, or just rely on the amgpu module from `nixos-hardware`
-      # rocmPackages.clr.icd
-      # clinfo
-    ];
-    extraPackages32 = with pkgs;[ driversi686Linux.amdvlk ];
+    extraPackages = with pkgs;
+      [
+        amdvlk
+        # add OpenCL support, or just rely on the amgpu module from `nixos-hardware`
+        # rocmPackages.clr.icd
+        # clinfo
+      ];
+    extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
     enable32Bit = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    vulkan-tools
-    ddcui
-  ];
+  environment.systemPackages = with pkgs; [ vulkan-tools ddcui ];
 
+  # define default driver
   environment.variables.AMD_VULKAN_ICD = "RADV";
 
 }

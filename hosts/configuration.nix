@@ -118,6 +118,7 @@
     xxd
     mold
     pkg-config
+    qemu
 
     firefox
     python3

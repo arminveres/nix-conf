@@ -56,6 +56,13 @@
     vesktop
 
     imagemagick
+
+    # TODO(aver): investigate utility
+    age
+    termshark
+    atac
+    sshs
+    portal
   ];
 
   xdg = {
