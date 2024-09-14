@@ -22,6 +22,12 @@
           "DP-1,  3840x2160@240,  0x0,    1.25"
           "DP-2,  1920x1200@60,   3072x0, 1,  transform,  3"
         ];
+
+        device = {
+          name = "logitech-g-pro--1";
+          accel_profile = "flat";
+        };
+
         decoration = {
           blur.enabled = true;
           drop_shadow = true;
