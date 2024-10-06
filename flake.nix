@@ -26,6 +26,12 @@
 
     # Some additional overlays
     neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
+
+    # DayZ Launcher
+    dzgui-nix = {
+      url = "github:lelgenio/dzgui-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, nixpkgs-stable, nixos-hardware, nix-darwin, home-manager, ... }:

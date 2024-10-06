@@ -1,7 +1,8 @@
-{ pkgs, lib, config, systemSettings, ... }: {
-  options = {
-    gaming.enable = lib.mkEnableOption "enables Nix Gaming module";
-  };
+{ inputs, pkgs, lib, config, systemSettings, ... }: {
+
+  imports = [ inputs.dzgui-nix.nixosModules.default ];
+
+  options = { gaming.enable = lib.mkEnableOption "enables Nix Gaming module"; };
 
   config = lib.mkIf config.gaming.enable {
     environment.systemPackages = with pkgs; [
@@ -31,6 +32,8 @@
         gpuOverclock.enable = true;
         gpuOverclock.ppfeaturemask = "0xffffffff";
       };
+
+      dzgui.enable = true;
     };
 
     # TODO(aver): There should be a group called corectrl and if we add the users to that group, we
@@ -47,6 +50,7 @@
       });
     '';
 
+    # Enable XBOX controller firmware
     hardware.xone.enable = true;
   };
 }
