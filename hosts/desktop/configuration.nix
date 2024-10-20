@@ -19,7 +19,7 @@
         monitor = [
           # NOTE(aver): since the scaling is 1.25 the transformation needs to be adjusted as well:
           # 3840/1.25=3072
-          "DP-1,  3840x2160@240,  0x0,    1.25"
+          "DP-1,  3840x2160@240,  0x0,    1.25, bitdepth, 10"
           "DP-2,  1920x1200@60,   3072x0, 1,  transform,  3"
         ];
 
@@ -87,7 +87,7 @@
           "HYPRCURSOR_SIZE,24"
           "HYPRCURSOR_THEME,Adwaita"
           "SSH_AUTH_SOCK,$XDG_RUNTIME_DIR/keyring/ssh"
-          "QT_QPA_PLATFORM,wayland"
+          # "QT_QPA_PLATFORM,wayland"
           "GDK_SCALE,1.25"
           "QT_SCALE,1.25"
         ];
@@ -108,7 +108,12 @@
     enable32Bit = true;
   };
 
-  environment.systemPackages = with pkgs; [ vulkan-tools ddcui ];
+  environment.systemPackages = with pkgs; [
+    vulkan-tools
+    ddcui
+    nvtopPackages.amd
+    radeontop
+  ];
 
   # define default driver
   environment.variables.AMD_VULKAN_ICD = "RADV";

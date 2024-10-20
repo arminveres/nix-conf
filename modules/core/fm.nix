@@ -8,7 +8,7 @@
       xfce.exo
     ];
     programs.thunar = {
-      enable = true;
+      enable = false;
       plugins = with pkgs.xfce; [ thunar-archive-plugin thunar-volman ];
     };
     services.gvfs.enable = true; # Mount, trash, and other functionalities

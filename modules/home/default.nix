@@ -19,6 +19,14 @@
         # "<C-d>" = "set first-page-column 1:2";
       };
     };
+    btop = {
+      enable = true;
+      settings = {
+        vim_keys = true;
+        color_theme = "default";
+        theme_background = true;
+      };
+    };
   };
 
   imports = [ ./modules ];
@@ -50,8 +58,6 @@
     tldr
     fzf
 
-    # webcord
-    # discord
     zoom-us
     vesktop
 
@@ -99,7 +105,8 @@
   };
 
   home.sessionVariables = { GTK_THEME = "Colloid-Orange-Dark"; };
-  home.file.".face".source = .assets/profile.jpg;
+  home.file.".face.icon".source = .assets/profile.jpg;
+  home.file.".config/face.jpg".source = .assets/profile.jpg;
 
   # NOTE(aver): a better way to automatically stow all my needs files, as in contrast to 
   # sourcing the file, where the files as un-writable

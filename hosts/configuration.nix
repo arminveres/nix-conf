@@ -89,7 +89,7 @@
     users.${systemSettings.username} = {
       isNormalUser = true;
       description = "Armin Veres";
-      extraGroups = [ "networkmanager" "wheel" "video" "dialout" ];
+      extraGroups = [ "networkmanager" "wheel" "video" "dialout" "plugdev" "gamemode" ];
     };
   };
 
@@ -125,7 +125,6 @@
     wget
     alacritty
     git
-    btop
     stow
     tmux
     nautilus
@@ -139,8 +138,6 @@
 
     powertop
     wl-clipboard
-    nvtopPackages.amd
-    radeontop
     pkg-config
     openssl
     baobab
@@ -163,7 +160,7 @@
 
     hyprland-protocols
 
-    smartmontools
+    smartmontools # SSD monitoring tools
 
     # email related packages
     protonmail-bridge
@@ -205,12 +202,8 @@
     (nerdfonts.override { fonts = [ "Meslo" "Terminus" "Iosevka" "IosevkaTerm" ]; })
   ];
 
-  programs.nix-ld = {
-    enable = true;
-    package = pkgs.nix-ld-rs;
-  };
+  programs.nix-ld.enable = true;
   programs.light.enable = true;
-
   programs.direnv.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are

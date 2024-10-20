@@ -1,8 +1,8 @@
 # Different host profiles when building NixOS
 
-{ inputs, nixpkgs, pkgs, nixos-hardware, systemSettings, home-manager, ... }:
+{ inputs, pkgs, nixos-hardware, systemSettings, home-manager, ... }:
 let
-  lib = nixpkgs.lib;
+  lib = inputs.nixpkgs.lib;
   system = systemSettings.system;
 in {
   nixos-desktop = lib.nixosSystem {

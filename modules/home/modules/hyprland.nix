@@ -1,4 +1,4 @@
-{ pkgs, lib, config, inputs, ... }: {
+{ inputs, pkgs, lib, config, ... }: {
   options = {
     hyprlandwm.enable = lib.mkEnableOption "enables Home-Manager Hyprland module";
     hyprlandwm.hostConfig = lib.mkOption { };
@@ -212,7 +212,7 @@
           "$mainMod SHIFT, 9, movetoworkspacesilent, 9"
           "$mainMod SHIFT, 0, movetoworkspacesilent, 10"
 
-          # "$mainMod SHIFT, o, split-changemonitor, +1"
+          "$mainMod SHIFT, o, movewindow, mon:+1"
           "$mainMod, o, focusmonitor, +1"
 
           # Scroll through existing workspaces with mainMod + scroll
@@ -275,13 +275,10 @@
           "udiskie --tray --notify"
           "nm-applet"
           "pasystray"
-          "solaar --window hide"
           "tmux new -s daemon -d"
           "swayosd-server"
           "kanshi"
-          # "cliphist store"
           "nextcloud --background"
-          "thunar --daemon"
           "protonmail-bridge-gui --no-window"
           "corectrl --minimize-systray"
           "solaar -w hide"
