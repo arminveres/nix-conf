@@ -52,13 +52,6 @@
       # https://github.com/nix-community/home-manager/blob/master/tests/modules/services/window-managers/hyprland/simple-config.nix
       settings = lib.recursiveUpdate {
         xwayland = { force_zero_scaling = true; };
-        env = [
-          "XCURSOR_SIZE,24"
-          "HYPRCURSOR_SIZE,24"
-          "HYPRCURSOR_THEME,Adwaita"
-          "SSH_AUTH_SOCK,$XDG_RUNTIME_DIR/keyring/ssh"
-          "QT_QPA_PLATFORM,wayland"
-        ];
 
         general = {
           # See https://wiki.hyprland.org/Configuring/Variables/ for more
@@ -236,8 +229,8 @@
           # Brightness lower
           ", XF86MonBrightnessDown, exec, swayosd-client --brightness lower 5"
 
-          "$mainMod SHIFT, p, exec, hyprshot -m window"
-          "$mainMod SHIFT, s, exec, hyprshot -m region"
+          "$mainMod SHIFT, p, exec, hyprshot --clipboard-only -m window"
+          "$mainMod SHIFT, s, exec, hyprshot --clipboard-only -m region"
 
           "ALT, ESCAPE, exec, wlogout"
         ];
@@ -264,7 +257,9 @@
 
         exec-once = [
           ''
-            export "$(/run/wrappers/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)"''
+            export "$(/run/wrappers/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)"
+          ''
+
           "/run/wrappers/bin/gnome-keyring-daemon --daemonize --login"
           "polkit-agent-helper-1"
 

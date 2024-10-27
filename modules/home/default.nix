@@ -32,15 +32,8 @@
   imports = [ ./modules ];
 
   home.packages = with pkgs; [
-    (colloid-gtk-theme.override {
-      themeVariants = [ "orange" ];
-      colorVariants = [ "dark" ];
-      tweaks = [ "black" "rimless" "normal" ];
-    })
-
     gnome-calculator
     gnome-disk-utility
-    adwaita-icon-theme
 
     # beeper
     dconf
@@ -96,7 +89,11 @@
     enable = true;
     theme = {
       name = "Colloid-Orange-Dark";
-      package = pkgs.colloid-gtk-theme;
+      package = (pkgs.colloid-gtk-theme.override {
+        themeVariants = [ "orange" ];
+        colorVariants = [ "dark" ];
+        tweaks = [ "black" "rimless" "normal" ];
+      });
     };
     iconTheme = {
       name = "Adwaita";
