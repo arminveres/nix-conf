@@ -6,12 +6,6 @@
     nixpkgs-stable.url = "nixpkgs/nixos-24.05";
     nixos-hardware.url = "github:nixos/nixos-hardware/master"; # Hardware Specific Configurations
 
-    # MacOS Package Management
-    nix-darwin = {
-      url = "github:lnl7/nix-darwin/master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -32,15 +26,22 @@
       url = "github:lelgenio/dzgui-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    /* # MacOS Package Management
+       nix-darwin = {
+         url = "github:lnl7/nix-darwin/master";
+         inputs.nixpkgs.follows = "nixpkgs";
+       };
+    */
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-stable, nixos-hardware, nix-darwin, home-manager, ... }:
+  outputs = inputs@{ nixpkgs, nixpkgs-stable, nixos-hardware, home-manager, ... }:
     let
       systemSettings = {
         system = "x86_64-linux";
         timezone = "Europe/Zurich";
         locale = "en_US.UTF-8";
-        kernelVersion = "6_10";
+        kernelVersion = "6_11";
         username = "arminveres";
       };
       pkgs = import nixpkgs {
@@ -60,8 +61,9 @@
         inherit (nixpkgs) lib;
         inherit inputs nixpkgs pkgs pkgs-stable nixos-hardware systemSettings home-manager;
       });
-      # NOTE(aver): don't inherit pkgs and system, as it is not a x86_64-linux based system
-      darwinConfigurations =
-        (import ./darwin { inherit self inputs nixpkgs home-manager nix-darwin; });
+      /* # NOTE(aver): don't inherit pkgs and system, as it is not a x86_64-linux based system
+         darwinConfigurations =
+           (import ./darwin { inherit self inputs nixpkgs home-manager nix-darwin; });
+      */
     };
 }
