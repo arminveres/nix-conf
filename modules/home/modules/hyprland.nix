@@ -9,10 +9,7 @@
     home.packages = with pkgs; [
       fuzzel
       hyprcursor
-      hypridle
       hyprland-protocols
-      hyprlock
-      hyprpaper
       hyprpicker
       hyprshot
       kanshi
@@ -35,7 +32,145 @@
 
     home.sessionVariables.NIXOS_OZONE_WL = "1";
     home.sessionVariables.WLR_NO_HARDWARE_CURSORS = "1";
-    services.cliphist.enable = true;
+
+    services = {
+      cliphist.enable = true;
+      hyprpaper = {
+        enable = true;
+        settings = {
+          preload = [
+            "~/nix-conf/dotfiles/wallpapers/Pictures/wallpapers/selected/rim-231014.jpg"
+            "~/nix-conf/dotfiles/wallpapers/Pictures/wallpapers/selected/forest-1.png"
+            "~/nix-conf/dotfiles/wallpapers/Pictures/wallpapers/selected/forest-2.jpg"
+            "~/nix-conf/dotfiles/wallpapers/Pictures/wallpapers/selected/forest-3.jpg"
+          ];
+          # set the default wallpaper(s) seen on initial workspace(s) --depending on the number of monitors used
+          wallpaper = [
+            "DP-1, ~/nix-conf/dotfiles/wallpapers/Pictures/wallpapers/selected/forest-1.png"
+            "DP-2, ~/nix-conf/dotfiles/wallpapers/Pictures/wallpapers/selected/rim-231014.jpg"
+          ];
+          #enable splash text rendering over the wallpaper
+          splash = true;
+
+          #fully disable ipc
+          # ipc = off
+        };
+      };
+      hypridle = {
+        enable = true;
+        settings = {
+
+          general = {
+            lock_cmd = "pidof hyprlock || hyprlock"; # avoid starting multiple hyprlock instances.
+            before_sleep_cmd = "loginctl lock-session"; # lock before suspend.
+            after_sleep_cmd =
+              "hyprctl dispatch dpms on"; # to avoid having to press a key twice to turn on the display.
+          };
+
+          listener = [
+
+            {
+              timeout = 150;
+              on-timeout = "hyprctl dispatch dpms off"; # screen off when timeout has passed
+              on-resume =
+                "hyprctl dispatch dpms on"; # screen on when activity is detected after timeout has fired.
+            }
+            {
+              timeout = 300;
+              on-timeout = "loginctl lock-session"; # lock screen when timeout has passed
+            }
+            {
+              timeout = 600;
+              on-timeout = "systemctl suspend"; # suspend pc
+            }
+          ];
+
+        };
+        # package = inputs.hyprland.packages.${pkgs.system}.hypridle;
+      };
+    };
+
+    programs.hyprlock = {
+      enable = true;
+      settings = {
+        background = {
+          # monitor =
+          # path = /home/me/someImage.png   # only png supported for now
+          color = "rgba(25, 20, 20, 1.0)";
+
+          # all these options are taken from hyprland, see https://wiki.hyprland.org/Configuring/Variables/#blur for explanations
+          blur_passes = 0; # 0 disables blurring
+          blur_size = 7;
+          noise = 1.17e-2;
+          contrast = 0.8916;
+          brightness = 0.8172;
+          vibrancy = 0.1696;
+          vibrancy_darkness = 0.0;
+        };
+
+        image = {
+          # monitor =
+          path = "/home/arminveres/.face.icon";
+          size = 150; # lesser side if not 1:1 ratio
+          rounding = -1; # negative values mean circle
+          border_size = 4;
+          border_color = "rgb(221, 221, 221)";
+          rotate = 0; # degrees, counter-clockwise
+
+          position = "0, 200";
+          halign = "center";
+          valign = "center";
+        };
+
+        input-field = {
+          # monitor =
+          size = "200, 50";
+          outline_thickness = 3;
+          dots_size = 0.33; # Scale of input-field height, 0.2 - 0.8
+          dots_spacing = 0.15; # Scale of dots' absolute size, 0.0 - 1.0
+          dots_center = false;
+          dots_rounding = -1; # -1 default circle, -2 follow input-field rounding
+          outer_color = "rgb(151515)";
+          inner_color = "rgb(200, 200, 200)";
+          font_color = "rgb(10, 10, 10)";
+          fade_on_empty = true;
+          fade_timeout = 1000; # Milliseconds before fade_on_empty is triggered.
+          placeholder_text =
+            "<i>Input Password...</i>"; # Text rendered in the input box when it's empty.
+          hide_input = false;
+          rounding = -1; # -1 means complete rounding (circle/oval)
+          check_color = "rgb(204, 136, 34)";
+          fail_color =
+            "rgb(204, 34, 34)"; # if authentication failed, changes outer_color and fail message color
+          fail_text = "<i>$FAIL <b>($ATTEMPTS)</b></i>"; # can be set to empty
+          fail_transition = 300; # transition time in ms between normal outer_color and fail_color
+          capslock_color = -1;
+          numlock_color = -1;
+          bothlock_color =
+            -1; # when both locks are active. -1 means don't change outer color (same for above)
+          invert_numlock = false; # change color if numlock is off
+          swap_font_color = false; # see below
+
+          position = "0, -20";
+          halign = "center";
+          valign = "center";
+        };
+
+        label = {
+          # monitor =
+          text = "Hello $USER";
+          color = "rgba(200, 200, 200, 1.0)";
+          font_size = 25;
+          font_family = "Iosevka Nerd Font Propo";
+          rotate = 0; # degrees, counter-clockwise
+
+          position = "0, 80";
+          halign = "center";
+          valign = "center";
+        };
+
+      };
+    };
 
     wayland.windowManager.hyprland = {
       enable = true;
@@ -260,8 +395,6 @@
           "/run/wrappers/bin/gnome-keyring-daemon --daemonize --login"
           "polkit-agent-helper-1"
 
-          "hyprpaper"
-          "hypridle"
           "swaync"
           "waybar"
           "udiskie --tray --notify"

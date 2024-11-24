@@ -121,7 +121,6 @@
            waybar \
            fuzzel \
            zsh \
-           hypr \
            xdg
       popd
 
