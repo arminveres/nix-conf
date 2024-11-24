@@ -35,7 +35,7 @@
 
         decoration = {
           blur.enabled = false;
-          drop_shadow = false;
+          shadow.enabled = false;
         };
         workspace = [
           "1, monitor:eDP-1, default:true"

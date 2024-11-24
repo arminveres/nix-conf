@@ -35,14 +35,12 @@
     gnome-calculator
     gnome-disk-utility
 
-    # beeper
     dconf
     eza
     fastfetch
     gh
     libreoffice
     okular
-    mission-center
     nextcloud-client
     obsidian
     rustup
@@ -50,11 +48,12 @@
     spotify
     tldr
     fzf
+    ncdu
+    imagemagick # for converting stuff
 
     zoom-us
     vesktop
 
-    imagemagick
 
     # TODO(aver): investigate utility
     age
@@ -77,6 +76,7 @@
     enable = true;
     settings = { "org/gnome/desktop/interface" = { color-scheme = "prefer-dark"; }; };
   };
+
   home.pointerCursor = {
     gtk.enable = true;
     name = "Adwaita";

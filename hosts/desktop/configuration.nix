@@ -24,13 +24,19 @@
         ];
 
         device = {
-          name = "logitech-g-pro--1";
+          # name = "logitech-g-pro--1";
+          name = "logitech-usb-receiver";
           accel_profile = "flat";
         };
 
         decoration = {
           blur.enabled = true;
-          drop_shadow = true;
+          shadow = {
+            enabled = true;
+            range = 4;
+            render_power = 3;
+            color = "rgba(1a1a1aee)";
+          };
         };
         workspace = [
           # code
