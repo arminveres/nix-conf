@@ -52,7 +52,10 @@
 
   services.xserver = {
     enable = true;
-    displayManager.gdm.enable = true;
+    displayManager.gdm = {
+      enable = true;
+      wayland = true;
+    };
   };
 
   # Configure keymap in X11
@@ -203,9 +206,10 @@
     spleen
     envypn-font
     terminus_font
-    (nerdfonts.override {
-      fonts = [ "Meslo" "Terminus" "Iosevka" "IosevkaTerm" ];
-    })
+    nerd-fonts.terminess-ttf
+    nerd-fonts.meslo-lg
+    nerd-fonts.iosevka
+    nerd-fonts.iosevka-term
   ];
 
   programs.nix-ld.enable = true;

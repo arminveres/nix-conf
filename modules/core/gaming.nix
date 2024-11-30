@@ -33,7 +33,7 @@
         gpuOverclock.ppfeaturemask = "0xffffffff";
       };
 
-      dzgui.enable = true;
+      dzgui.enable = false;
     };
 
     # TODO(aver): There should be a group called corectrl and if we add the users to that group, we
