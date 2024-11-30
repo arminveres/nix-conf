@@ -40,11 +40,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1731293549,
-        "narHash": "sha256-YP3ly/LOT6HRuzs3EZME47cjzFH00YBW0X/bXr2Mseg=",
+        "lastModified": 1732982830,
+        "narHash": "sha256-giMAU0PqMOqTe3zQax4rTbhu5efyFcaQu3EP5CqPIaU=",
         "owner": "lelgenio",
         "repo": "dzgui-nix",
-        "rev": "f19d8dd0afbb41a87124e90cd2ad96b82cf270ce",
+        "rev": "995dd52adc6fe5cbbd4530a9f2add88e1e04d0da",
         "type": "github"
       },
       "original": {
