@@ -51,7 +51,6 @@
     ncdu
     imagemagick # for converting stuff
 
-    zoom-us
     vesktop
 
 

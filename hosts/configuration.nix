@@ -147,9 +147,10 @@
     pkg-config
     openssl
     baobab
-    # Polkit
+
     polkit
     polkit_gnome
+
     glxinfo
     nh
     lsb-release

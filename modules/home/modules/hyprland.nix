@@ -28,6 +28,7 @@
       wlr-randr
       grim
       slurp
+      udiskie
     ];
 
     home.sessionVariables.NIXOS_OZONE_WL = "1";
@@ -409,7 +410,6 @@
           "solaar -w hide"
 
           # TODO(aver): remove this after waybar fixes it itself
-          "ln -s $XDG_RUNTIME_DIR/hypr/* /tmp/hypr"
         ];
       } config.hyprlandwm.hostConfig;
     };
