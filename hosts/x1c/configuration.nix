@@ -1,4 +1,4 @@
-{ systemSettings, ... }: {
+{ inputs, systemSettings, pkgs, ... }: {
   imports = [ ../../modules/core ];
 
   printing.enable = true;
@@ -8,7 +8,19 @@
   bluetooth.enable = true;
   docker.enable = true;
 
+  # enable hyprlock pam authentication
+  security.pam.services.hyprlock = {
+    fprintAuth = true;
+    enableGnomeKeyring = true;
+  };
+
+  environment.systemPackages = with pkgs; [ intel-undervolt ];
+
   home-manager.users.${systemSettings.username} = {
+
+    services.easyeffects.enable = true;
+    home.packages = with pkgs; [ inputs.ghostty.packages.x86_64-linux.default ];
+
     neovim.enable = true;
     gaming.enable = false;
     latex.enable = true;

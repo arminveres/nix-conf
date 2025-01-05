@@ -27,6 +27,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
+    };
+
     /* # MacOS Package Management
        nix-darwin = {
          url = "github:lnl7/nix-darwin/master";
@@ -41,7 +45,7 @@
         system = "x86_64-linux";
         timezone = "Europe/Zurich";
         locale = "en_US.UTF-8";
-        kernelVersion = "6_11";
+        kernelVersion = "6_12";
         username = "arminveres";
       };
       pkgs = import nixpkgs {

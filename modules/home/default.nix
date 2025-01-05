@@ -101,7 +101,7 @@
   };
 
   home.sessionVariables = { GTK_THEME = "Colloid-Orange-Dark"; };
-  home.file.".face.icon".source = .assets/profile.jpg;
+  home.file.".face".source = .assets/profile.jpg;
   home.file.".config/face.jpg".source = .assets/profile.jpg;
 
   # NOTE(aver): a better way to automatically stow all my needs files, as in contrast to 

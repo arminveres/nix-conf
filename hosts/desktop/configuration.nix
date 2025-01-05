@@ -6,6 +6,9 @@
   bluetooth.enable = true;
   docker.enable = true;
 
+  # enable hyprlock pam authentication
+  security.pam.services.hyprlock = { };
+
   home-manager.users.${systemSettings.username} = {
     neovim.enable = true;
     gaming.enable = true;
