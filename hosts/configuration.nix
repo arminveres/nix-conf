@@ -17,10 +17,9 @@
 
       # NOTE(aver): enable nix-community binary caching
       trusted-users = [ systemSettings.username ];
-      extra-substituters =
-        [ "https://nix-community.cachix.org" "https://hyprland.cachix.org" ];
-      extra-trusted-public-keys = [
-        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      substituters = [ "https://nix-community.cachix.org" "https://hyprland.cachix.org" ];
+      trusted-public-keys = [
+       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       ];
     };
@@ -67,7 +66,7 @@
   zramSwap.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -93,8 +92,7 @@
     users.${systemSettings.username} = {
       isNormalUser = true;
       description = "Armin Veres";
-      extraGroups =
-        [ "networkmanager" "wheel" "video" "dialout" "plugdev" "gamemode" ];
+      extraGroups = [ "networkmanager" "wheel" "video" "dialout" "plugdev" "gamemode" ];
     };
   };
 
@@ -108,8 +106,7 @@
   environment.sessionVariables = {
     FLAKE = "/home/${systemSettings.username}/nix-conf?submodules=1";
     PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
-    NAUTILUS_4_EXTENSION_DIR =
-      "${pkgs.nautilus-python}/lib/nautilus/extensions-4";
+    NAUTILUS_4_EXTENSION_DIR = "${pkgs.nautilus-python}/lib/nautilus/extensions-4";
   };
   environment.pathsToLink = [ "/share/nautilus-python/extensions" ];
 
@@ -195,8 +192,7 @@
     enable = true;
     xwayland.enable = true;
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-    portalPackage =
-      inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
+    portalPackage = inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
   };
 
   programs.zsh.enable = true;
@@ -286,8 +282,7 @@
         after = [ "graphical-session.target" ];
         serviceConfig = {
           Type = "simple";
-          ExecStart =
-            "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+          ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
           Restart = "on-failure";
           RestartSec = 1;
           TimeoutStopSec = 10;

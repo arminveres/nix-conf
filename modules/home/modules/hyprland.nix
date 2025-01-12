@@ -51,7 +51,7 @@
             "DP-2, ~/nix-conf/dotfiles/wallpapers/Pictures/wallpapers/selected/rim-231014.jpg"
           ];
           #enable splash text rendering over the wallpaper
-          splash = true;
+          splash = false;
 
           #fully disable ipc
           # ipc = off
