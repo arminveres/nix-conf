@@ -27,16 +27,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    ghostty = {
-      url = "github:ghostty-org/ghostty";
-    };
-
-    /* # MacOS Package Management
-       nix-darwin = {
-         url = "github:lnl7/nix-darwin/master";
-         inputs.nixpkgs.follows = "nixpkgs";
-       };
-    */
+    zen-browser.url = "github:MarceColl/zen-browser-flake";
   };
 
   outputs = inputs@{ nixpkgs, nixpkgs-stable, nixos-hardware, home-manager, ... }:

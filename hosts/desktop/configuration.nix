@@ -122,6 +122,7 @@
     ddcui
     nvtopPackages.amd
     radeontop
+    ghostty
   ];
 
   # define default driver
