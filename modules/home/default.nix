@@ -27,6 +27,7 @@
         theme_background = true;
       };
     };
+    yazi.enable = true;
   };
 
   imports = [ ./modules ];
@@ -51,8 +52,8 @@
     ncdu
     imagemagick # for converting stuff
 
-    vesktop
-
+    # vesktop
+    discord
 
     # TODO(aver): investigate utility
     age
