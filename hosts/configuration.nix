@@ -2,7 +2,10 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ inputs, pkgs, systemSettings, ... }: {
+{ inputs, pkgs, systemSettings, lib, ... }:
+# define some libraries used to build stuff in general
+let myLibs = with pkgs; [ openssl.dev freetype.dev fontconfig.dev pkg-config ];
+in {
 
   home-manager = {
     useGlobalPkgs = true;
@@ -103,74 +106,85 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  environment.sessionVariables = {
-    FLAKE = "/home/${systemSettings.username}/nix-conf?submodules=1";
-    PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
-    NAUTILUS_4_EXTENSION_DIR = "${pkgs.nautilus-python}/lib/nautilus/extensions-4";
+  environment = {
+    sessionVariables = {
+      FLAKE = "/home/${systemSettings.username}/nix-conf?submodules=1";
+      NAUTILUS_4_EXTENSION_DIR = "${pkgs.nautilus-python}/lib/nautilus/extensions-4";
+
+      # CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER = "${pkgs.clang}/bin/clang";
+      # CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER =
+      #   "${pkgs.mold-wrapped}/bin/mold";
+      # CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS =
+      #   "-C link-arg=-fuse-ld=${pkgs.mold-wrapped}/bin/mold";
+
+      # Export the library paths for compiling and linking targets
+      LD_LIBRARY_PATH = lib.makeLibraryPath myLibs;
+      PKG_CONFIG_PATH = lib.makeSearchPath "lib/pkgconfig" myLibs;
+
+    };
+
+    pathsToLink = [ "/share/nautilus-python/extensions" ];
+
+    # List packages installed in system profile. To search, run: nix search wget
+    # WARN(aver):Watch out, if some packages are missing when linking, use the makeLibraryPath method
+    systemPackages = with pkgs; [
+      # build utilities
+      binutils
+      gcc
+      cmake
+      gnumake
+      xxd
+      qemu
+      openssl
+      pkg-config
+
+      firefox
+      python3
+      wget
+      alacritty
+      git
+      stow
+      tmux
+      nautilus
+
+      nodejs
+      zoxide
+      ripgrep
+      fd
+      unzip
+      lazygit
+
+      powertop
+      wl-clipboard
+      baobab
+
+      polkit
+      polkit_gnome
+
+      glxinfo
+      nh
+      lsb-release
+      libnotify # enable notify-send
+      networkmanagerapplet
+      cachix
+      libheif
+      pavucontrol
+      pasystray
+      imagemagick
+      lshw
+      usbutils
+      solaar
+
+      hyprland-protocols
+
+      smartmontools # SSD monitoring tools
+
+      # email related packages
+      protonmail-bridge
+      protonmail-bridge-gui
+      thunderbird
+    ];
   };
-  environment.pathsToLink = [ "/share/nautilus-python/extensions" ];
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    # build utilities
-    binutils
-    gcc
-    cmake
-    gnumake
-    xxd
-    mold
-    pkg-config
-    qemu
-
-    firefox
-    python3
-    wget
-    alacritty
-    git
-    stow
-    tmux
-    nautilus
-
-    nodejs
-    zoxide
-    ripgrep
-    fd
-    unzip
-    lazygit
-
-    powertop
-    wl-clipboard
-    pkg-config
-    openssl
-    baobab
-
-    polkit
-    polkit_gnome
-
-    glxinfo
-    nh
-    lsb-release
-    libnotify # enable notify-send
-    networkmanagerapplet
-    cachix
-    libheif
-    pavucontrol
-    pasystray
-    imagemagick
-    lshw
-    usbutils
-    solaar
-
-    hyprland-protocols
-
-    smartmontools # SSD monitoring tools
-
-    # email related packages
-    protonmail-bridge
-    protonmail-bridge-gui
-    thunderbird
-  ];
 
   # TODO(aver): move this into submodule
   xdg.portal = {
