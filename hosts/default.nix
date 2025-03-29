@@ -13,7 +13,9 @@ in {
       ./configuration.nix
       ./desktop/hardware-configuration.nix
       ./desktop/configuration.nix
-      nixos-hardware.nixosModules.common-cpu-intel-cpu-only
+      nixos-hardware.nixosModules.common-cpu-amd-pstate
+      nixos-hardware.nixosModules.common-cpu-amd-zenpower
+      nixos-hardware.nixosModules.common-cpu-amd
       nixos-hardware.nixosModules.common-gpu-amd
     ];
   };
