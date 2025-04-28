@@ -10,9 +10,7 @@
     kernelPackages = pkgs."linuxPackages_${systemSettings.kernelVersion}";
 
     initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
-    initrd.kernelModules = [
-      # "amdgpu" # WARN(aver): this is replaced by nixos hardware modules
-    ];
+    # initrd.kernelModules = [ ];
 
     kernelModules = [ "kvm-intel" ];
     # extraModulePackages = [ ];
@@ -73,7 +71,7 @@
   networking.hostName = "nixos-desktop"; # Define your hostname.
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   services.udev.extraRules = ''
     SUBSYSTEM=="usb", ATTR{idVendor}=="2e8a", ATTR{idProduct}=="000c", MODE="0666", GROUP="plugdev"

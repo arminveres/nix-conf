@@ -14,9 +14,10 @@ in {
       ./desktop/hardware-configuration.nix
       ./desktop/configuration.nix
       nixos-hardware.nixosModules.common-cpu-amd-pstate
-      nixos-hardware.nixosModules.common-cpu-amd-zenpower
+      # nixos-hardware.nixosModules.common-cpu-amd-zenpower # TODO(aver): 29-03-2025 messes with sensors
       nixos-hardware.nixosModules.common-cpu-amd
       nixos-hardware.nixosModules.common-gpu-amd
+      nixos-hardware.nixosModules.common-pc-ssd
     ];
   };
 
@@ -29,6 +30,7 @@ in {
       ./x1c/hardware-configuration.nix
       ./x1c/configuration.nix
       nixos-hardware.nixosModules.lenovo-thinkpad-x1-9th-gen
+      nixos-hardware.nixosModules.common-pc-ssd
     ];
   };
 }
