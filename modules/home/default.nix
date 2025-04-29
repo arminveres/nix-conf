@@ -28,6 +28,11 @@
       };
     };
     yazi.enable = true;
+
+    java = {
+      enable = true;
+      package = pkgs.openjdk17;
+    };
   };
 
   imports = [ ./modules ];
@@ -41,7 +46,7 @@
     fastfetch
     gh
     libreoffice
-    okular
+    kdePackages.okular
     nextcloud-client
     obsidian
     rustup
@@ -74,7 +79,9 @@
 
   dconf = {
     enable = true;
-    settings = { "org/gnome/desktop/interface" = { color-scheme = "prefer-dark"; }; };
+    settings = {
+      "org/gnome/desktop/interface" = { color-scheme = "prefer-dark"; };
+    };
   };
 
   home.pointerCursor = {
