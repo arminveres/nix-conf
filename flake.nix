@@ -12,7 +12,10 @@
     };
 
     # NOTE(aver): Don't use the default flake input, as it breaks when building with split-monitor-workspaces
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    hyprland = {
+      url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
@@ -36,7 +39,7 @@
         system = "x86_64-linux";
         timezone = "Europe/Zurich";
         locale = "en_US.UTF-8";
-        kernelVersion = "6_12";
+        kernelVersion = "6_14";
         username = "arminveres";
       };
       pkgs = import nixpkgs {
