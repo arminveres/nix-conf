@@ -269,7 +269,8 @@
         bind = [
           "$mainMod, return, exec, alacritty"
           "$mainMod SHIFT, c, killactive,"
-          "$mainMod, b, exec, nautilus" # or thunar
+          # add a windows like launcher
+          "$mainMod, e, exec, nautilus" # or thunar
           "$mainMod, i, exec, firefox"
           "$mainMod, V, togglefloating,"
           "$mainMod, t, pin," # only floating
@@ -287,6 +288,9 @@
           "$mainMod, f, fullscreen, 0" # use entire screen
           "$mainMod, m, fullscreen, 1" # akin to maximize in AwesomeWM
           # $mainMod, SPACE, togglefloating
+          # to switch between windows in a floating workspace
+          "$mainMod, Tab, cyclenext," # change focus to another window
+          "$mainMod, Tab, bringactivetotop," # bring it to the top
 
           # Move focus with mainMod + arrow keys
           "$mainMod, h, movefocus, l"
