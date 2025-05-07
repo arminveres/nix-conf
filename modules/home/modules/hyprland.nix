@@ -176,14 +176,16 @@
     wayland.windowManager.hyprland = {
       enable = true;
       xwayland.enable = true;
-      package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+
+      # set the flake package
+      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+      portalPackage =
+        inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
 
       systemd.enable = true;
       systemd.variables = [ "--all" ];
 
-      plugins = [
-        # inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
-      ];
+      plugins = [ ];
 
       # https://github.com/nix-community/home-manager/blob/master/tests/modules/services/window-managers/hyprland/simple-config.nix
       settings = lib.recursiveUpdate {
