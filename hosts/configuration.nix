@@ -4,8 +4,7 @@
 
 { inputs, pkgs, systemSettings, lib, ... }:
 # define some libraries used to build stuff in general
-let myLibs = with pkgs; [ openssl.dev freetype.dev fontconfig.dev pkg-config ];
-in {
+{
 
   home-manager = {
     useGlobalPkgs = true;
@@ -108,19 +107,12 @@ in {
 
   environment = {
     sessionVariables = {
-      FLAKE = "/home/${systemSettings.username}/nix-conf?submodules=1";
+      NH_FLAKE = "/home/${systemSettings.username}/nix-conf?submodules=1";
       NAUTILUS_4_EXTENSION_DIR = "${pkgs.nautilus-python}/lib/nautilus/extensions-4";
 
-      # CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER = "${pkgs.clang}/bin/clang";
-      # CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER =
-      #   "${pkgs.mold-wrapped}/bin/mold";
-      # CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS =
-      #   "-C link-arg=-fuse-ld=${pkgs.mold-wrapped}/bin/mold";
-
-      # Export the library paths for compiling and linking targets
-      LD_LIBRARY_PATH = lib.makeLibraryPath myLibs;
-      PKG_CONFIG_PATH = lib.makeSearchPath "lib/pkgconfig" myLibs;
-
+      CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER = "${pkgs.clang}/bin/clang";
+      CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS =
+        "-C link-arg=-fuse-ld=${pkgs.mold-wrapped}/bin/mold";
     };
 
     pathsToLink = [ "/share/nautilus-python/extensions" ];
@@ -135,8 +127,6 @@ in {
       gnumake
       xxd
       qemu
-      openssl
-      pkg-config
 
       firefox
       python3
@@ -180,9 +170,17 @@ in {
       smartmontools # SSD monitoring tools
 
       # email related packages
-      protonmail-bridge
+      # protonmail-bridge
       protonmail-bridge-gui
       thunderbird
+
+      pkg-config
+      openssl
+      fontconfig
+
+      cpufetch
+      s-tui
+      stress-ng
     ];
   };
 
