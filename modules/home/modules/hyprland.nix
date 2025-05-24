@@ -89,6 +89,7 @@
         };
         # package = inputs.hyprland.packages.${pkgs.system}.hypridle;
       };
+      hyprpolkitagent.enable = true;
     };
 
     programs.hyprlock = {
@@ -396,15 +397,12 @@
 
         exec-once = [
           ''
-            export "$(/run/wrappers/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)"
+            export "$(${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)"
           ''
-
-          "/run/wrappers/bin/gnome-keyring-daemon --daemonize --login"
-          "polkit-agent-helper-1"
-
           "swaync"
           "waybar"
           "udiskie --tray --notify"
+          "${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --daemonize --login"
           "nm-applet"
           "pasystray"
           "tmux new -s daemon -d"
