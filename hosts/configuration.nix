@@ -159,7 +159,6 @@
       cachix
       libheif
       pavucontrol
-      pasystray
       imagemagick
       lshw
       usbutils
@@ -184,13 +183,9 @@
     ];
   };
 
-  # TODO(aver): move this into submodule
   xdg.portal = {
     enable = true;
-    extraPortals = [
-      inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland
-      pkgs.xdg-desktop-portal-gtk
-    ];
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     configPackages = [ inputs.hyprland.packages.${pkgs.system}.hyprland ];
     xdgOpenUsePortal = true;
   };
@@ -222,6 +217,7 @@
     nerd-fonts.meslo-lg
     nerd-fonts.iosevka
     nerd-fonts.iosevka-term
+    nerd-fonts.jetbrains-mono
   ];
 
   programs.nix-ld.enable = true;

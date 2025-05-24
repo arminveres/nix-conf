@@ -12,13 +12,9 @@
       hyprland-protocols
       hyprpicker
       hyprshot
-      kanshi
       pavucontrol
       playerctl
       pulseaudio
-      swaynotificationcenter
-      swayosd
-      waybar
       wdisplays
       wlogout
       wofi
@@ -28,11 +24,14 @@
       wlr-randr
       grim
       slurp
-      udiskie
+      hyprsysteminfo
+      hyprland-qt-support
     ];
 
-    home.sessionVariables.NIXOS_OZONE_WL = "1";
-    home.sessionVariables.WLR_NO_HARDWARE_CURSORS = "1";
+    home.sessionVariables = {
+      NIXOS_OZONE_WL = "1";
+      WLR_NO_HARDWARE_CURSORS = "1";
+    };
 
     services = {
       cliphist.enable = true;
@@ -90,6 +89,7 @@
         # package = inputs.hyprland.packages.${pkgs.system}.hypridle;
       };
       hyprpolkitagent.enable = true;
+      hyprsunset.enable = true;
     };
 
     programs.hyprlock = {
@@ -281,7 +281,7 @@
           "$mainMod, R, exec, fuzzel"
           "$mainMod, P, pseudo," # dwindle
           # $mainMod, J, togglesplit, # dwindle
-          "$mainMod CONTROL, o, exec, ~/.local/bin/rofi-pactl-output"
+          "$mainMod CONTROL, v, exec, ~/.local/bin/rofi-pactl-output"
           "$mainMod, z, exec, ~/.local/bin/rofi-zathura"
           "$mainMod SHIFT, t, togglegroup,"
           "$mainMod, ESCAPE, workspace, previous"
@@ -399,21 +399,21 @@
           ''
             export "$(${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)"
           ''
-          "swaync"
-          "waybar"
-          "udiskie --tray --notify"
           "${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --daemonize --login"
+          # "polkit-agent-helper-1"
+
+          "${pkgs.swaynotificationcenter}/bin/swaync"
+          "${pkgs.waybar}/bin/waybar"
+          "${pkgs.udiskie}/bin/udiskie --tray --notify"
+          "${pkgs.pasystray}/bin/pasystray"
+          "${pkgs.swayosd}/bin/swayosd-server"
+          "${pkgs.kanshi}/bin/kanshi"
           "nm-applet"
-          "pasystray"
           "tmux new -s daemon -d"
-          "swayosd-server"
-          "kanshi"
           "nextcloud --background"
-          "protonmail-bridge-gui --no-window"
+          "protonmail-bridge-gui --no-window" # "protonmail-bridge -n -l info"
           "corectrl --minimize-systray"
           "solaar -w hide"
-
-          # TODO(aver): remove this after waybar fixes it itself
         ];
       } config.hyprlandwm.hostConfig;
     };
