@@ -40,20 +40,15 @@
         settings = {
           preload = [
             "~/nix-conf/dotfiles/wallpapers/Pictures/wallpapers/selected/rim-231014.jpg"
-            "~/nix-conf/dotfiles/wallpapers/Pictures/wallpapers/selected/forest-1.png"
-            "~/nix-conf/dotfiles/wallpapers/Pictures/wallpapers/selected/forest-2.jpg"
-            "~/nix-conf/dotfiles/wallpapers/Pictures/wallpapers/selected/forest-3.jpg"
+            "~/nix-conf/dotfiles/wallpapers/Pictures/wallpapers/selected/desert-dunes-4k-bx.jpg"
           ];
           # set the default wallpaper(s) seen on initial workspace(s) --depending on the number of monitors used
           wallpaper = [
-            "DP-1, ~/nix-conf/dotfiles/wallpapers/Pictures/wallpapers/selected/forest-1.png"
+            "DP-1, ~/nix-conf/dotfiles/wallpapers/Pictures/wallpapers/selected/desert-dunes-4k-bx.jpg"
             "DP-2, ~/nix-conf/dotfiles/wallpapers/Pictures/wallpapers/selected/rim-231014.jpg"
           ];
           #enable splash text rendering over the wallpaper
           splash = false;
-
-          #fully disable ipc
-          # ipc = off
         };
       };
       hypridle = {
@@ -68,25 +63,23 @@
           };
 
           listener = [
-
             {
-              timeout = 150;
+              timeout = 240;
               on-timeout = "hyprctl dispatch dpms off"; # screen off when timeout has passed
               on-resume =
                 "hyprctl dispatch dpms on"; # screen on when activity is detected after timeout has fired.
             }
             {
-              timeout = 300;
+              timeout = 360;
               on-timeout = "loginctl lock-session"; # lock screen when timeout has passed
             }
             {
-              timeout = 600;
+              timeout = 900;
               on-timeout = "systemctl suspend"; # suspend pc
             }
           ];
 
         };
-        # package = inputs.hyprland.packages.${pkgs.system}.hypridle;
       };
       hyprpolkitagent.enable = true;
       hyprsunset.enable = true;

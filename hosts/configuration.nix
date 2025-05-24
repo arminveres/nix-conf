@@ -180,6 +180,7 @@
       cpufetch
       s-tui
       stress-ng
+      lm_sensors
     ];
   };
 

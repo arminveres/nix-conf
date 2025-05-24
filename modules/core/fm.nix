@@ -1,12 +1,8 @@
 { pkgs, lib, config, ... }: {
-  options = {
-    fm.enable = lib.mkEnableOption "enables Nix File Manager module";
-  };
+  options = { fm.enable = lib.mkEnableOption "enables Nix File Manager module"; };
 
   config = lib.mkIf config.fm.enable {
-    environment.systemPackages = with pkgs; [
-      xfce.exo
-    ];
+    environment.systemPackages = with pkgs; [ xfce.exo ];
     programs.thunar = {
       enable = false;
       plugins = with pkgs.xfce; [ thunar-archive-plugin thunar-volman ];
