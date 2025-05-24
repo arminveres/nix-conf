@@ -81,7 +81,8 @@
             }
             {
               timeout = 900;
-              on-timeout = "systemctl suspend"; # suspend pc
+              on-timeout =
+                "bash -c '[[ -f ~/.config/hypr/sleep_inhibit.flag ]] || systemctl suspend'";
             }
           ];
 
