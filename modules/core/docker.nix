@@ -11,7 +11,6 @@
 
     virtualisation.docker = {
       enable = true;
-      storageDriver = "btrfs";
     };
 
     users.users.${systemSettings.username}.extraGroups = lib.mkAfter [ "docker" ];
