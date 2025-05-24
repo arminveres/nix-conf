@@ -8,24 +8,30 @@
 
     home.packages = with pkgs; [
       fuzzel
+      grim
+      gthumb
       hyprcursor
       hyprland-protocols
+      hyprland-qt-support
       hyprpicker
       hyprshot
+      hyprsysteminfo
+      kanshi
+      pasystray
       pavucontrol
       playerctl
       pulseaudio
+      slurp
+      swaynotificationcenter
+      swayosd
+      udiskie
+      waybar
       wdisplays
       wlogout
+      wlr-randr
       wofi
       xcur2png
-      gthumb
       xdg-utils
-      wlr-randr
-      grim
-      slurp
-      hyprsysteminfo
-      hyprland-qt-support
     ];
 
     home.sessionVariables = {
@@ -263,7 +269,7 @@
         "$mainMod" = "SUPER";
 
         bind = [
-          "$mainMod, return, exec, alacritty"
+          "$mainMod, return, exec, ghostty"
           "$mainMod SHIFT, c, killactive,"
           # add a windows like launcher
           "$mainMod, e, exec, nautilus" # or thunar
