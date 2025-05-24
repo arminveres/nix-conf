@@ -135,7 +135,6 @@
       wget
       alacritty
       git
-      stow
       tmux
       nautilus
 
@@ -181,6 +180,8 @@
       s-tui
       stress-ng
       lm_sensors
+
+      ghostty
     ];
   };
 

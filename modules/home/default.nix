@@ -56,6 +56,7 @@
     fzf
     ncdu
     imagemagick # for converting stuff
+    stow
 
     # vesktop
     discord
@@ -119,6 +120,7 @@
       pushd /home/${systemSettings.username}/nix-conf/dotfiles
       ${pkgs.stow}/bin/stow -vt /home/${systemSettings.username} \
            alacritty \
+           ghostty \
            nvim \
            scripts \
            qmk \
