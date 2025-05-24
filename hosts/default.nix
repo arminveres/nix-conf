@@ -1,13 +1,13 @@
 # Different host profiles when building NixOS
 
-{ inputs, pkgs, nixos-hardware, systemSettings, home-manager, ... }:
+{ inputs, nixos-hardware, systemSettings, home-manager, ... }:
 let
   lib = inputs.nixpkgs.lib;
   system = systemSettings.system;
 in {
   nixos-desktop = lib.nixosSystem {
     inherit system;
-    specialArgs = { inherit inputs pkgs systemSettings; };
+    specialArgs = { inherit inputs systemSettings; };
     modules = [
       home-manager.nixosModules.home-manager
       ./configuration.nix
@@ -23,7 +23,7 @@ in {
 
   nixos-x1c = lib.nixosSystem {
     inherit system;
-    specialArgs = { inherit inputs pkgs systemSettings; };
+    specialArgs = { inherit inputs systemSettings; };
     modules = [
       home-manager.nixosModules.home-manager
       ./configuration.nix

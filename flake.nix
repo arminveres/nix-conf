@@ -39,17 +39,12 @@
         kernelVersion = "6_14";
         username = "arminveres";
       };
-      pkgs = import nixpkgs {
-        system = systemSettings.system;
-        config = { allowUnfree = true; };
-        overlays = [ inputs.neovim-nightly.overlays.default ];
-      };
     in {
       # NOTE(aver): We let Home Manager be managed through flakes, therefore no `homeConfigurations`
       # needed here
       nixosConfigurations = (import ./hosts {
         inherit (nixpkgs) lib;
-        inherit inputs nixpkgs pkgs nixos-hardware systemSettings home-manager;
+        inherit inputs nixpkgs nixos-hardware systemSettings home-manager;
       });
       /* # NOTE(aver): don't inherit pkgs and system, as it is not a x86_64-linux based system
          darwinConfigurations =

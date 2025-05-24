@@ -2,9 +2,14 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ inputs, pkgs, systemSettings, lib, ... }:
+{ inputs, systemSettings, pkgs, ... }:
 # define some libraries used to build stuff in general
 {
+
+  nixpkgs = {
+    config = { allowUnfree = true; };
+    overlays = [ inputs.neovim-nightly.overlays.default ];
+  };
 
   home-manager = {
     useGlobalPkgs = true;
@@ -101,9 +106,6 @@
   # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
   systemd.services."getty@tty1".enable = false;
   systemd.services."autovt@tty1".enable = false;
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   environment = {
     sessionVariables = {
