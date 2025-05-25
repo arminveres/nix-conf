@@ -149,7 +149,6 @@
       wl-clipboard
       baobab
 
-
       glxinfo
       nh
       lsb-release
@@ -182,6 +181,7 @@
       lm_sensors
 
       ghostty
+      mission-center
     ];
   };
 
