@@ -130,6 +130,7 @@
            waybar \
            fuzzel \
            zsh \
+           wlogout \
            xdg
       popd
 
