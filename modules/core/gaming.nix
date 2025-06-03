@@ -25,15 +25,9 @@
 
       gamemode.enable = true;
       gamescope.enable = true;
-
-      # TODO(aver): move to separate nix file
-      corectrl = {
-        enable = true;
-        gpuOverclock.enable = true;
-        gpuOverclock.ppfeaturemask = "0xffffffff";
-      };
-
       dzgui.enable = true;
+
+      corectrl.enable = true;
     };
 
     # TODO(aver): There should be a group called corectrl and if we add the users to that group, we
