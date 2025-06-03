@@ -54,11 +54,9 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "${systemSettings.locale}";
 
-  services.displayManager = { autoLogin.enable = false; };
-
-  services.xserver = {
-    enable = true;
-    displayManager.gdm = {
+  services.displayManager = {
+    autoLogin.enable = false;
+    gdm = {
       enable = true;
       wayland = true;
     };
