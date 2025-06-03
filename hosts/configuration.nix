@@ -115,6 +115,10 @@
       CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER = "${pkgs.clang}/bin/clang";
       CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS =
         "-C link-arg=-fuse-ld=${pkgs.mold-wrapped}/bin/mold";
+
+      # https://wiki.hyprland.org/Getting-Started/Master-Tutorial/#force-apps-to-use-wayland
+      NIXOS_OZONE_WL = "1";
+      WLR_NO_HARDWARE_CURSORS = "1";
     };
 
     pathsToLink = [ "/share/nautilus-python/extensions" ];

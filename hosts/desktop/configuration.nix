@@ -91,11 +91,11 @@
         ];
 
         env = [
+          "SSH_AUTH_SOCK,$XDG_RUNTIME_DIR/keyring/ssh"
           "XCURSOR_SIZE,24"
           "HYPRCURSOR_SIZE,24"
           "HYPRCURSOR_THEME,Adwaita"
-          "SSH_AUTH_SOCK,$XDG_RUNTIME_DIR/keyring/ssh"
-          # "QT_QPA_PLATFORM,wayland"
+          "QT_QPA_PLATFORM,wayland"
           "GDK_SCALE,1.25"
           "QT_SCALE,1.25"
         ];
