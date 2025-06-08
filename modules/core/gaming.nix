@@ -1,7 +1,5 @@
 { inputs, pkgs, lib, config, systemSettings, ... }: {
 
-  imports = [ inputs.dzgui-nix.nixosModules.default ];
-
   options = { gaming.enable = lib.mkEnableOption "enables Nix Gaming module"; };
 
   config = lib.mkIf config.gaming.enable {
@@ -10,6 +8,7 @@
       # vkbasalt # A Vulkan post processing layer for Linux
       # this may be missing for some games on steam
       SDL2
+      inputs.dzgui-nix.packages.${systemSettings.system}.default
     ];
 
     # systemd.packages = with pkgs; [ lact ];
@@ -25,7 +24,6 @@
 
       gamemode.enable = true;
       gamescope.enable = true;
-      dzgui.enable = true;
 
       corectrl.enable = true;
     };
