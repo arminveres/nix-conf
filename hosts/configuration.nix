@@ -3,7 +3,7 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { inputs, systemSettings, pkgs, ... }:
-# define some libraries used to build stuff in general
+# define some libraries used to build stuff in general;
 {
 
   nixpkgs = {
@@ -39,54 +39,13 @@
     };
   };
 
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
-  networking.networkmanager.enable = true;
-
   # Set your time zone.
   time.timeZone = "${systemSettings.timezone}";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "${systemSettings.locale}";
 
-  services.displayManager = {
-    autoLogin.enable = false;
-    gdm = {
-      enable = true;
-      wayland = true;
-    };
-  };
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "eu";
-    variant = "";
-  };
-
   zramSwap.enable = true;
-
-  # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-    # enable for screensharing and whatnot: https://wiki.hyprland.org/Useful-Utilities/Screen-Sharing/
-    wireplumber.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -106,23 +65,21 @@
   systemd.services."autovt@tty1".enable = false;
 
   environment = {
+    pathsToLink = [ "/share/nautilus-python/extensions" ];
+
     sessionVariables = {
       NH_FLAKE = "/home/${systemSettings.username}/nix-conf?submodules=1";
       NAUTILUS_4_EXTENSION_DIR = "${pkgs.nautilus-python}/lib/nautilus/extensions-4";
 
-      CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER = "${pkgs.clang}/bin/clang";
-      CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS =
-        "-C link-arg=-fuse-ld=${pkgs.mold-wrapped}/bin/mold";
-
       # https://wiki.hyprland.org/Getting-Started/Master-Tutorial/#force-apps-to-use-wayland
       NIXOS_OZONE_WL = "1";
       WLR_NO_HARDWARE_CURSORS = "1";
+
+
+
     };
 
-    pathsToLink = [ "/share/nautilus-python/extensions" ];
-
     # List packages installed in system profile. To search, run: nix search wget
-    # WARN(aver):Watch out, if some packages are missing when linking, use the makeLibraryPath method
     systemPackages = with pkgs; [
       # build utilities
       binutils
@@ -173,10 +130,6 @@
       protonmail-bridge-gui
       thunderbird
 
-      pkg-config
-      openssl
-      fontconfig
-
       cpufetch
       s-tui
       stress-ng
@@ -194,22 +147,35 @@
     xdgOpenUsePortal = true;
   };
 
-  programs.nautilus-open-any-terminal = {
-    enable = true;
-    terminal = "alacritty";
-  };
+  programs = {
+    nautilus-open-any-terminal = {
+      enable = true;
+      terminal = "alacritty";
+    };
 
-  programs.hyprland = {
-    enable = true;
-    # xwayland.enable = true;
-    # set the flake package
-    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-    # make sure to also set the portal package, so that they are in sync
-    portalPackage =
-      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
-  };
+    hyprland = {
+      enable = true;
+      # xwayland.enable = true;
+      # set the flake package
+      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+      # make sure to also set the portal package, so that they are in sync
+      portalPackage =
+        inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+    };
 
-  programs.zsh.enable = true;
+    zsh.enable = true;
+
+    nix-ld = {
+      enable = true;
+      libraries = with pkgs; [ pkg-config openssl fontconfig freetype ];
+    };
+    light.enable = true;
+    direnv.enable = true;
+
+    # Some programs need SUID wrappers, can be configured further or are
+    # started in user sessions.
+    # mtr.enable = true;
+  };
 
   fonts.packages = with pkgs; [
     tamzen
@@ -224,37 +190,62 @@
     nerd-fonts.jetbrains-mono
   ];
 
-  programs.nix-ld.enable = true;
-  programs.light.enable = true;
-  programs.direnv.enable = true;
+  services = {
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
+    # Enable the OpenSSH daemon.
+    openssh.enable = true;
 
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-  programs.ssh.startAgent = true;
+    zerotierone = {
+      enable = true;
+      localConf = { settings = { }; };
+    };
 
-  services.zerotierone = {
-    enable = true;
-    localConf = { settings = { }; };
+    fwupd.enable = true;
+
+    displayManager = {
+      autoLogin.enable = false;
+      gdm = {
+        enable = true;
+        wayland = true;
+      };
+    };
+
+    # Configure keymap in X11
+    xserver.xkb = {
+      layout = "eu";
+      variant = "";
+    };
+
+    # Enable sound with pipewire.
+    pulseaudio.enable = false;
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      # If you want to use JACK applications, uncomment this
+      #jack.enable = true;
+      # enable for screensharing and whatnot: https://wiki.hyprland.org/Useful-Utilities/Screen-Sharing/
+      wireplumber.enable = true;
+
+      # use the example session manager (no others are packaged yet so this is enabled by default,
+      # no need to redefine it in your config for now)
+      #media-session.enable = true;
+    };
+
+    gnome.gnome-keyring.enable = true;
+
+    ratbagd.enable = true;
   };
 
-  security.sudo = {
-    enable = true;
-    extraRules = [{
-      commands = [{
-        command = "/run/current-system/sw/bin/nixos-rebuild";
-        options = [ "NOPASSWD" ];
-      }];
-      groups = [ "wheel" ];
-    }];
-    # wheelNeedsPassword = false;
-  };
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-  services.fwupd.enable = true;
+  # Configure network proxy if necessary
+  # networking.proxy.default = "http://user:password@proxy:port/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
+  # Enable networking
+  networking.networkmanager.enable = true;
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
@@ -286,10 +277,20 @@
   hardware.keyboard.qmk.enable = true;
   hardware.keyboard.zsa.enable = true;
 
-  services.gnome.gnome-keyring.enable = true;
+  security.sudo = {
+    enable = true;
+    extraRules = [{
+      commands = [{
+        command = "/run/current-system/sw/bin/nixos-rebuild";
+        options = [ "NOPASSWD" ];
+      }];
+      groups = [ "wheel" ];
+    }];
+    # wheelNeedsPassword = false;
+  };
 
+  security.rtkit.enable = true;
   security.polkit.enable = true;
-
   security.polkit.extraConfig = ''
     polkit.addRule(function(action, subject) {
       if (
@@ -307,5 +308,4 @@
     })
   '';
 
-  services.ratbagd.enable = true;
 }

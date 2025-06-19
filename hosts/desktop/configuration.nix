@@ -118,12 +118,7 @@
     enable32Bit = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    vulkan-tools
-    ddcui
-    nvtopPackages.amd
-    radeontop
-  ];
+  environment.systemPackages = with pkgs; [ vulkan-tools ddcui nvtopPackages.amd radeontop ];
 
   # define default driver
   environment.variables.AMD_VULKAN_ICD = "RADV";

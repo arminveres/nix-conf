@@ -10,7 +10,7 @@
       enable = true;
       options = {
         selection-clipboard = "clipboard";
-        font = "Terminus 10";
+        font = "JetBrainsMono Nerd Font Propo 10";
         scroll-step = 50;
       };
       mappings = {
@@ -33,6 +33,7 @@
       enable = true;
       package = pkgs.openjdk17;
     };
+
   };
 
   imports = [ ./modules ];
@@ -80,9 +81,7 @@
 
   dconf = {
     enable = true;
-    settings = {
-      "org/gnome/desktop/interface" = { color-scheme = "prefer-dark"; };
-    };
+    settings = { "org/gnome/desktop/interface" = { color-scheme = "prefer-dark"; }; };
   };
 
   home.pointerCursor = {
