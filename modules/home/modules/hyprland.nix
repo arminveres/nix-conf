@@ -268,13 +268,13 @@
           "$mainMod, return, exec, ghostty"
           "$mainMod SHIFT, c, killactive,"
           # add a windows like launcher
-          "$mainMod, e, exec, nautilus" # or thunar
-          "$mainMod, i, exec, firefox"
-          "$mainMod, V, togglefloating,"
+          "$mainMod, b, exec, nautilus" # or thunar
+          # "$mainMod, i, exec, firefox"
+          "$mainMod, v, togglefloating,"
           "$mainMod, t, pin," # only floating
           "$mainMod, c, centerwindow," # only floating
-          "$mainMod, R, exec, fuzzel"
-          "$mainMod, P, pseudo," # dwindle
+          "$mainMod, SPACE, exec, fuzzel"
+          # "$mainMod, P, pseudo," # dwindle
           # $mainMod, J, togglesplit, # dwindle
           "$mainMod CONTROL, v, exec, ~/.local/bin/rofi-pactl-output"
           "$mainMod, z, exec, ~/.local/bin/rofi-zathura"
@@ -316,29 +316,29 @@
           "$mainMod CONTROL, c, layoutmsg, orientationcenter"
 
           # Switch workspaces with mainMod + [0-9]
-          "$mainMod, 1, workspace, 1"
-          "$mainMod, 2, workspace, 2"
-          "$mainMod, 3, workspace, 3"
-          "$mainMod, 4, workspace, 4"
-          "$mainMod, 5, workspace, 5"
-          "$mainMod, 6, workspace, 6"
-          "$mainMod, 7, workspace, 7"
-          "$mainMod, 8, workspace, 8"
-          "$mainMod, 9, workspace, 9"
-          "$mainMod, 0, workspace, 10"
+          "$mainMod, q, workspace, 1"
+          "$mainMod, w, workspace, 2"
+          "$mainMod, e, workspace, 3"
+          "$mainMod, r, workspace, 4"
+          "$mainMod, t, workspace, 5"
+          "$mainMod, y, workspace, 6"
+          "$mainMod, u, workspace, 7"
+          "$mainMod, i, workspace, 8"
+          "$mainMod, o, workspace, 9"
+          "$mainMod, p, workspace, 10"
 
           # Move active window to a workspace with mainMod + SHIFT + [0-9] bind = $mainMod SHIFT, 1, movetoworkspace, 1
           # To bring focus to moved workspace use without 'silent'
-          "$mainMod SHIFT, 1, movetoworkspacesilent, 1"
-          "$mainMod SHIFT, 2, movetoworkspacesilent, 2"
-          "$mainMod SHIFT, 3, movetoworkspacesilent, 3"
-          "$mainMod SHIFT, 4, movetoworkspacesilent, 4"
-          "$mainMod SHIFT, 5, movetoworkspacesilent, 5"
-          "$mainMod SHIFT, 6, movetoworkspacesilent, 6"
-          "$mainMod SHIFT, 7, movetoworkspacesilent, 7"
-          "$mainMod SHIFT, 8, movetoworkspacesilent, 8"
-          "$mainMod SHIFT, 9, movetoworkspacesilent, 9"
-          "$mainMod SHIFT, 0, movetoworkspacesilent, 10"
+          "$mainMod SHIFT, q, movetoworkspacesilent, 1"
+          "$mainMod SHIFT, w, movetoworkspacesilent, 2"
+          "$mainMod SHIFT, e, movetoworkspacesilent, 3"
+          "$mainMod SHIFT, r, movetoworkspacesilent, 4"
+          "$mainMod SHIFT, t, movetoworkspacesilent, 5"
+          "$mainMod SHIFT, y, movetoworkspacesilent, 6"
+          "$mainMod SHIFT, u, movetoworkspacesilent, 7"
+          "$mainMod SHIFT, i, movetoworkspacesilent, 8"
+          "$mainMod SHIFT, o, movetoworkspacesilent, 9"
+          "$mainMod SHIFT, p, movetoworkspacesilent, 10"
 
           "$mainMod SHIFT, o, movewindow, mon:+1"
           "$mainMod, o, focusmonitor, +1"
