@@ -2,9 +2,11 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ inputs, systemSettings, pkgs, ... }:
-# define some libraries used to build stuff in general;
-{
+{ inputs, systemSettings, pkgs, lib, ... }:
+# define some libraries used to build stuff in general, e.g., with rust. They are then passed to
+# system environment, as well as nix-ld.
+let myLibs = with pkgs; [ openssl fontconfig.lib freetype ];
+in {
 
   nixpkgs = {
     config = { allowUnfree = true; };
@@ -75,69 +77,79 @@
       NIXOS_OZONE_WL = "1";
       WLR_NO_HARDWARE_CURSORS = "1";
 
+      # CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER = "${pkgs.clang}/bin/clang";
+      # CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS =
+      #   "-C link-arg=-fuse-ld=${pkgs.mold-wrapped}/bin/mold";
 
+      # When unable to link on gcc/rustc try adding libraries to library path, see difference:
+      # https://www.baeldung.com/linux/library_path-vs-ld_library_path
+      LIBRARY_PATH = lib.makeLibraryPath myLibs;
+      # this worked for openssl-sys dependencies for rust.
+      PKG_CONFIG_PATH =
+        "${pkgs.openssl.dev}/lib/pkgconfig:${pkgs.fontconfig.dev}/lib/pkgconfig:${pkgs.freetype.dev}/lib/pkgconfig";
 
     };
 
     # List packages installed in system profile. To search, run: nix search wget
-    systemPackages = with pkgs; [
-      # build utilities
-      binutils
-      gcc
-      cmake
-      gnumake
-      xxd
-      qemu
+    systemPackages = with pkgs;
+      [
+        # build utilities
+        binutils
+        gcc
+        cmake
+        gnumake
+        xxd
+        qemu
 
-      firefox
-      python3
-      wget
-      alacritty
-      git
-      tmux
-      nautilus
+        firefox
+        python3
+        wget
+        alacritty
+        git
+        tmux
+        nautilus
 
-      nodejs
-      zoxide
-      ripgrep
-      fd
-      unzip
-      lazygit
+        nodejs
+        zoxide
+        ripgrep
+        fd
+        unzip
+        lazygit
 
-      powertop
-      wl-clipboard
-      baobab
+        powertop
+        wl-clipboard
+        baobab
 
-      glxinfo
-      nh
-      lsb-release
-      libnotify # enable notify-send
-      networkmanagerapplet
-      cachix
-      libheif
-      pavucontrol
-      imagemagick
-      lshw
-      usbutils
-      solaar
+        glxinfo
+        nh
+        lsb-release
+        libnotify # enable notify-send
+        networkmanagerapplet
+        cachix
+        libheif
+        pavucontrol
+        imagemagick
+        lshw
+        usbutils
+        solaar
 
-      hyprland-protocols
+        hyprland-protocols
 
-      smartmontools # SSD monitoring tools
+        smartmontools # SSD monitoring tools
 
-      # email related packages
-      # protonmail-bridge
-      protonmail-bridge-gui
-      thunderbird
+        # email related packages
+        # protonmail-bridge
+        protonmail-bridge-gui
+        thunderbird
 
-      cpufetch
-      s-tui
-      stress-ng
-      lm_sensors
+        cpufetch
+        s-tui
+        stress-ng
+        lm_sensors
 
-      ghostty
-      mission-center
-    ];
+        ghostty
+        mission-center
+      ] ++ myLibs;
   };
 
   xdg.portal = {
@@ -167,7 +179,7 @@
 
     nix-ld = {
       enable = true;
-      libraries = with pkgs; [ pkg-config openssl fontconfig freetype ];
+      libraries = myLibs;
     };
     light.enable = true;
     direnv.enable = true;
