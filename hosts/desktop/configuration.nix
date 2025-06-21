@@ -93,7 +93,6 @@
         ];
 
         env = [
-          "SSH_AUTH_SOCK,$XDG_RUNTIME_DIR/keyring/ssh"
           "XCURSOR_SIZE,24"
           "HYPRCURSOR_SIZE,24"
           "HYPRCURSOR_THEME,Adwaita"

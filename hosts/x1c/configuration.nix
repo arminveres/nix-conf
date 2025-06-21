@@ -10,7 +10,7 @@
 
   # enable hyprlock pam authentication
   security.pam.services.hyprlock = {
-    fprintAuth = true;
+    fprintAuth = false;
     enableGnomeKeyring = true;
   };
 
@@ -40,7 +40,6 @@
           "XCURSOR_SIZE,24"
           "HYPRCURSOR_SIZE,24"
           "HYPRCURSOR_THEME,Adwaita"
-          "SSH_AUTH_SOCK,$XDG_RUNTIME_DIR/keyring/ssh"
           "QT_QPA_PLATFORM,wayland"
         ];
 
