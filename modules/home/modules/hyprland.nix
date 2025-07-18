@@ -265,7 +265,7 @@
         "$mainMod" = "SUPER";
 
         bind = [
-          "$mainMod, return, exec, ghostty"
+          "$mainMod, return, exec, alacritty"
           "$mainMod SHIFT, c, killactive,"
           # add a windows like launcher
           "$mainMod, b, exec, nautilus" # or thunar

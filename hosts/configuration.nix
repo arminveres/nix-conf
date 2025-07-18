@@ -147,8 +147,10 @@ in {
         stress-ng
         lm_sensors
 
-        ghostty
+        # ghostty  # TODO(aver): 18-07-2025 seems to have some weird loading issues
         mission-center
+
+        prusa-slicer
       ] ++ myLibs;
   };
 
