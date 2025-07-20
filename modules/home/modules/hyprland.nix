@@ -84,7 +84,7 @@
         };
       };
       hyprpolkitagent.enable = true;
-      hyprsunset.enable = true;
+      hyprsunset.enable = false;
     };
 
     programs.hyprlock = {
