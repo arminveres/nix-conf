@@ -5,7 +5,12 @@
     ./hyprland.nix
     ./neovim.nix
     ./latex.nix
+    ./rust.nix
   ];
+  # First all by default enabled modules
+  rustenv.enable = lib.mkDefault true;
+
+  # then all the ones needing manual enabling
   gaming.enable = lib.mkDefault false;
   hyprlandwm.enable = lib.mkDefault false;
   neovim.enable = lib.mkDefault false;

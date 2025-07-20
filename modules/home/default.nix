@@ -50,7 +50,6 @@
     kdePackages.okular
     nextcloud-client
     obsidian
-    rustup
     signal-desktop
     spotify
     tldr
