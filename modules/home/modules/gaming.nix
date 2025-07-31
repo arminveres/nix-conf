@@ -6,7 +6,8 @@
       # TODO(aver): move games into separate dir
       mangohud
       heroic # heroic game launcher
-      protonup-qt
+      # protonup-qt
+      protonplus
     ];
   };
 }
