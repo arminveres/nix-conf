@@ -139,7 +139,8 @@
           fail_color =
             "rgb(204, 34, 34)"; # if authentication failed, changes outer_color and fail message color
           fail_text = "<i>$FAIL <b>($ATTEMPTS)</b></i>"; # can be set to empty
-          fail_transition = 300; # transition time in ms between normal outer_color and fail_color
+          # TODO(aver): does not exist
+          # fail_transition = 300; # transition time in ms between normal outer_color and fail_color
           capslock_color = -1;
           numlock_color = -1;
           bothlock_color =
@@ -211,7 +212,7 @@
           # we need to set this, otherwise turning dpms off results in off displays
           key_press_enables_dpms = true;
           # allow to restore if the monitor goes off; happens with my OLED when regenerating
-          allow_session_lock_restore = true;
+          allow_session_lock_restore = 1;
         };
         decoration = {
           # See https://wiki.hyprland.org/Configuring/Variables/ for more
