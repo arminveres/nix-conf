@@ -36,7 +36,7 @@
         system = "x86_64-linux";
         timezone = "Europe/Zurich";
         locale = "en_US.UTF-8";
-        kernelVersion = "6_15";
+        kernelVersion = "6_16";
         username = "arminveres";
       };
     in {
