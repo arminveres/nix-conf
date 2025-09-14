@@ -11,7 +11,7 @@
       };
 
       neovide = {
-        enable = true;
+        enable = false;
         settings = {
           font = {
             normal = [ ];
@@ -22,7 +22,6 @@
     };
 
     home.packages = with pkgs; [
-      # neovide # remove for the time being, as it gets recompiled with each update
       cppcheck
       bear # add to generate compile_commands.json, if necessary
       marksman
