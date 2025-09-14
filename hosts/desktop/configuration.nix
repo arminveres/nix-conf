@@ -104,16 +104,18 @@
     };
   };
 
-  # NOTE(aver): possibly superfluous, as achieved by nixos-hardware
   hardware.graphics = {
     extraPackages = with pkgs;
       [
-        amdvlk
+        # amdvlk # NOTE: superseded mainly by radv, https://www.phoronix.com/news/AMDVLK-Four-Months-Go
         # add OpenCL support, or just rely on the amgpu module from `nixos-hardware`
         # rocmPackages.clr.icd
         # clinfo
       ];
-    extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
+    extraPackages32 = with pkgs;
+      [
+        # driversi686Linux.amdvlk # NOTE: superseded mainly by radv, https://www.phoronix.com/news/AMDVLK-Four-Months-Go
+      ];
     enable32Bit = true;
   };
 
