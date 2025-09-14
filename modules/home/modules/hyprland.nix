@@ -189,9 +189,9 @@
 
         general = {
           # See https://wiki.hyprland.org/Configuring/Variables/ for more
-          gaps_in = 5;
-          gaps_out = 20;
-          border_size = 2;
+          gaps_in = 3;
+          gaps_out = 3;
+          border_size = 1;
           layout = "master"; # dwindle
           "col.active_border" = "rgba(83a598ee) rgba(b8bb26ee) 45deg";
           "col.inactive_border" = "rgba(595959aa)";
@@ -216,7 +216,7 @@
         };
         decoration = {
           # See https://wiki.hyprland.org/Configuring/Variables/ for more
-          rounding = 10;
+          rounding = 7;
         };
 
         animations = {
@@ -253,9 +253,7 @@
           # always_center_master = true;
         };
 
-        plugin = {
-          # split-monitor-workspaces = { count = 10; };
-        };
+        plugin = { };
 
         # =================================================================================================
         # Keybinds
