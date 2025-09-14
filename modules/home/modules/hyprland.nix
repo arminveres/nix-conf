@@ -252,10 +252,6 @@
           # orientation = "center";
           # always_center_master = true;
         };
-        gestures = {
-          # See https://wiki.hyprland.org/Configuring/Variables/ for more
-          workspace_swipe = true;
-        };
 
         plugin = {
           # split-monitor-workspaces = { count = 10; };
