@@ -119,6 +119,7 @@
       ];
     enable32Bit = true;
   };
+  hardware.probe-rs.enable = true;
 
   environment.systemPackages = with pkgs; [ vulkan-tools ddcui nvtopPackages.amd radeontop ];
 

@@ -27,7 +27,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    zen-browser.url = "github:MarceColl/zen-browser-flake";
+    # zen-browser.url = "github:MarceColl/zen-browser-flake";
+    probe-rs-rules.url = "github:jneem/probe-rs-rules";
   };
 
   outputs = inputs@{ nixpkgs, nixos-hardware, home-manager, ... }:

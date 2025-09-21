@@ -18,6 +18,7 @@ in {
       nixos-hardware.nixosModules.common-cpu-amd
       nixos-hardware.nixosModules.common-gpu-amd
       nixos-hardware.nixosModules.common-pc-ssd
+      inputs.probe-rs-rules.nixosModules.${systemSettings.system}.default
     ];
   };
 
