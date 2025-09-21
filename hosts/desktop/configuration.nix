@@ -23,7 +23,8 @@
           # Bitdepth 10 provides some compability issues with screensharing.
           # "DP-1,      3840x2160@240,  0x0,        1.5,  bitdepth, 10"
           "DP-1,      3840x2160@240,  0x0,        1.5"
-          "DP-2,      1920x1200@60,   auto-right, 1,    transform, 3"
+          "DP-2,      1920x1200@60,   auto-right, 1"
+          # "DP-2,      1920x1200@60,   auto-right, 1,    transform, 3"
           # "HDMI-A-2,  3840x2160@120,  auto-right, 1.25"
         ];
 
