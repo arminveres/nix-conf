@@ -201,7 +201,7 @@
           repeat_rate = 30;
           repeat_delay = 250;
 
-          follow_mouse = 1;
+          follow_mouse = 0;
           sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
           touchpad.natural_scroll = true;
         };
