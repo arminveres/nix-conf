@@ -30,7 +30,7 @@
       nixd # official nix lsp
       nixfmt-classic
       go
-      rust-analyzer
+      # rust-analyzer
       # TODO(aver): move these into cli development module
       difftastic
       onefetch
