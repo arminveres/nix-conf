@@ -26,7 +26,8 @@ in {
 
       # NOTE(aver): enable nix-community binary caching
       trusted-users = [ systemSettings.username ];
-      substituters = [ "https://nix-community.cachix.org" "https://hyprland.cachix.org" ];
+      substituters =
+        [ "https://nix-community.cachix.org" "https://hyprland.cachix.org" ];
       trusted-public-keys = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
@@ -58,7 +59,8 @@ in {
     users.${systemSettings.username} = {
       isNormalUser = true;
       description = "Armin Veres";
-      extraGroups = [ "networkmanager" "wheel" "video" "dialout" "plugdev" "gamemode" ];
+      extraGroups =
+        [ "networkmanager" "wheel" "video" "dialout" "plugdev" "gamemode" ];
     };
   };
 
@@ -71,7 +73,8 @@ in {
 
     sessionVariables = {
       NH_FLAKE = "/home/${systemSettings.username}/nix-conf?submodules=1";
-      NAUTILUS_4_EXTENSION_DIR = "${pkgs.nautilus-python}/lib/nautilus/extensions-4";
+      NAUTILUS_4_EXTENSION_DIR =
+        "${pkgs.nautilus-python}/lib/nautilus/extensions-4";
 
       # https://wiki.hyprland.org/Getting-Started/Master-Tutorial/#force-apps-to-use-wayland
       NIXOS_OZONE_WL = "1";
@@ -171,13 +174,80 @@ in {
       enable = true;
       # xwayland.enable = true;
       # set the flake package
-      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+      package =
+        inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
       # make sure to also set the portal package, so that they are in sync
       portalPackage =
         inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
     };
 
-    zsh.enable = true;
+    zsh = {
+      enable = true;
+      shellAliases = {
+        nxfclean = "nix-collect-garbage -d && nix-store --optimize";
+        nxclean = "nix-collect-garbage && nix-store --optimize";
+      };
+      shellInit = ''
+        export LD_LIBRARY_PATH="$NIX_LD_LIBRARY_PATH:$LD_LIBRARY_PATH"
+
+        # Pretty print log messages
+        function log() {
+            printf "\n<<<< $1 >>>>\n\n"
+        }
+
+        function lrebuild() {
+            case "$(uname)" in
+            Linux)
+                sudo nixos-rebuild switch --flake "$FLAKE#$(hostname)"
+                ;;
+            Darwin)
+                darwin-rebuild switch --flake "$HOME/nix-conf#armins-macbook"
+                ;;
+            esac
+        }
+
+        # @brief rebuilds the system on my remote server
+        function rrebuild() {
+            nixos-rebuild switch \
+                --flake "$FLAKE#$(hostname)" \
+                --build-host arminserver-zt \
+                --use-remote-sudo
+        }
+
+        # Create a flake out of a directory/repository
+        function flakify() {
+            if [ ! -e flake.nix ]; then
+                nix flake new -t github:nix-community/nix-direnv .
+            elif [ ! -e .envrc ]; then
+                echo "use flake" >.envrc
+                direnv allow
+            fi
+            ${"EDITOR:-vim"} flake.nix
+        }
+
+        # Update flake based nix setup and create a commit with the date and time
+        function nxup() {
+            local GIT_REPO=$HOME/nix-conf
+
+            log "Running NixOS system update"
+            if ! nh os boot --update; then
+                log "Update failed!"
+                return
+            fi
+
+            log "Creating commit for update"
+            pushd $GIT_REPO
+            git commit $GIT_REPO/flake.lock \
+                -m "build(flake): update lockfile $(date -u +%Y-%m-%dT%H:%M%Z)"
+            if [[ $? -ne 0 ]]; then
+                git commit --amend \
+                    -m "build(flake): update lockfile $(date -u +%Y-%m-%dT%H:%M%Z)"
+            fi
+            popd
+            log "Update successful!"
+        }
+      '';
+    };
 
     nix-ld = {
       enable = true;
@@ -321,5 +391,4 @@ in {
       }
     })
   '';
-
 }
