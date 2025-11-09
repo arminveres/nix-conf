@@ -4,15 +4,12 @@
   printing.enable = true;
   fm.enable = true;
   power-management.enable = true;
-  fingerprint.enable = true;
+  fingerprint.enable = false;
   bluetooth.enable = true;
   docker.enable = true;
 
   # enable hyprlock pam authentication
-  security.pam.services.hyprlock = {
-    fprintAuth = false;
-    enableGnomeKeyring = true;
-  };
+  # security.pam.services.hyprlock = { fprintAuth = false; enableGnomeKeyring = true; };
 
   environment.systemPackages = with pkgs; [ intel-undervolt ];
 
