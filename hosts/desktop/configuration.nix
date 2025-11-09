@@ -121,7 +121,14 @@
   };
   hardware.probe-rs.enable = true;
 
-  environment.systemPackages = with pkgs; [ vulkan-tools ddcui nvtopPackages.amd radeontop ];
+  environment.systemPackages = with pkgs; [
+    vulkan-tools
+    ddcui
+    nvtopPackages.amd
+    radeontop
+
+    prusa-slicer
+  ];
 
   # define default driver
   environment.variables.AMD_VULKAN_ICD = "RADV";
