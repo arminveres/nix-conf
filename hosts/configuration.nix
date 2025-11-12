@@ -142,7 +142,7 @@ in {
 
         # email related packages
         # protonmail-bridge
-        protonmail-bridge-gui
+        # protonmail-bridge-gui
         thunderbird
 
         cpufetch

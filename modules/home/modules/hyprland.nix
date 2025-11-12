@@ -402,7 +402,7 @@
           "nm-applet"
           "tmux new -s daemon -d"
           "nextcloud --background"
-          "protonmail-bridge-gui --no-window" # "protonmail-bridge -n -l info"
+          # "protonmail-bridge-gui --no-window" # "protonmail-bridge -n -l info"
           "corectrl --minimize-systray"
           "solaar -w hide"
         ];
