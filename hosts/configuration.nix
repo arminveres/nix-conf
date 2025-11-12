@@ -123,7 +123,7 @@ in {
         wl-clipboard
         baobab
 
-        glxinfo
+        mesa-demos
         nh
         lsb-release
         libnotify # enable notify-send
