@@ -158,7 +158,7 @@ in {
   xdg.portal = {
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    configPackages = [ inputs.hyprland.packages.${pkgs.system}.hyprland ];
+    configPackages = [ inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland ];
     xdgOpenUsePortal = true;
   };
 
