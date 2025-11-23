@@ -23,7 +23,7 @@
 
     # DayZ Launcher
     dzgui-nix = {
-      url = "github:lelgenio/dzgui-nix";
+      url = "github:arminveres/dzgui-nix/fix/renamed-wrapGAppsHook";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

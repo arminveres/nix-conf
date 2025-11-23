@@ -40,15 +40,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1749410315,
-        "narHash": "sha256-5H8MuMMSq1WnQcvb1FiDNkKP+uyeZ8HX5GRTMfEOyLI=",
-        "owner": "lelgenio",
+        "lastModified": 1763815587,
+        "narHash": "sha256-boT6An7Ra7fE4au+Nktnk/HkwcTFfN5fCYqKXXa4wEk=",
+        "owner": "arminveres",
         "repo": "dzgui-nix",
-        "rev": "49adbb1edfb3c25b0cd8256d35673394386065e7",
+        "rev": "f9118a33355ba87a7ac8b5d7c89ebe91ae4f8c2e",
         "type": "github"
       },
       "original": {
-        "owner": "lelgenio",
+        "owner": "arminveres",
+        "ref": "fix/renamed-wrapGAppsHook",
         "repo": "dzgui-nix",
         "type": "github"
       }
