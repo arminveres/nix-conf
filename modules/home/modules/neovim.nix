@@ -33,6 +33,7 @@
       # rust-analyzer
       # TODO(aver): move these into cli development module
       difftastic
+      delta
       onefetch
     ];
   };
