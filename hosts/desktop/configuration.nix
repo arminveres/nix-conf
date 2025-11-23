@@ -23,7 +23,7 @@
           # Bitdepth 10 provides some compability issues with screensharing.
           # "DP-1,      3840x2160@240,  0x0,        1.5,  bitdepth, 10"
           "DP-1,      3840x2160@240,  0x0,        1.5"
-          "DP-2,      1920x1200@60,   auto-right, 1"
+          "DP-2,      1920x1200@60,   auto-left,  1.25"
           # "DP-2,      1920x1200@60,   auto-right, 1,    transform, 3"
           # "HDMI-A-2,  3840x2160@120,  auto-right, 1.25"
         ];
@@ -53,44 +53,46 @@
           # research
           "4,   monitor:DP-1"
           "5,   monitor:DP-1"
+          # use layoutopt:orientation:top for master placement
+          # "6,   monitor:DP-2, layoutopt:orientation:top, default:true"
           # messages
-          "6,   monitor:DP-2, layoutopt:orientation:top, default:true"
+          "6,   monitor:DP-2, default:true"
           # mail
-          "7,   monitor:DP-2, layoutopt:orientation:top"
+          "7,   monitor:DP-2"
           # sound + bluetooth
-          "8,   monitor:DP-2, layoutopt:orientation:top"
-          "9,   monitor:DP-2, layoutopt:orientation:top"
-          "10,  monitor:DP-2, layoutopt:orientation:top"
+          "8,   monitor:DP-2"
+          "9,   monitor:DP-2"
+          "10,  monitor:DP-2"
         ];
 
-        windowrulev2 = [
-          "workspace 3 silent,  class:^steam$"
-          "workspace 3 silent,  class:^heroic$"
+        windowrule = [
+          "workspace 3 silent, match:class ^steam$"
+          "workspace 3 silent, match:class ^heroic$"
           # add steam games to ws 6
-          "workspace 5 silent,  class:(steam_app_*)"
-          "monitor 0,           class:(steam_app_*)"
+          "workspace 5 silent, match:class (steam_app_*)"
+          "monitor 0,          match:class (steam_app_*)"
           # "fullscreen,          class:(steam_app_*)"
 
-          "workspace 6 silent,  class:^signal$"
-          "workspace 6 silent,  class:^Signal$"
-          "workspace 6 silent,  class:^discord$"
-          "workspace 6 silent,  class:^Discord$"
-          "workspace 6 silent,  class:^WebCord$"
-          "workspace 6 silent,  class:^vesktop$"
-          "workspace 6 silent,  title:^Microsoft Teams*$"
-          "tile,                title:^Microsoft Teams*$"
+          "workspace 6 silent, match:class ^signal$"
+          "workspace 6 silent, match:class ^Signal$"
+          "workspace 6 silent, match:class ^discord$"
+          "workspace 6 silent, match:class ^Discord$"
+          "workspace 6 silent, match:class ^WebCord$"
+          "workspace 6 silent, match:class ^vesktop$"
+          "workspace 6 silent, match:title ^Microsoft Teams*$"
+          "tile on,            match:title ^Microsoft Teams*$"
 
-          "workspace 7 silent,  class:^ch.proton.bridge-gui$"
-          "workspace 7 silent,  class:^thunderbird$"
+          "workspace 7 silent, match:class ^ch.proton.bridge-gui$"
+          "workspace 7 silent, match:class ^thunderbird$"
 
-          "workspace 8 silent,  class:^Spotify$"
-          "workspace 8 silent,  class:^blueman-manager$"
-          "workspace 8 silent,  class:^easyeffects$"
+          "workspace 8 silent, match:class ^Spotify$"
+          "workspace 8 silent, match:class ^blueman-manager$"
+          "workspace 8 silent, match:class ^easyeffects$"
 
-          "workspace 9 silent,  class:^org.corectrl.CoreCtrl$"
+          "workspace 9 silent, match:class ^org.corectrl.CoreCtrl$"
 
-          "float, class:^org.gnome.Calculator$"
-          "float, title:^Friends List$"
+          "float on, match:class ^org.gnome.Calculator$"
+          "float on, match:title ^Friends List$"
         ];
 
         env = [

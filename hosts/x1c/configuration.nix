@@ -46,28 +46,28 @@
         };
         workspace = [ "1, monitor:eDP-1, default:true" ];
 
-        windowrulev2 = [
-          "workspace 4 silent,  class:^Spotify$"
-          "workspace 4 silent,  class:^blueman-manager$"
-          "workspace 4 silent,  class:^easyeffects$"
+        windowrule = [
+          "workspace 4 silent, match:class ^Spotify$"
+          "workspace 4 silent, match:class ^blueman-manager$"
+          "workspace 4 silent, match:class ^easyeffects$"
 
-          "workspace 5 silent,  class:^steam$"
+          "workspace 5 silent, match:class ^steam$"
           # add steam games to ws 6
-          "workspace 5 silent,  class:^steam_app_d*$"
-          "monitor 1,           class:^steam_app_d*$"
-          "fullscreen,          class:^steam_app_d*$"
+          "workspace 5 silent, match:class ^steam_app_d*$"
+          "monitor 1,          match:class ^steam_app_d*$"
+          "fullscreen,         match:class ^steam_app_d*$"
 
-          "workspace 7 silent,  class:^thunderbird$"
-          "workspace 7 silent,  class:^ch.proton.bridge-gui$"
+          "workspace 7 silent, match:class ^thunderbird$"
+          "workspace 7 silent, match:class ^ch.proton.bridge-gui$"
 
-          "workspace 6 silent,  class:^signal$"
-          "workspace 6 silent,  class:^Signal$"
-          "workspace 6 silent,  class:^discord$"
-          "workspace 6 silent,  class:^Discord$"
-          "workspace 6 silent,  class:^WebCord$"
-          "workspace 6 silent,  title:^Microsoft Teams*$"
-          "tile,                title:^Microsoft Teams*$"
-          "float, class:^org.gnome.Calculator$"
+          "workspace 6 silent, match:class ^signal$"
+          "workspace 6 silent, match:class ^Signal$"
+          "workspace 6 silent, match:class ^discord$"
+          "workspace 6 silent, match:class ^Discord$"
+          "workspace 6 silent, match:class ^WebCord$"
+          "workspace 6 silent, match:title ^Microsoft Teams*$"
+          "tile on,            match:title ^Microsoft Teams*$"
+          "float on,           match:class ^org.gnome.Calculator$"
         ];
       };
     };
