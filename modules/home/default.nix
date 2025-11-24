@@ -67,6 +67,8 @@
     atac
     sshs
     portal
+
+    miro
   ];
 
   xdg = {
