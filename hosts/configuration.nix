@@ -72,7 +72,6 @@ in {
     pathsToLink = [ "/share/nautilus-python/extensions" ];
 
     sessionVariables = {
-      NH_FLAKE = "/home/${systemSettings.username}/nix-conf?submodules=1";
       NAUTILUS_4_EXTENSION_DIR =
         "${pkgs.nautilus-python}/lib/nautilus/extensions-4";
 
@@ -124,7 +123,6 @@ in {
         baobab
 
         mesa-demos
-        nh
         lsb-release
         libnotify # enable notify-send
         networkmanagerapplet
@@ -158,11 +156,19 @@ in {
   xdg.portal = {
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    configPackages = [ inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland ];
+    configPackages =
+      [ inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland ];
     xdgOpenUsePortal = true;
   };
 
   programs = {
+    nh = {
+      enable = true;
+      clean.enable = true;
+      clean.extraArgs = "--keep-since 4d --keep 3";
+      flake =
+        "/home/${systemSettings.username}/nix-conf?submodules=1"; # sets NH_OS_FLAKE variable for you
+    };
     nautilus-open-any-terminal = {
       enable = true;
       terminal = "alacritty";
