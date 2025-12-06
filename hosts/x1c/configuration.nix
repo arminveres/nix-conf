@@ -55,7 +55,7 @@
           # add steam games to ws 6
           "workspace 5 silent, match:class ^steam_app_d*$"
           "monitor 1,          match:class ^steam_app_d*$"
-          "fullscreen,         match:class ^steam_app_d*$"
+          "fullscreen on,      match:class ^steam_app_d*$"
 
           "workspace 7 silent, match:class ^thunderbird$"
           "workspace 7 silent, match:class ^ch.proton.bridge-gui$"
@@ -69,6 +69,8 @@
           "tile on,            match:title ^Microsoft Teams*$"
           "float on,           match:class ^org.gnome.Calculator$"
         ];
+
+        gesture = [ "3, horizontal, workspace" ];
       };
     };
   };
