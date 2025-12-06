@@ -369,13 +369,18 @@ in {
   security.sudo = {
     enable = true;
     extraRules = [{
-      commands = [{
-        command = "/run/current-system/sw/bin/nixos-rebuild";
-        options = [ "NOPASSWD" ];
-      }];
       groups = [ "wheel" ];
+      commands = [
+        {
+          command = "/run/current-system/sw/bin/nixos-rebuild";
+          options = [ "NOPASSWD" ];
+        }
+        {
+          command = "/run/current-system/sw/bin/powertop";
+          options = [ "NOPASSWD" ];
+        }
+      ];
     }];
-    # wheelNeedsPassword = false;
   };
 
   security.rtkit.enable = true;
