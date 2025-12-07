@@ -28,6 +28,16 @@
           # "HDMI-A-2,  3840x2160@120,  auto-right, 1.25"
         ];
 
+        input = {
+          kb_layout = "eu";
+          repeat_rate = 30;
+          repeat_delay = 250;
+
+          follow_mouse = 1;
+          sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
+          touchpad.natural_scroll = true;
+        };
+
         device = {
           name = "logitech-g-pro--1";
           # name = "logitech-usb-receiver";

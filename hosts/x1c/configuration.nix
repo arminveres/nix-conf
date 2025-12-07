@@ -27,6 +27,19 @@
       hostConfig = {
         monitor = [ ",preferred,auto,1.0" ];
 
+        input = {
+          kb_layout = "eu";
+          repeat_rate = 30;
+          repeat_delay = 250;
+
+          follow_mouse = 1;
+          sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
+          touchpad.natural_scroll = true;
+
+          force_no_accel = false;
+          accel_profile = "adaptive"; # flat
+        };
+
         # only swap keys for the builtin laptop keyboard
         device = {
           name = "at-translated-set-2-keyboard";
