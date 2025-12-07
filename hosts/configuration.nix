@@ -35,11 +35,8 @@ in {
     };
 
     optimise.automatic = true;
-    gc = {
-      automatic = true;
-      dates = "daily";
-      options = "--delete-older-than 7d";
-    };
+    # Nix Helper already does cleaning
+    # gc = { automatic = true; dates = "daily"; options = "--delete-older-than 7d"; };
   };
 
   # Set your time zone.
@@ -188,8 +185,8 @@ in {
     zsh = {
       enable = true;
       shellAliases = {
-        nxfclean = "nix-collect-garbage -d && nix-store --optimize";
-        nxclean = "nix-collect-garbage && nix-store --optimize";
+        nxfclean = "nh clean all --keep 3 --optimise";
+        nxclean = "nh clean user --keep 3 --optimise";
       };
       shellInit = ''
         export LD_LIBRARY_PATH="$NIX_LD_LIBRARY_PATH:$LD_LIBRARY_PATH"

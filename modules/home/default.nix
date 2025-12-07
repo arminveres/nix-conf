@@ -51,7 +51,6 @@
     nextcloud-client
     obsidian
     signal-desktop
-    spotify
     tldr
     fzf
     ncdu

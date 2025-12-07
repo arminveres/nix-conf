@@ -11,7 +11,7 @@
   # enable hyprlock pam authentication
   # security.pam.services.hyprlock = { fprintAuth = false; enableGnomeKeyring = true; };
 
-  environment.systemPackages = with pkgs; [ intel-undervolt ];
+  programs.zsh.shellAliases = { ptop = "sudo powertop"; };
 
   home-manager.users.${systemSettings.username} = {
 
