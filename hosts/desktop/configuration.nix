@@ -53,11 +53,16 @@
           touchpad.natural_scroll = true;
         };
 
-        device = {
-          name = "logitech-g-pro--1";
-          # name = "logitech-usb-receiver";
-          accel_profile = "flat";
-        };
+        device = [
+          {
+            name = "logitech-g-pro--1";
+            accel_profile = "flat";
+          }
+          {
+            name = "logitech-usb-receiver";
+            accel_profile = "flat";
+          }
+        ];
 
         decoration = {
           blur.enabled = true;

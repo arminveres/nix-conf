@@ -56,10 +56,17 @@
         };
 
         # only swap keys for the builtin laptop keyboard
-        device = {
-          name = "at-translated-set-2-keyboard";
-          kb_options = "ctrl:swapcaps,altwin:swap_lalt_lwin";
-        };
+        device = [
+          {
+            name = "at-translated-set-2-keyboard";
+            kb_options = "ctrl:swapcaps,altwin:swap_lalt_lwin";
+          }
+          {
+            name = "tpps/2-elan-trackpoint";
+            accel_profile = "flat";
+            sensitivity = 0.5;
+          }
+        ];
 
         env = [
           "XCURSOR_SIZE,24"
