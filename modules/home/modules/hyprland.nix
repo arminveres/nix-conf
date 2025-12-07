@@ -1,6 +1,7 @@
 { inputs, pkgs, lib, config, ... }: {
   options = {
-    hyprlandwm.enable = lib.mkEnableOption "enables Home-Manager Hyprland module";
+    hyprlandwm.enable =
+      lib.mkEnableOption "enables Home-Manager Hyprland module";
     hyprlandwm.hostConfig = lib.mkOption { };
   };
 
@@ -38,25 +39,18 @@
       hyprpaper = {
         enable = true;
         settings = {
-          preload = [
-            "~/nix-conf/dotfiles/wallpapers/Pictures/wallpapers/selected/rim-231014.jpg"
-            "~/nix-conf/dotfiles/wallpapers/Pictures/wallpapers/selected/desert-dunes-4k-bx.jpg"
-          ];
-          # set the default wallpaper(s) seen on initial workspace(s) --depending on the number of monitors used
-          wallpaper = [
-            "DP-1, ~/nix-conf/dotfiles/wallpapers/Pictures/wallpapers/selected/desert-dunes-4k-bx.jpg"
-            "DP-2, ~/nix-conf/dotfiles/wallpapers/Pictures/wallpapers/selected/rim-231014.jpg"
-          ];
           #enable splash text rendering over the wallpaper
           splash = false;
         };
       };
+
       hypridle = {
         enable = true;
         settings = {
 
           general = {
-            lock_cmd = "pidof hyprlock || hyprlock"; # avoid starting multiple hyprlock instances.
+            lock_cmd =
+              "pidof hyprlock || hyprlock"; # avoid starting multiple hyprlock instances.
             before_sleep_cmd = "loginctl lock-session"; # lock before suspend.
             after_sleep_cmd =
               "hyprctl dispatch dpms on"; # to avoid having to press a key twice to turn on the display.
@@ -65,13 +59,15 @@
           listener = [
             {
               timeout = 240;
-              on-timeout = "hyprctl dispatch dpms off"; # screen off when timeout has passed
+              on-timeout =
+                "hyprctl dispatch dpms off"; # screen off when timeout has passed
               on-resume =
                 "hyprctl dispatch dpms on"; # screen on when activity is detected after timeout has fired.
             }
             {
               timeout = 360;
-              on-timeout = "loginctl lock-session"; # lock screen when timeout has passed
+              on-timeout =
+                "loginctl lock-session"; # lock screen when timeout has passed
             }
             {
               timeout = 900;
@@ -82,8 +78,26 @@
 
         };
       };
+
       hyprpolkitagent.enable = true;
-      hyprsunset.enable = false;
+
+      hyprsunset = {
+        enable = false;
+        settings = {
+          max-gamma = 150;
+          profile = [
+            {
+              time = "7:30";
+              identity = true;
+            }
+            {
+              time = "21:00";
+              temperature = 5000;
+              gamma = 0.8;
+            }
+          ];
+        };
+      };
     };
 
     programs.hyprlock = {
@@ -125,7 +139,8 @@
           dots_size = 0.33; # Scale of input-field height, 0.2 - 0.8
           dots_spacing = 0.15; # Scale of dots' absolute size, 0.0 - 1.0
           dots_center = false;
-          dots_rounding = -1; # -1 default circle, -2 follow input-field rounding
+          dots_rounding =
+            -1; # -1 default circle, -2 follow input-field rounding
           outer_color = "rgb(151515)";
           inner_color = "rgb(200, 200, 200)";
           font_color = "rgb(10, 10, 10)";
@@ -174,7 +189,8 @@
       xwayland.enable = true;
 
       # set the flake package
-      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+      package =
+        inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
       portalPackage =
         inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
 
