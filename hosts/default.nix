@@ -28,6 +28,7 @@ in {
     modules = [
       home-manager.nixosModules.home-manager
       ./configuration.nix
+      ./x1c/boot.nix
       ./x1c/hardware-configuration.nix
       ./x1c/configuration.nix
       nixos-hardware.nixosModules.lenovo-thinkpad-x1-9th-gen
