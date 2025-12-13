@@ -36,11 +36,8 @@
       hostConfig = {
         monitor = [
           # Bitdepth 10 provides some compability issues with screensharing.
-          # "DP-1,      3840x2160@240,  0x0,        1.5,  bitdepth, 10"
           "DP-1,      3840x2160@240,  0x0,        1.5"
-          "DP-2,      1920x1200@60,   auto-left,  1.25"
-          # "DP-2,      1920x1200@60,   auto-right, 1,    transform, 3"
-          # "HDMI-A-2,  3840x2160@120,  auto-right, 1.25"
+          "DP-2,      1920x1200@60,   auto-left,  1,  transform, 1"
         ];
 
         input = {
@@ -84,15 +81,14 @@
           "4,   monitor:DP-1"
           "5,   monitor:DP-1"
           # use layoutopt:orientation:top for master placement
-          # "6,   monitor:DP-2, layoutopt:orientation:top, default:true"
           # messages
-          "6,   monitor:DP-2, default:true"
+          "6,   monitor:DP-2, layoutopt:orientation:top, default:true"
           # mail
-          "7,   monitor:DP-2"
+          "7,   monitor:DP-2, layoutopt:orientation:top"
           # sound + bluetooth
-          "8,   monitor:DP-2"
-          "9,   monitor:DP-2"
-          "10,  monitor:DP-2"
+          "8,   monitor:DP-2, layoutopt:orientation:top"
+          "9,   monitor:DP-2, layoutopt:orientation:top"
+          "10,  monitor:DP-2, layoutopt:orientation:top"
         ];
 
         windowrule = [
