@@ -287,7 +287,7 @@
           "$mainMod SHIFT, t, togglegroup,"
           "$mainMod, ESCAPE, workspace, previous"
           # Go to urgen workspace and swap back and forth!
-          "$mainMod, u, focusurgentorlast"
+          "$mainMod CONTROL, u, focusurgentorlast"
           # bind = $mainMod, o, focusmonitor, eDP-1 or DP-3
           "$mainMod, f, fullscreen, 0" # use entire screen
           "$mainMod, m, fullscreen, 1" # akin to maximize in AwesomeWM
@@ -315,10 +315,12 @@
           "ALT CONTROL, k, resizeactive, 0 -40"
 
           "$mainMod CONTROL, RETURN, layoutmsg, swapwithmaster master"
-          "$mainMod CONTROL, h, layoutmsg, addmaster"
-          "$mainMod CONTROL, l, layoutmsg, removemaster"
-          "$mainMod CONTROL, j, layoutmsg, orientationleft"
-          "$mainMod CONTROL, k, layoutmsg, orientationright"
+          # "$mainMod CONTROL, h, layoutmsg, addmaster"
+          # "$mainMod CONTROL, l, layoutmsg, removemaster"
+          "$mainMod CONTROL, h, layoutmsg, orientationleft"
+          "$mainMod CONTROL, j, layoutmsg, orientationbottom"
+          "$mainMod CONTROL, k, layoutmsg, orientationtop"
+          "$mainMod CONTROL, l, layoutmsg, orientationright"
           "$mainMod CONTROL, c, layoutmsg, orientationcenter"
 
           # Switch workspaces with mainMod + [0-9]
