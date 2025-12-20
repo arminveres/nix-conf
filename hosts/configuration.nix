@@ -26,8 +26,7 @@ in {
 
       # NOTE(aver): enable nix-community binary caching
       trusted-users = [ systemSettings.username ];
-      substituters =
-        [ "https://nix-community.cachix.org" "https://hyprland.cachix.org" ];
+      substituters = [ "https://nix-community.cachix.org" "https://hyprland.cachix.org" ];
       trusted-public-keys = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
@@ -56,8 +55,7 @@ in {
     users.${systemSettings.username} = {
       isNormalUser = true;
       description = "Armin Veres";
-      extraGroups =
-        [ "networkmanager" "wheel" "video" "dialout" "plugdev" "gamemode" ];
+      extraGroups = [ "networkmanager" "wheel" "video" "dialout" "plugdev" "gamemode" ];
     };
   };
 
@@ -69,8 +67,7 @@ in {
     pathsToLink = [ "/share/nautilus-python/extensions" ];
 
     sessionVariables = {
-      NAUTILUS_4_EXTENSION_DIR =
-        "${pkgs.nautilus-python}/lib/nautilus/extensions-4";
+      NAUTILUS_4_EXTENSION_DIR = "${pkgs.nautilus-python}/lib/nautilus/extensions-4";
 
       # https://wiki.hyprland.org/Getting-Started/Master-Tutorial/#force-apps-to-use-wayland
       NIXOS_OZONE_WL = "1";
@@ -153,8 +150,7 @@ in {
   xdg.portal = {
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    configPackages =
-      [ inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland ];
+    configPackages = [ inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland ];
     xdgOpenUsePortal = true;
   };
 
@@ -175,8 +171,7 @@ in {
       enable = true;
       # xwayland.enable = true;
       # set the flake package
-      package =
-        inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
       # make sure to also set the portal package, so that they are in sync
       portalPackage =
         inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
@@ -260,6 +255,8 @@ in {
     # Some programs need SUID wrappers, can be configured further or are
     # started in user sessions.
     # mtr.enable = true;
+
+    localsend.enable = true;
   };
 
   fonts.packages = with pkgs; [
