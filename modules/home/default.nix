@@ -68,6 +68,8 @@
     portal
 
     miro
+
+    drawio
   ];
 
   xdg = {
