@@ -14,7 +14,6 @@ in {
       ./desktop/hardware-configuration.nix
       ./desktop/configuration.nix
       nixos-hardware.nixosModules.common-cpu-amd-pstate
-      # nixos-hardware.nixosModules.common-cpu-amd-zenpower # TODO(aver): 29-03-2025 messes with sensors
       nixos-hardware.nixosModules.common-cpu-amd
       nixos-hardware.nixosModules.common-gpu-amd
       nixos-hardware.nixosModules.common-pc-ssd

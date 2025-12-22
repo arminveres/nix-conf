@@ -97,13 +97,10 @@ in {
         xxd
         qemu
 
-        firefox
         python3
         wget
-        alacritty
         git
         tmux
-        nautilus
 
         nodejs
         zoxide
@@ -114,36 +111,22 @@ in {
 
         powertop
         wl-clipboard
-        baobab
 
         mesa-demos
         lsb-release
         libnotify # enable notify-send
-        networkmanagerapplet
         cachix
         libheif
-        pavucontrol
         imagemagick
         lshw
         usbutils
-        solaar
-
-        hyprland-protocols
 
         smartmontools # SSD monitoring tools
-
-        # email related packages
-        # protonmail-bridge
-        # protonmail-bridge-gui
-        thunderbird
 
         cpufetch
         s-tui
         stress-ng
         lm_sensors
-
-        # ghostty  # TODO(aver): 18-07-2025 seems to have some weird loading issues
-        mission-center
       ] ++ myLibs;
   };
 
