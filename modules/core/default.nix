@@ -7,6 +7,7 @@
     ./fingerprint.nix
     ./bluetooth.nix
     ./docker.nix
+    ./desktop.nix
   ];
   gaming.enable = lib.mkDefault false;
   printing.enable = lib.mkDefault false;
@@ -15,4 +16,5 @@
   fingerprint.enable = lib.mkDefault false;
   bluetooth.enable = lib.mkDefault false;
   docker.enable = lib.mkDefault false;
+  desktop.enable = lib.mkDefault false;
 }

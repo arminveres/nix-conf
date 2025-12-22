@@ -5,6 +5,7 @@
   fm.enable = true;
   bluetooth.enable = true;
   docker.enable = true;
+  desktop.enable = true;
 
   # enable hyprlock pam authentication
   security.pam.services.hyprlock = { };
@@ -13,6 +14,7 @@
     neovim.enable = true;
     gaming.enable = true;
     latex.enable = true;
+    desktop.enable = true;
 
     services = {
       blueman-applet.enable = true;

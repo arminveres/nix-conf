@@ -7,6 +7,7 @@
   fingerprint.enable = false;
   bluetooth.enable = true;
   docker.enable = true;
+  desktop.enable = true;
 
   # enable hyprlock pam authentication
   # security.pam.services.hyprlock = { fprintAuth = false; enableGnomeKeyring = true; };
@@ -18,6 +19,7 @@
     neovim.enable = true;
     gaming.enable = false;
     latex.enable = true;
+    desktop.enable = true;
 
     services = {
       blueman-applet.enable = true;
