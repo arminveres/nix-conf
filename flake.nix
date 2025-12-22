@@ -12,22 +12,14 @@
 
     hyprland.url = "github:hyprwm/Hyprland";
 
-    /* hyprland-plugins = {
-         url = "github:hyprwm/hyprland-plugins";
-         inputs.hyprland.follows = "hyprland";
-       };
-    */
-
-    # Some additional overlays
     neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
 
     # DayZ Launcher
     dzgui-nix = {
-      url = "github:arminveres/dzgui-nix/fix/renamed-wrapGAppsHook";
+      url = "github:lelgenio/dzgui-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # zen-browser.url = "github:MarceColl/zen-browser-flake";
     probe-rs-rules.url = "github:jneem/probe-rs-rules";
   };
 
