@@ -5,20 +5,6 @@
 
   programs = {
     home-manager.enable = true;
-    mpv.enable = true;
-    zathura = {
-      enable = true;
-      options = {
-        selection-clipboard = "clipboard";
-        font = "JetBrainsMono Nerd Font Propo 10";
-        scroll-step = 50;
-      };
-      mappings = {
-        "<C-/>" = "recolor";
-        "D" = "set first-page-column 1:1";
-        # "<C-d>" = "set first-page-column 1:2";
-      };
-    };
     btop = {
       enable = true;
       settings = {
@@ -39,26 +25,14 @@
   imports = [ ./modules ];
 
   home.packages = with pkgs; [
-    gnome-calculator
-    gnome-disk-utility
-
-    dconf
     eza
     fastfetch
     gh
-    libreoffice
-    kdePackages.okular
-    nextcloud-client
-    obsidian
-    signal-desktop
     tldr
     fzf
     ncdu
     imagemagick # for converting stuff
     stow
-
-    # vesktop
-    discord
 
     # TODO(aver): investigate utility
     age
@@ -66,10 +40,7 @@
     atac
     sshs
     portal
-
     miro
-
-    drawio
   ];
 
   xdg = {
@@ -79,35 +50,6 @@
       createDirectories = true;
     };
     mime.enable = true;
-  };
-
-  dconf = {
-    enable = true;
-    settings = { "org/gnome/desktop/interface" = { color-scheme = "prefer-dark"; }; };
-  };
-
-  home.pointerCursor = {
-    gtk.enable = true;
-    name = "Adwaita";
-    package = pkgs.adwaita-icon-theme;
-    size = 24;
-
-  };
-
-  gtk = {
-    enable = true;
-    theme = {
-      name = "Colloid-Orange-Dark";
-      package = (pkgs.colloid-gtk-theme.override {
-        themeVariants = [ "orange" ];
-        colorVariants = [ "dark" ];
-        tweaks = [ "black" "rimless" "normal" ];
-      });
-    };
-    iconTheme = {
-      name = "Adwaita";
-      package = pkgs.adwaita-icon-theme;
-    };
   };
 
   home.sessionVariables = { GTK_THEME = "Colloid-Orange-Dark"; };
@@ -148,5 +90,4 @@
     # disable as it does not correctly start as requested
     tray.enable = false;
   };
-
 }
