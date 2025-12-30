@@ -34,4 +34,16 @@ in {
       nixos-hardware.nixosModules.common-pc-ssd
     ];
   };
+
+  nixos-iraclion = lib.nixosSystem {
+    inherit system;
+    specialArgs = { inherit inputs systemSettings; };
+    modules = [
+      home-manager.nixosModules.home-manager
+      ./configuration.nix
+      ./iraclion/configuration.nix
+      ./iraclion/hardware-configuration.nix
+      nixos-hardware.nixosModules.common-cpu-intel-coffe-lake
+    ];
+  };
 }
