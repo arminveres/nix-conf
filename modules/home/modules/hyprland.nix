@@ -419,6 +419,7 @@
           # "protonmail-bridge-gui --no-window" # "protonmail-bridge -n -l info"
           "corectrl --minimize-systray"
           "solaar -w hide"
+          "xrdb ~/.Xresources"
         ];
       } config.hyprlandwm.hostConfig;
     };
