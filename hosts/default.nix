@@ -10,7 +10,7 @@ in {
     specialArgs = { inherit inputs systemSettings; };
     modules = [
       home-manager.nixosModules.home-manager
-      ./configuration.nix
+      ./common.nix
       ./desktop/hardware-configuration.nix
       ./desktop/configuration.nix
       nixos-hardware.nixosModules.common-cpu-amd-pstate
@@ -26,7 +26,7 @@ in {
     specialArgs = { inherit inputs systemSettings; };
     modules = [
       home-manager.nixosModules.home-manager
-      ./configuration.nix
+      ./common.nix
       ./x1c/boot.nix
       ./x1c/hardware-configuration.nix
       ./x1c/configuration.nix
@@ -40,7 +40,7 @@ in {
     specialArgs = { inherit inputs systemSettings; };
     modules = [
       home-manager.nixosModules.home-manager
-      ./configuration.nix
+      ./common.nix
       ./iraclion/configuration.nix
       ./iraclion/hardware-configuration.nix
       nixos-hardware.nixosModules.common-cpu-intel-coffe-lake

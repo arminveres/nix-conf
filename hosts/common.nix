@@ -136,7 +136,8 @@ in {
         nxclean = "nh clean user --keep 3 --optimise";
       };
       shellInit = ''
-        export LD_LIBRARY_PATH="$NIX_LD_LIBRARY_PATH:$LD_LIBRARY_PATH"
+        # This messes up with running binaries, e.g., hyprctl, let us ignore for now.
+        # export LD_LIBRARY_PATH="$NIX_LD_LIBRARY_PATH:$LD_LIBRARY_PATH"
 
         # Pretty print log messages
         function log() {
