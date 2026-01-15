@@ -34,15 +34,12 @@
       easyeffects.enable = true;
       hyprpaper = {
         settings = {
-          preload = [
-            "~/nix-conf/dotfiles/wallpapers/Pictures/wallpapers/selected/desert-dunes-4k-bx.jpg"
-            # "~/nix-conf/dotfiles/wallpapers/Pictures/wallpapers/selected/rim-231014.jpg"
-          ];
           # set the default wallpaper(s) seen on initial workspace(s) --depending on the number of monitors used
-          wallpaper = [
-            "eDP-1, ~/nix-conf/dotfiles/wallpapers/Pictures/wallpapers/selected/desert-dunes-4k-bx.jpg"
-            # "DP-2, ~/nix-conf/dotfiles/wallpapers/Pictures/wallpapers/selected/rim-231014.jpg"
-          ];
+          wallpaper = [{
+            monitor = "eDP-1";
+            path =
+              "~/nix-conf/dotfiles/wallpapers/Pictures/wallpapers/selected/desert-dunes-4k-bx.jpg";
+          }];
         };
       };
     };

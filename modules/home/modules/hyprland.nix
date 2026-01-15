@@ -222,7 +222,7 @@
           # we need to set this, otherwise turning dpms off results in off displays
           key_press_enables_dpms = true;
           # allow to restore if the monitor goes off; happens with my OLED when regenerating
-          allow_session_lock_restore = 1;
+          allow_session_lock_restore = true;
         };
         decoration = {
           # See https://wiki.hyprland.org/Configuring/Variables/ for more
