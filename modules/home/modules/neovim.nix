@@ -28,7 +28,7 @@
       bear # add to generate compile_commands.json, if necessary
       marksman
       nixd # official nix lsp
-      nixfmt-classic
+      nixfmt
       go
       # rust-analyzer
       # TODO(aver): move these into cli development module
