@@ -173,4 +173,11 @@
   # define default driver
   environment.variables.AMD_VULKAN_ICD = "RADV";
 
+  #
+  # scx_lavd, Steam built gaming first scheduler
+  # From NixOS 24.11 onwards, scx is available on Nixpkgs. Using a kernel of version 6.12+ or later is required.
+  #
+  services.scx.enable = true;
+  services.scx.scheduler = "scx_lavd"; # default is "scx_rustland"
+
 }
