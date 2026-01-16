@@ -2,14 +2,34 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ inputs, systemSettings, pkgs, lib, ... }:
+{
+  inputs,
+  systemSettings,
+  pkgs,
+  lib,
+  ...
+}:
 # define some libraries used to build stuff in general, e.g., with rust. They are then passed to
 # system environment, as well as nix-ld.
-let myLibs = with pkgs; [ openssl fontconfig.lib freetype ];
-in {
+let
+  myLibs = with pkgs; [
+    openssl
+    fontconfig.lib
+    freetype
+  ];
+in
+{
+  # Generate documentation caches, as from NixOS 21.05 they ware not automatically created.
+  # https://wiki.nixos.org/wiki/Apropos
+  documentation = {
+  enable = true;
+    man.generateCaches = true;
+  };
 
   nixpkgs = {
-    config = { allowUnfree = true; };
+    config = {
+      allowUnfree = true;
+    };
     overlays = [ inputs.neovim-nightly.overlays.default ];
   };
 
@@ -22,11 +42,17 @@ in {
 
   nix = {
     settings = {
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
 
       # NOTE(aver): enable nix-community binary caching
       trusted-users = [ systemSettings.username ];
-      substituters = [ "https://nix-community.cachix.org" "https://hyprland.cachix.org" ];
+      substituters = [
+        "https://nix-community.cachix.org"
+        "https://hyprland.cachix.org"
+      ];
       trusted-public-keys = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
@@ -55,7 +81,14 @@ in {
     users.${systemSettings.username} = {
       isNormalUser = true;
       description = "Armin Veres";
-      extraGroups = [ "networkmanager" "wheel" "video" "dialout" "plugdev" "gamemode" ];
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+        "video"
+        "dialout"
+        "plugdev"
+        "gamemode"
+      ];
     };
   };
 
@@ -71,13 +104,13 @@ in {
       # https://www.baeldung.com/linux/library_path-vs-ld_library_path
       LIBRARY_PATH = lib.makeLibraryPath myLibs;
       # this worked for openssl-sys dependencies for rust.
-      PKG_CONFIG_PATH =
-        "${pkgs.openssl.dev}/lib/pkgconfig:${pkgs.fontconfig.dev}/lib/pkgconfig:${pkgs.freetype.dev}/lib/pkgconfig";
+      PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig:${pkgs.fontconfig.dev}/lib/pkgconfig:${pkgs.freetype.dev}/lib/pkgconfig";
 
     };
 
     # List packages installed in system profile. To search, run: nix search wget
-    systemPackages = with pkgs;
+    systemPackages =
+      with pkgs;
       [
         # build utilities
         binutils
@@ -117,7 +150,8 @@ in {
         s-tui
         stress-ng
         lm_sensors
-      ] ++ myLibs;
+      ]
+      ++ myLibs;
   };
 
   programs = {
@@ -125,8 +159,7 @@ in {
       enable = true;
       clean.enable = true;
       clean.extraArgs = "--keep-since 4d --keep 3";
-      flake =
-        "/home/${systemSettings.username}/nix-conf?submodules=1"; # sets NH_OS_FLAKE variable for you
+      flake = "/home/${systemSettings.username}/nix-conf?submodules=1"; # sets NH_OS_FLAKE variable for you
     };
 
     zsh = {
@@ -217,7 +250,9 @@ in {
 
     zerotierone = {
       enable = true;
-      localConf = { settings = { }; };
+      localConf = {
+        settings = { };
+      };
     };
 
     fwupd.enable = true;
@@ -257,19 +292,21 @@ in {
 
   security.sudo = {
     enable = true;
-    extraRules = [{
-      groups = [ "wheel" ];
-      commands = [
-        {
-          command = "/run/current-system/sw/bin/nixos-rebuild";
-          options = [ "NOPASSWD" ];
-        }
-        {
-          command = "/run/current-system/sw/bin/powertop";
-          options = [ "NOPASSWD" ];
-        }
-      ];
-    }];
+    extraRules = [
+      {
+        groups = [ "wheel" ];
+        commands = [
+          {
+            command = "/run/current-system/sw/bin/nixos-rebuild";
+            options = [ "NOPASSWD" ];
+          }
+          {
+            command = "/run/current-system/sw/bin/powertop";
+            options = [ "NOPASSWD" ];
+          }
+        ];
+      }
+    ];
   };
 
   security.rtkit.enable = true;
