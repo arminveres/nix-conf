@@ -35,6 +35,8 @@
       difftastic
       delta
       onefetch
+      claude-code
+      opencode
     ];
   };
 }
