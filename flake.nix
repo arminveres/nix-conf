@@ -23,25 +23,93 @@
     probe-rs-rules.url = "github:jneem/probe-rs-rules";
   };
 
-  outputs = inputs@{ nixpkgs, nixos-hardware, home-manager, ... }:
+  outputs =
+    inputs@{
+      nixpkgs,
+      nixos-hardware,
+      home-manager,
+      ...
+    }:
     let
-      systemSettings = {
+      systemSettings = rec {
         system = "x86_64-linux";
         timezone = "Europe/Zurich";
         locale = "en_US.UTF-8";
         kernelVersion = "6_18";
         username = "arminveres";
+        homeDirectory = "/home/${username}";
       };
-    in {
+      overlays = [ inputs.neovim-nightly.overlays.default ];
+      system = systemSettings.system;
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true; # optional
+      };
+    in
+    {
       # NOTE(aver): We let Home Manager be managed through flakes, therefore no `homeConfigurations`
       # needed here
-      nixosConfigurations = (import ./hosts {
-        inherit (nixpkgs) lib;
-        inherit inputs nixpkgs nixos-hardware systemSettings home-manager;
-      });
-      /* # NOTE(aver): don't inherit pkgs and system, as it is not a x86_64-linux based system
-         darwinConfigurations =
-           (import ./darwin { inherit self inputs nixpkgs home-manager nix-darwin; });
-      */
+      nixosConfigurations = (
+        import ./hosts {
+          inherit (nixpkgs) lib;
+          inherit
+            inputs
+            nixpkgs
+            nixos-hardware
+            systemSettings
+            home-manager
+            ;
+        }
+      );
+      # TODO(aver): Move into modules, refactor the ./modules/home/default.nix file to accommodate
+      # standalone instantiations.
+      homeConfigurations."ubuntu" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [
+          (
+            { pkgs, ... }:
+            {
+              nixpkgs.overlays = overlays;
+              imports = [ ./modules/home/modules ];
+
+              home = {
+                username = systemSettings.username;
+                homeDirectory = systemSettings.homeDirectory;
+                # IMPORTANT: set this once and don’t change it casually.
+                stateVersion = "25.11"; # pick your HM release/state version
+                packages = with pkgs; [
+                  opencode
+                  nixfmt
+                  nixd
+                ];
+              };
+
+              programs = {
+                home-manager.enable = true;
+                nh = {
+                  enable = true;
+                  clean.enable = true;
+                  clean.extraArgs = "--keep-since 4d --keep 3";
+                  flake = "${systemSettings.homeDirectory}/nix-conf?submodules=1"; # sets NH_OS_FLAKE variable for you
+                };
+
+                fzf = {
+                  enable = true;
+                  enableZshIntegration = true;
+                  tmux.enableShellIntegration = true;
+                };
+              };
+
+              # my modules
+              neovim.enable = true;
+
+            }
+          )
+        ];
+      };
+
+      # # Don't inherit pkgs and system, as it is not a x86_64-linux based system
+      # darwinConfigurations =
+      #   (import ./darwin { inherit self inputs nixpkgs home-manager nix-darwin; });
     };
 }
