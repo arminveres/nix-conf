@@ -78,7 +78,7 @@
       hyprpolkitagent.enable = true;
 
       hyprsunset = {
-        enable = false;
+        enable = true;
         settings = {
           max-gamma = 150;
           profile = [
