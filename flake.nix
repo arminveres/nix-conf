@@ -67,7 +67,7 @@
         inherit pkgs;
         modules = [
           (
-            { pkgs, ... }:
+            { pkgs, lib, ... }:
             {
               nixpkgs.overlays = overlays;
               imports = [ ./modules/home/modules ];
@@ -76,13 +76,11 @@
                 username = systemSettings.username;
                 homeDirectory = systemSettings.homeDirectory;
                 # IMPORTANT: set this once and don’t change it casually.
-                stateVersion = "25.11"; # pick your HM release/state version
-                packages = with pkgs; [
-                  opencode
-                  nixfmt
-                  nixd
-                ];
+                stateVersion = "26.05"; # pick your HM release/state version
+                packages = with pkgs; [ ];
               };
+
+              xdg.enable = true;
 
               programs = {
                 home-manager.enable = true;
@@ -97,7 +95,29 @@
                   enable = true;
                   enableZshIntegration = true;
                   tmux.enableShellIntegration = true;
+                  # defaultCommand = "rg --hidden -l ''";
+                  # defaultCommand = "fd --type f";
+                  defaultOptions = [
+                    "--height 40%"
+                    "--layout=reverse"
+                    "--border"
+                  ];
                 };
+
+                zoxide = {
+                  enable = true;
+                  enableZshIntegration = true;
+                  options = [ "--cmd cd" ];
+                };
+
+                direnv = {
+                  nix-direnv.enable = true;
+                  enable = true;
+                  enableZshIntegration = true;
+                };
+
+                ripgrep.enable = true;
+                fd.enable = true;
               };
 
               # my modules

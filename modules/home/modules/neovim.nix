@@ -1,6 +1,14 @@
-{ pkgs, lib, config, ... }: {
-  options.neovim.enable =
-    lib.mkEnableOption "enables Home-Manager NeoVim module";
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+let
+  link = config.lib.file.mkOutOfStoreSymlink;
+in
+{
+  options.neovim.enable = lib.mkEnableOption "enables Home-Manager NeoVim module";
 
   # FIXME(aver): does not work on submodules
   config = lib.mkIf config.neovim.enable {
@@ -18,6 +26,10 @@
             size = 14.0;
           };
         };
+      };
+
+      opencode = {
+        enable = true;
       };
     };
 
