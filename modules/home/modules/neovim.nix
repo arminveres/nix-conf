@@ -37,6 +37,12 @@ in
         };
       };
 
+      zsh.shellAliases = {
+        vi = "nvim";
+        viup = "nvim --headless '+Lazy! sync' +qa";
+        vim = "nvim";
+      };
+
       opencode = {
         enable = true;
       };
