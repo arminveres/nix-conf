@@ -12,6 +12,15 @@ in
 
   # FIXME(aver): does not work on submodules
   config = lib.mkIf config.neovim.enable {
+
+    # TODO(aver): https://blog.daniel-beskin.com/2025-10-18-symlinking-home-manager
+    xdg.configFile = {
+      "nvim" = {
+        source = link "${config.home.homeDirectory}/dotfiles/nvim/.config/nvim";
+        recursive = true;
+      };
+    };
+
     programs = {
       neovim = {
         enable = true;
