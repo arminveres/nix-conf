@@ -123,6 +123,8 @@
               # my modules
               neovim.enable = true;
 
+              ave.zsh.enable = true;
+
             }
           )
         ];
