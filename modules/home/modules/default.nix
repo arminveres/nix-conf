@@ -1,5 +1,17 @@
-{ inputs, nixpkgs, pkgs, lib, ... }: {
-  imports = [ ./gaming.nix ./hyprland.nix ./neovim.nix ./latex.nix ./rust.nix ./desktop.nix ];
+{
+  lib,
+  ...
+}:
+{
+  imports = [
+    ./gaming.nix
+    ./hyprland.nix
+    ./neovim.nix
+    ./latex.nix
+    ./rust.nix
+    ./desktop.nix
+    ./zsh.nix
+  ];
   # First all by default enabled modules
   rustenv.enable = lib.mkDefault true;
 
@@ -9,4 +21,5 @@
   hyprlandwm.enable = lib.mkDefault false;
   neovim.enable = lib.mkDefault false;
   latex.enable = lib.mkDefault false;
+  ave.zsh.enable = lib.mkDefault false;
 }
