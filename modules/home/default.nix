@@ -86,7 +86,7 @@
   };
 
   services.syncthing = {
-    enable = true;
+    enable = false; # currently not required, obsidian is synced internally.
     # disable as it does not correctly start as requested
     tray.enable = false;
   };
