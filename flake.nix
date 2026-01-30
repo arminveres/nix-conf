@@ -21,6 +21,8 @@
     };
 
     probe-rs-rules.url = "github:jneem/probe-rs-rules";
+
+    pwndbg.url = "github:pwndbg/pwndbg";
   };
 
   outputs =
@@ -65,9 +67,15 @@
       # standalone instantiations.
       homeConfigurations."ubuntu" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
+        extraSpecialArgs = { inherit inputs systemSettings; };
         modules = [
           (
-            { pkgs, lib, ... }:
+            {
+              inputs,
+              pkgs,
+              lib,
+              ...
+            }:
             {
               nixpkgs.overlays = overlays;
               imports = [ ./modules/home/modules ];
@@ -77,7 +85,10 @@
                 homeDirectory = systemSettings.homeDirectory;
                 # IMPORTANT: set this once and don’t change it casually.
                 stateVersion = "26.05"; # pick your HM release/state version
-                packages = with pkgs; [ ];
+                packages = [
+                  pkgs.nodejs
+                  inputs.pwndbg.packages.${system}.pwndbg
+                ];
               };
 
               xdg.enable = true;
