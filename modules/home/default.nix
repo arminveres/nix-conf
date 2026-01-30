@@ -49,40 +49,6 @@
       enable = true;
       createDirectories = true;
     };
-    mime.enable = true;
-  };
-
-  home.sessionVariables = { GTK_THEME = "Colloid-Orange-Dark"; };
-  home.file.".face".source = .assets/profile.jpg;
-  home.file.".config/face.jpg".source = .assets/profile.jpg;
-
-  # NOTE(aver): a better way to automatically stow all my needs files, as in contrast to 
-  # sourcing the file, where the files as un-writable
-  home.activation = {
-    dotfileSetup = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      pushd /home/${systemSettings.username}/nix-conf/dotfiles
-      ${pkgs.stow}/bin/stow -vt /home/${systemSettings.username} \
-           alacritty \
-           ghostty \
-           nvim \
-           scripts \
-           qmk \
-           ripgrep \
-           swaync \
-           tmux \
-           waybar \
-           fuzzel \
-           zsh \
-           wlogout \
-           xdg
-      popd
-
-      pushd /home/${systemSettings.username}/nix-conf/dotfiles/dotfiles-secret
-      ${pkgs.stow}/bin/stow -vt /home/${systemSettings.username} \
-          git \
-          ssh
-      popd
-    '';
   };
 
   services.syncthing = {
