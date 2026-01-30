@@ -63,82 +63,13 @@
             ;
         }
       );
-      # TODO(aver): Move into modules, refactor the ./modules/home/default.nix file to accommodate
-      # standalone instantiations.
+      # TODO(aver): move to similar layout as nixosConfigurations, 
+      # or use flake-parts.
       homeConfigurations."ubuntu" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        extraSpecialArgs = { inherit inputs systemSettings; };
+        extraSpecialArgs = { inherit inputs systemSettings overlays; };
         modules = [
-          (
-            {
-              inputs,
-              pkgs,
-              lib,
-              ...
-            }:
-            {
-              nixpkgs.overlays = overlays;
-              imports = [ ./modules/home/modules ];
-
-              home = {
-                username = systemSettings.username;
-                homeDirectory = systemSettings.homeDirectory;
-                # IMPORTANT: set this once and don’t change it casually.
-                stateVersion = "26.05"; # pick your HM release/state version
-                packages = [
-                  pkgs.nodejs
-                  inputs.pwndbg.packages.${system}.pwndbg
-                ];
-              };
-
-              xdg.enable = true;
-
-              programs = {
-                home-manager.enable = true;
-                nh = {
-                  enable = true;
-                  clean.enable = true;
-                  clean.extraArgs = "--keep-since 4d --keep 3";
-                  flake = "${systemSettings.homeDirectory}/nix-conf?submodules=1"; # sets NH_OS_FLAKE variable for you
-                };
-
-                fzf = {
-                  enable = true;
-                  enableZshIntegration = true;
-                  tmux.enableShellIntegration = true;
-                  # defaultCommand = "rg --hidden -l ''";
-                  # defaultCommand = "fd --type f";
-                  defaultOptions = [
-                    "--height 40%"
-                    "--layout=reverse"
-                    "--border"
-                  ];
-                };
-
-                zoxide = {
-                  enable = true;
-                  enableZshIntegration = true;
-                  options = [ "--cmd cd" ];
-                };
-
-                direnv = {
-                  nix-direnv.enable = true;
-                  enable = true;
-                  enableZshIntegration = true;
-                };
-
-                ripgrep.enable = true;
-                fd.enable = true;
-              };
-
-              # my modules
-              ave = {
-                neovim.enable = true;
-                zsh.enable = true;
-              };
-
-            }
-          )
+          ./modules/home
         ];
       };
 
