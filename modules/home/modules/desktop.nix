@@ -1,10 +1,10 @@
 { pkgs, lib, config, ... }: {
-  options = {
+  options.ave = {
     desktop.enable = lib.mkEnableOption
       "enables Home-Manager Desktop module, which includes basic tools to work with a GUI based system.";
   };
 
-  config = lib.mkIf config.desktop.enable {
+  config = lib.mkIf config.ave.desktop.enable {
     programs = {
       mpv.enable = true;
       zathura = {

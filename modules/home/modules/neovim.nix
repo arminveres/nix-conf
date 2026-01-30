@@ -8,10 +8,10 @@ let
   link = config.lib.file.mkOutOfStoreSymlink;
 in
 {
-  options.neovim.enable = lib.mkEnableOption "enables Home-Manager NeoVim module";
+  options.ave.neovim.enable = lib.mkEnableOption "enables Home-Manager NeoVim module";
 
   # FIXME(aver): does not work on submodules
-  config = lib.mkIf config.neovim.enable {
+  config = lib.mkIf config.ave.neovim.enable {
 
     # TODO(aver): https://blog.daniel-beskin.com/2025-10-18-symlinking-home-manager
     xdg.configFile = {

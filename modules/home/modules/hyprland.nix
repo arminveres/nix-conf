@@ -1,10 +1,16 @@
-{ inputs, pkgs, lib, config, ... }: {
-  options = {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
+  options.ave = {
     hyprlandwm.enable = lib.mkEnableOption "enables Home-Manager Hyprland module";
     hyprlandwm.hostConfig = lib.mkOption { };
   };
 
-  config = lib.mkIf config.hyprlandwm.enable {
+  config = lib.mkIf config.ave.hyprlandwm.enable {
 
     home.packages = with pkgs; [
       fuzzel
@@ -50,16 +56,14 @@
           general = {
             lock_cmd = "pidof hyprlock || hyprlock"; # avoid starting multiple hyprlock instances.
             before_sleep_cmd = "loginctl lock-session"; # lock before suspend.
-            after_sleep_cmd =
-              "hyprctl dispatch dpms on"; # to avoid having to press a key twice to turn on the display.
+            after_sleep_cmd = "hyprctl dispatch dpms on"; # to avoid having to press a key twice to turn on the display.
           };
 
           listener = [
             {
               timeout = 240;
               on-timeout = "hyprctl dispatch dpms off"; # screen off when timeout has passed
-              on-resume =
-                "hyprctl dispatch dpms on"; # screen on when activity is detected after timeout has fired.
+              on-resume = "hyprctl dispatch dpms on"; # screen on when activity is detected after timeout has fired.
             }
             {
               timeout = 360;
@@ -67,8 +71,7 @@
             }
             {
               timeout = 900;
-              on-timeout =
-                "bash -c '[[ -f ~/.config/hypr/sleep_inhibit.flag ]] || systemctl suspend'";
+              on-timeout = "bash -c '[[ -f ~/.config/hypr/sleep_inhibit.flag ]] || systemctl suspend'";
             }
           ];
 
@@ -141,20 +144,17 @@
           font_color = "rgb(10, 10, 10)";
           fade_on_empty = true;
           fade_timeout = 1000; # Milliseconds before fade_on_empty is triggered.
-          placeholder_text =
-            "<i>Input Password...</i>"; # Text rendered in the input box when it's empty.
+          placeholder_text = "<i>Input Password...</i>"; # Text rendered in the input box when it's empty.
           hide_input = false;
           rounding = -1; # -1 means complete rounding (circle/oval)
           check_color = "rgb(204, 136, 34)";
-          fail_color =
-            "rgb(204, 34, 34)"; # if authentication failed, changes outer_color and fail message color
+          fail_color = "rgb(204, 34, 34)"; # if authentication failed, changes outer_color and fail message color
           fail_text = "<i>$FAIL <b>($ATTEMPTS)</b></i>"; # can be set to empty
           # TODO(aver): does not exist
           # fail_transition = 300; # transition time in ms between normal outer_color and fail_color
           capslock_color = -1;
           numlock_color = -1;
-          bothlock_color =
-            -1; # when both locks are active. -1 means don't change outer color (same for above)
+          bothlock_color = -1; # when both locks are active. -1 means don't change outer color (same for above)
           invert_numlock = false; # change color if numlock is off
           swap_font_color = false; # see below
 
@@ -195,7 +195,9 @@
 
       # https://github.com/nix-community/home-manager/blob/master/tests/modules/services/window-managers/hyprland/simple-config.nix
       settings = lib.recursiveUpdate {
-        xwayland = { force_zero_scaling = true; };
+        xwayland = {
+          force_zero_scaling = true;
+        };
 
         general = {
           # See https://wiki.hyprland.org/Configuring/Variables/ for more
@@ -251,8 +253,7 @@
         };
         dwindle = {
           # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
-          pseudotile =
-            true; # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+          pseudotile = true; # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
           preserve_split = true; # you probably want this
         };
         master = {
@@ -421,7 +422,7 @@
           "solaar -w hide"
           "xrdb ~/.Xresources"
         ];
-      } config.hyprlandwm.hostConfig;
+      } config.ave.hyprlandwm.hostConfig;
     };
   };
 }
