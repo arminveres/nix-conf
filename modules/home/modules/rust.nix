@@ -1,8 +1,8 @@
 { pkgs, lib, config, ... }: {
-  options.rustenv.enable =
+  options.ave.rustenv.enable =
     lib.mkEnableOption "enables Home-Manager RustEnv module";
 
-  config = lib.mkIf config.rustenv.enable {
+  config = lib.mkIf config.ave.rustenv.enable {
     home.packages = with pkgs; [
       rustup
       cargo-cache

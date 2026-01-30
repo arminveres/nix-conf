@@ -1,10 +1,10 @@
 { pkgs, lib, config, ... }:
 {
-  options = {
+  options.ave = {
     latex.enable = lib.mkEnableOption "enables Home-Manager Latex module";
   };
 
-  config = lib.mkIf config.latex.enable {
+  config = lib.mkIf config.ave.latex.enable {
 
     home.packages = with pkgs; [
       pandoc
