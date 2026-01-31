@@ -11,6 +11,7 @@
     ./rust.nix
     ./desktop.nix
     ./zsh.nix
+    ./terminal-tools.nix
   ];
   ave = {
     # First all by default enabled modules
@@ -23,5 +24,6 @@
     neovim.enable = lib.mkDefault false;
     latex.enable = lib.mkDefault false;
     zsh.enable = lib.mkDefault false;
+    terminal-tools.enable = lib.mkDefault false;
   };
 }

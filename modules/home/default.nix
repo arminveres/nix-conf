@@ -25,34 +25,6 @@
       flake = "${systemSettings.homeDirectory}/nix-conf?submodules=1"; # sets NH_OS_FLAKE variable for you
     };
 
-    fzf = {
-      enable = true;
-      enableZshIntegration = true;
-      tmux.enableShellIntegration = true;
-      # defaultCommand = "rg --hidden -l ''";
-      # defaultCommand = "fd --type f";
-      defaultOptions = [
-        "--height 40%"
-        "--layout=reverse"
-        "--border"
-      ];
-    };
-
-    zoxide = {
-      enable = true;
-      enableZshIntegration = true;
-      options = [ "--cmd cd" ];
-    };
-
-    direnv = {
-      nix-direnv.enable = true;
-      enable = true;
-      enableZshIntegration = true;
-    };
-
-    ripgrep.enable = true;
-    fd.enable = true;
-
   };
 
   imports = [ ./modules ];
@@ -83,11 +55,9 @@
       [
         nodejs
 
-        # eza
         # fastfetch
         # gh
         # tldr
-        # fzf
         # ncdu
         # imagemagick # for converting stuff
         # stow

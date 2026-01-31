@@ -1,4 +1,10 @@
-{ inputs, systemSettings, pkgs, ... }: {
+{
+  inputs,
+  systemSettings,
+  pkgs,
+  ...
+}:
+{
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
@@ -24,10 +30,13 @@
 
   home-manager.users.${systemSettings.username} = {
     # my modules
-    neovim.enable = true;
-    gaming.enable = false;
-    latex.enable = true;
-    desktop.enable = true;
+    ave = {
+      neovim.enable = true;
+      gaming.enable = false;
+      latex.enable = true;
+      desktop.enable = true;
+      terminal-tools.enable = true;
+    };
 
     services = {
       blueman-applet.enable = true;

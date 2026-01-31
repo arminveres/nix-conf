@@ -126,11 +126,7 @@ in
         tmux
 
         nodejs
-        zoxide
-        ripgrep
-        fd
         unzip
-        lazygit
 
         powertop
         wl-clipboard
