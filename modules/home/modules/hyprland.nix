@@ -199,9 +199,9 @@
 
         general = {
           # See https://wiki.hyprland.org/Configuring/Variables/ for more
-          gaps_in = 3;
-          gaps_out = 3;
-          border_size = 1;
+          gaps_in = 0;
+          gaps_out = 0;
+          border_size = 2;
           layout = "master"; # dwindle
           "col.active_border" = "rgba(83a598ee) rgba(b8bb26ee) 45deg";
           "col.inactive_border" = "rgba(595959aa)";
@@ -226,7 +226,7 @@
         };
         decoration = {
           # See https://wiki.hyprland.org/Configuring/Variables/ for more
-          rounding = 7;
+          rounding = 0;
         };
 
         animations = {
