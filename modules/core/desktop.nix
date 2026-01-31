@@ -89,6 +89,7 @@
       nerd-fonts.iosevka-term
       nerd-fonts.jetbrains-mono
       nerd-fonts.mononoki
+      nerd-fonts.martian-mono
     ];
   };
 }
