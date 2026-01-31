@@ -1,7 +1,12 @@
-{ pkgs, lib, config, ... }: {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
   options = {
-    desktop.enable = lib.mkEnableOption
-      "enables Home-Manager Desktop module, which includes basic tools to work with a GUI based system.";
+    desktop.enable = lib.mkEnableOption "enables Home-Manager Desktop module, which includes basic tools to work with a GUI based system.";
   };
 
   config = lib.mkIf config.desktop.enable {
@@ -57,7 +62,9 @@
     dconf = {
       enable = true;
       settings = {
-        "org/gnome/desktop/interface" = { color-scheme = "prefer-dark"; };
+        "org/gnome/desktop/interface" = {
+          color-scheme = "prefer-dark";
+        };
       };
     };
 
@@ -65,16 +72,26 @@
       enable = true;
       theme = {
         name = "Colloid-Orange-Dark";
-        package = (pkgs.colloid-gtk-theme.override {
-          themeVariants = [ "orange" ];
-          colorVariants = [ "dark" ];
-          tweaks = [ "black" "rimless" "normal" ];
-        });
+        package = (
+          pkgs.colloid-gtk-theme.override {
+            themeVariants = [ "orange" ];
+            colorVariants = [ "dark" ];
+            tweaks = [
+              "black"
+              "rimless"
+              "normal"
+            ];
+          }
+        );
       };
       iconTheme = {
         name = "Adwaita";
         package = pkgs.adwaita-icon-theme;
       };
+    };
+    services.gnome-keyring = {
+      enable = true;
+      components = [ "ssh" ];
     };
   };
 }
