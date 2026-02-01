@@ -6,17 +6,17 @@
   ...
 }:
 let
-  link = config.lib.file.mkOutOfStoreSymlink;
+  helpers = import ../helpers.nix { inherit config systemSettings; };
 in
 {
   options.ave.zsh.enable = lib.mkEnableOption "enables Home-Manager ZSH module";
 
   config = lib.mkIf config.ave.zsh.enable {
+
     xdg.configFile = {
-      "zsh/functions.zsh" = {
-        source = link "${config.home.homeDirectory}/nix-conf/dotfiles/zsh/.config/zsh/modules";
-        recursive = true;
-      };
+      "zsh/modules".source = helpers.linkSubDir "zsh" "modules";
+      "zsh/completion".source = helpers.linkSubDir "zsh" "completion";
+      "zsh/scripts".source = helpers.linkSubDir "zsh" "scripts";
     };
 
     programs.zsh = {

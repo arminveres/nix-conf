@@ -6,6 +6,8 @@
   ...
 }:
 {
+  # nixpkgs.overlays = overlays;
+
   programs = {
     home-manager.enable = true;
     btop = {
@@ -43,8 +45,6 @@
     tray.enable = false;
   };
 
-  nixpkgs.overlays = overlays;
-
   home = {
     username = systemSettings.username;
     homeDirectory = systemSettings.homeDirectory;
@@ -71,17 +71,7 @@
         # miro
       ]
       ++ [
-        inputs.pwndbg.packages.${system}.pwndbg
+        inputs.pwndbg.packages.${systemSettings.system}.pwndbg
       ];
   };
-
-  programs = {
-  };
-
-  # my modules
-  ave = {
-    neovim.enable = true;
-    zsh.enable = true;
-  };
-
 }
