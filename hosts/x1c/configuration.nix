@@ -26,8 +26,6 @@
   # enable hyprlock pam authentication
   # security.pam.services.hyprlock = { fprintAuth = false; enableGnomeKeyring = true; };
 
-  programs.zsh.shellAliases = { ptop = "sudo powertop"; };
-
   home-manager.users.${systemSettings.username} = {
     # my modules
     ave = {
