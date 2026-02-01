@@ -128,7 +128,6 @@ in
         nodejs
         unzip
 
-        powertop
         wl-clipboard
 
         mesa-demos
