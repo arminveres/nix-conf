@@ -2,10 +2,11 @@
   pkgs,
   lib,
   config,
+  systemSettings,
   ...
 }:
 let
-  link = config.lib.file.mkOutOfStoreSymlink;
+  helpers = import ../helpers.nix { inherit config systemSettings; };
 in
 {
   options.ave.neovim.enable = lib.mkEnableOption "enables Home-Manager NeoVim module";
@@ -13,13 +14,7 @@ in
   # FIXME(aver): does not work on submodules
   config = lib.mkIf config.ave.neovim.enable {
 
-    # TODO(aver): https://blog.daniel-beskin.com/2025-10-18-symlinking-home-manager
-    xdg.configFile = {
-      "nvim" = {
-        source = link "${config.home.homeDirectory}/dotfiles/nvim/.config/nvim";
-        recursive = true;
-      };
-    };
+    xdg.configFile = (helpers.linkDir "nvim");
 
     programs = {
       neovim = {

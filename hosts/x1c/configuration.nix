@@ -27,13 +27,31 @@
   # security.pam.services.hyprlock = { fprintAuth = false; enableGnomeKeyring = true; };
 
   home-manager.users.${systemSettings.username} = {
+    services = {
+      blueman-applet.enable = true;
+      easyeffects.enable = true;
+      hyprpaper = {
+        settings = {
+          # set the default wallpaper(s) seen on initial workspace(s) --depending on the number of monitors used
+          wallpaper = [
+            {
+              monitor = "eDP-1";
+              path = "~/nix-conf/dotfiles/wallpapers/Pictures/wallpapers/selected/desert-dunes-4k-bx.jpg";
+            }
+          ];
+        };
+      };
+    };
+
     # my modules
     ave = {
+      zsh.enable = true;
       neovim.enable = true;
       gaming.enable = false;
       latex.enable = true;
       desktop.enable = true;
       terminal-tools.enable = true;
+
       hyprlandwm = {
         enable = true;
         hostConfig = {
@@ -103,22 +121,6 @@
           ];
 
           gesture = [ "3, horizontal, workspace" ];
-        };
-      };
-    };
-
-    services = {
-      blueman-applet.enable = true;
-      easyeffects.enable = true;
-      hyprpaper = {
-        settings = {
-          # set the default wallpaper(s) seen on initial workspace(s) --depending on the number of monitors used
-          wallpaper = [
-            {
-              monitor = "eDP-1";
-              path = "~/nix-conf/dotfiles/wallpapers/Pictures/wallpapers/selected/desert-dunes-4k-bx.jpg";
-            }
-          ];
         };
       };
     };
