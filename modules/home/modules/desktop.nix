@@ -104,9 +104,5 @@
         package = pkgs.adwaita-icon-theme;
       };
     };
-    services.gnome-keyring = {
-      enable = true;
-      components = [ "ssh" ];
-    };
   };
 }

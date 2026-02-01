@@ -39,7 +39,6 @@
         # no need to redefine it in your config for now)
         #media-session.enable = true;
       };
-      gnome.gnome-keyring.enable = true;
       ratbagd.enable = true;
     };
 

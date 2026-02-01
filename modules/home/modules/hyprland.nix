@@ -404,10 +404,6 @@
         ];
 
         exec-once = [
-          # ''
-          #   export "$(${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)"
-          # ''
-          # "${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --daemonize --login"
           # "polkit-agent-helper-1"
 
           "${pkgs.swaynotificationcenter}/bin/swaync"
