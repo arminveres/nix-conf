@@ -29,7 +29,6 @@
       pulseaudio
       slurp
       swaynotificationcenter
-      swayosd
       udiskie
       waybar
       wdisplays
@@ -96,6 +95,9 @@
             }
           ];
         };
+      };
+      swayosd = {
+        enable = true;
       };
     };
 
@@ -412,7 +414,6 @@
           "${pkgs.waybar}/bin/waybar"
           "${pkgs.udiskie}/bin/udiskie --tray --notify"
           "${pkgs.pasystray}/bin/pasystray"
-          "${pkgs.swayosd}/bin/swayosd-server"
           "${pkgs.kanshi}/bin/kanshi"
           "nm-applet"
           "tmux new -s daemon -d"
@@ -424,5 +425,6 @@
         ];
       } config.ave.hyprlandwm.hostConfig;
     };
+
   };
 }
