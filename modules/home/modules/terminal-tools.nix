@@ -62,6 +62,17 @@ in
           style = "plain";
         };
       };
+
+      keychain = {
+        enable = true;
+        enableZshIntegration = lib.mkIf config.ave.zsh.enable true;
+        extraFlags = [
+          "--noask"
+          "--quiet"
+          "--quick"
+        ];
+        keys = [ "id_ed25519" ];
+      };
     };
   };
 }
