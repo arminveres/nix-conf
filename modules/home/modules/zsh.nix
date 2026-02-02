@@ -137,9 +137,11 @@ in
         mktempdir = "cd $(mktemp -d)";
         visudo = "sudo visudo";
       };
+
       localVariables = {
         zsh_start_time = "$(python3 -c 'import time; print(int(time.time() * 1000))')";
       };
+
       # TODO(aver): Integrate into home-manager
       initContent = ''
         # ==================================================================================================
@@ -219,6 +221,7 @@ in
         zsh_end_time=$(python3 -c 'import time; print(int(time.time() * 1000))')
         echo "Shell init time: $((zsh_end_time - zsh_start_time)) ms"
       '';
+
       plugins = [
         {
           name = "git-prompt";

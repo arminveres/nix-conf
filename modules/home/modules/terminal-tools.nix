@@ -50,7 +50,7 @@ in
 
       lazygit = {
         enable = true;
-        enableZshIntegration = lib.mkIf config.ave.zsh.enable true;
+        enableZshIntegration = false;
         # TODO(aver): Consider moving configuration here.
       };
 
@@ -73,6 +73,18 @@ in
         ];
         keys = [ "id_ed25519" ];
       };
+
+      zsh.initExtra = ''
+        #
+        # Use a better lg function alias
+        #
+        function lg {
+          pushd $(realpath .) >/dev/null
+          lazygit
+          popd >/dev/null
+        }
+      '';
+
     };
   };
 }
