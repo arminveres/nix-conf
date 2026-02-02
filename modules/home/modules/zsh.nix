@@ -21,6 +21,8 @@ in
 
     programs.zsh = {
       enable = true;
+      # enable for profiling
+      zprof.enable = false;
       autocd = true;
       history = {
         append = true;
@@ -66,7 +68,9 @@ in
         MANPAGER = "nvim +Man!";
         VIMTEX_OUTPUT_DIRECTORY = "build";
         DISTRO = "$(lsb_release -i | awk '{print $3}')";
+        ZSH_COMPDUMP = "${"$"}{XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-${"$"}{ZSH_VERSION}";
       };
+
       envExtra = ''
         path+=(
           /usr/local/bin
@@ -110,7 +114,7 @@ in
 
         _comp_options+=(globdots)      # Include hidden files.
 
-        autoload -Uz compinit && compinit
+        autoload -Uz compinit && compinit -d ${"$"}ZSH_COMPDUMP
 
         # -------------------------------------------------------------------------------------------------
         # END
@@ -137,7 +141,7 @@ in
         zsh_start_time = "$(python3 -c 'import time; print(int(time.time() * 1000))')";
       };
       # TODO(aver): Integrate into home-manager
-      initContent = lib.mkAfter ''
+      initContent = ''
         # ==================================================================================================
         # Sourcing plugins and custom scripts
         # ==================================================================================================
@@ -161,10 +165,10 @@ in
         # ==================================================================================================
         # Key-bindings
         # ==================================================================================================
-        # bindkey -s '^v' "^U$ZDOTDIR/scripts/fzf_vim.sh^M"
-        # bindkey -s '^f' "^Ucdi^M"
-        # bindkey -s '^s' "^Utmux-sessionizer^M"
+        bindkey -s '^v' "^U$ZDOTDIR/scripts/fzf_vim.sh^M"
         bindkey -s '^_' "^U$ZDOTDIR/scripts/conf.sh^M"
+        bindkey -s '^f' "^Ucdi^M"
+        # bindkey -s '^s' "^Utmux-sessionizer^M"
 
         bindkey "^[[3~" delete-char
         bindkey '^o' end-of-line
