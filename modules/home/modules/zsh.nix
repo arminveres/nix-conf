@@ -1,7 +1,8 @@
 {
-  systemSettings,
   lib,
   config,
+  systemSettings,
+  pkgs,
   ...
 }:
 let
@@ -17,6 +18,7 @@ in
         recursive = true;
       };
     };
+
     programs.zsh = {
       enable = true;
       autocd = true;
@@ -149,12 +151,12 @@ in
         source "$ZDOTDIR/modules/git.zsh"
 
         # Prompt
-        source "$ZDOTDIR/plugins/git-prompt.zsh/git-prompt.zsh"
+        # source "$ZDOTDIR/plugins/git-prompt.zsh/git-prompt.zsh"
         source "$ZDOTDIR/modules/prompt.zsh"
 
         # Plugins
-        # For more plugins: https://github.com/unixorn/awesome-zsh-plugins
-        source "$ZDOTDIR/plugins/zsh-autopair/zsh-autopair.plugin.zsh"
+        # initialize autopair plugin
+        autopair-init
 
         # ==================================================================================================
         # Key-bindings
@@ -213,6 +215,27 @@ in
         zsh_end_time=$(python3 -c 'import time; print(int(time.time() * 1000))')
         echo "Shell init time: $((zsh_end_time - zsh_start_time)) ms"
       '';
+      plugins = [
+        {
+          name = "git-prompt";
+          src = pkgs.fetchFromGitHub {
+            owner = "woefe";
+            repo = "git-prompt.zsh";
+            rev = "990bdc073bde9b00d9683f19b8d408a5c8a407d6";
+            sha256 = "sha256-zlIfEDDcL7DkfXLhLvfzgXZ0Q9Q2jinJ6e+0E+BGR+0=";
+          };
+        }
+        {
+          name = "zsh-completions";
+          src = pkgs.zsh-completions;
+          completions = [ "share/zsh/site-functions" ];
+        }
+        {
+          name = "zsh-autopair";
+          src = pkgs.zsh-autopair;
+          file = "share/zsh/zsh-autopair/autopair.zsh";
+        }
+      ];
     };
   };
 }
