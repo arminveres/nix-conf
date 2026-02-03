@@ -32,10 +32,15 @@ in
         };
       };
 
-      zsh.shellAliases = {
-        vi = "nvim";
-        viup = "nvim --headless '+Lazy! sync' +qa";
-        vim = "nvim";
+      zsh = {
+        sessionVariables = {
+          EDITOR = "${pkgs.neovim}/bin/nvim";
+        };
+        shellAliases = {
+          vi = "nvim";
+          viup = "nvim --headless '+Lazy! sync' +qa";
+          vim = "nvim";
+        };
       };
 
       opencode = {
@@ -46,13 +51,31 @@ in
     home.packages = with pkgs; [
       tree-sitter
       # LSPs and Formatters
+      lua-language-server
+      stylua
       cppcheck
       bear # add to generate compile_commands.json, if necessary
+      clang-tools
       marksman
       nixd # official nix lsp
       nixfmt
-      go
+      taplo
+      yaml-language-server
+      shfmt
+      shellcheck
+      prettier
+      neocmakelsp
+      vscode-json-languageserver
+      mdformat
+      gitlint
+      basedpyright
+      bash-language-server
       # rust-analyzer
+
+      # binaries
+      go
+      jq
+
       # TODO(aver): move these into cli development module
       difftastic
       delta

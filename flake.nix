@@ -63,7 +63,7 @@
             ;
         }
       );
-      # TODO(aver): move to similar layout as nixosConfigurations, 
+      # TODO(aver): move to similar layout as nixosConfigurations,
       # or use flake-parts.
       homeConfigurations."ubuntu" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
