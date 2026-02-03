@@ -77,7 +77,7 @@ in
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
-    defaultUserShell = pkgs.zsh;
+    # defaultUserShell = pkgs.zsh;
     users.${systemSettings.username} = {
       isNormalUser = true;
       description = "Armin Veres";
@@ -155,75 +155,6 @@ in
       clean.enable = true;
       clean.extraArgs = "--keep-since 4d --keep 3";
       flake = "/home/${systemSettings.username}/nix-conf?submodules=1"; # sets NH_OS_FLAKE variable for you
-    };
-
-    zsh = {
-      enable = true;
-      shellAliases = {
-        nxfclean = "nh clean all --keep 3 --optimise";
-        nxclean = "nh clean user --keep 3 --optimise";
-      };
-      shellInit = ''
-        # This messes up with running binaries, e.g., hyprctl, let us ignore for now.
-        # export LD_LIBRARY_PATH="$NIX_LD_LIBRARY_PATH:$LD_LIBRARY_PATH"
-
-        # Pretty print log messages
-        function log() {
-            printf "\n<<<< $1 >>>>\n\n"
-        }
-
-        function lrebuild() {
-            case "$(uname)" in
-            Linux)
-                sudo nixos-rebuild switch --flake "$FLAKE#$(hostname)"
-                ;;
-            Darwin)
-                darwin-rebuild switch --flake "$HOME/nix-conf#armins-macbook"
-                ;;
-            esac
-        }
-
-        # @brief rebuilds the system on my remote server
-        function rrebuild() {
-            nixos-rebuild switch \
-                --flake "$FLAKE#$(hostname)" \
-                --build-host arminserver-zt \
-                --use-remote-sudo
-        }
-
-        # Create a flake out of a directory/repository
-        function flakify() {
-            if [ ! -e flake.nix ]; then
-                nix flake new -t github:nix-community/nix-direnv .
-            elif [ ! -e .envrc ]; then
-                echo "use flake" >.envrc
-                direnv allow
-            fi
-            ${"EDITOR:-vim"} flake.nix
-        }
-
-        # Update flake based nix setup and create a commit with the date and time
-        function nxup() {
-            local GIT_REPO=$HOME/nix-conf
-
-            log "Running NixOS system update"
-            if ! nh os boot --update; then
-                log "Update failed!"
-                return
-            fi
-
-            log "Creating commit for update"
-            pushd $GIT_REPO
-            git commit $GIT_REPO/flake.lock \
-                -m "build(flake): update lockfile $(date -u +%Y-%m-%dT%H:%M%Z)"
-            if [[ $? -ne 0 ]]; then
-                git commit --amend \
-                    -m "build(flake): update lockfile $(date -u +%Y-%m-%dT%H:%M%Z)"
-            fi
-            popd
-            log "Update successful!"
-        }
-      '';
     };
 
     nix-ld = {

@@ -19,6 +19,11 @@ in
       "zsh/scripts".source = helpers.linkSubDir "zsh" "scripts";
     };
 
+    # set the shell here, nowhere else.
+    home.sessionVariables = {
+      SHELL = "${pkgs.zsh}/bin/zsh";
+    };
+
     programs.zsh = {
       enable = true;
       # enable for profiling
@@ -68,7 +73,6 @@ in
         MANPAGER = "nvim +Man!";
         VIMTEX_OUTPUT_DIRECTORY = "build";
         DISTRO = "$(lsb_release -i | awk '{print $3}')";
-        ZSH_COMPDUMP = "${"$"}{XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-${"$"}{ZSH_VERSION}";
       };
 
       envExtra = ''
@@ -114,7 +118,7 @@ in
 
         _comp_options+=(globdots)      # Include hidden files.
 
-        autoload -Uz compinit && compinit -d ${"$"}ZSH_COMPDUMP
+        autoload -Uz compinit && compinit #-d $ZDOTDIR/.zcompdump
 
         # -------------------------------------------------------------------------------------------------
         # END
@@ -136,6 +140,8 @@ in
         dd = "dd status=progress";
         mktempdir = "cd $(mktemp -d)";
         visudo = "sudo visudo";
+        nxfclean = "nh clean all --keep 3 --optimise";
+        nxclean = "nh clean user --keep 3 --optimise";
       };
 
       localVariables = {
@@ -204,6 +210,55 @@ in
                 alias dup='dnf upgrade'
                 alias doffup='dnf offline-upgrade download -y && dnf offline-upgrade reboot'
                 ;;
+            NixOS)
+                # Pretty print log messages
+                function log() {
+                    printf "\n<<<< $1 >>>>\n\n"
+                }
+
+                #
+                # Rebuilds the system on my remote server
+                #
+                function rrebuild() {
+                    nixos-rebuild switch \
+                        --flake "$FLAKE#$(hostname)" \
+                        --build-host arminserver-zt \
+                        --use-remote-sudo
+                }
+
+                # Create a flake out of a directory/repository
+                function flakify() {
+                    if [ ! -e flake.nix ]; then
+                        nix flake new -t github:nix-community/nix-direnv .
+                    elif [ ! -e .envrc ]; then
+                        echo "use flake" >.envrc
+                        direnv allow
+                    fi
+                    ${"EDITOR:-vim"} flake.nix
+                }
+
+                # Update flake based nix setup and create a commit with the date and time
+                function nxup() {
+                    local GIT_REPO=$HOME/nix-conf
+
+                    log "Running NixOS system update"
+                    if ! nh os boot --update; then
+                        log "Update failed!"
+                        return
+                    fi
+
+                    log "Creating commit for update"
+                    pushd $GIT_REPO
+                    git commit $GIT_REPO/flake.lock \
+                        -m "build(flake): update lockfile $(date -u +%Y-%m-%dT%H:%M%Z)"
+                    if [[ $? -ne 0 ]]; then
+                        git commit --amend \
+                            -m "build(flake): update lockfile $(date -u +%Y-%m-%dT%H:%M%Z)"
+                    fi
+                    popd
+                    log "Update successful!"
+                }
+            ;;
             *) ;;
             esac
         fi
