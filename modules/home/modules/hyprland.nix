@@ -181,7 +181,7 @@
 
         };
       };
-      zsh.initExtra = ''
+      zsh.initContent = ''
         function resprg() {
           pkill $1
           hyprctl dispatch exec $1
