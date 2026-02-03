@@ -74,7 +74,7 @@ in
         keys = [ "id_ed25519" ];
       };
 
-      zsh.initExtra = ''
+      zsh.initContent = ''
         #
         # Use a better lg function alias
         #

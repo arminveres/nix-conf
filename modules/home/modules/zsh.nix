@@ -16,7 +16,6 @@ in
     xdg.configFile = {
       "zsh/modules".source = helpers.linkSubDir "zsh" "modules";
       "zsh/completion".source = helpers.linkSubDir "zsh" "completion";
-      "zsh/scripts".source = helpers.linkSubDir "zsh" "scripts";
     };
 
     # set the shell here, nowhere else.
@@ -146,6 +145,7 @@ in
 
       localVariables = {
         zsh_start_time = "$(python3 -c 'import time; print(int(time.time() * 1000))')";
+        ZMODULES = "$ZDOTDIR/modules";
       };
 
       # TODO(aver): Integrate into home-manager
@@ -155,27 +155,23 @@ in
         # ==================================================================================================
 
         # Useful Functions
-        source "$ZDOTDIR/modules/functions.zsh"
+        source "$ZMODULES/functions.zsh"
 
         # Normal files to source
         # Exports are needed before aliases
-        source "$ZDOTDIR/modules/vim_mode.zsh"
-        source "$ZDOTDIR/modules/git.zsh"
+        source "$ZMODULES/vim_mode.zsh"
+        source "$ZMODULES/git.zsh"
 
         # Prompt
-        # source "$ZDOTDIR/plugins/git-prompt.zsh/git-prompt.zsh"
-        source "$ZDOTDIR/modules/prompt.zsh"
+        source "$ZMODULES/prompt.zsh"
 
-        # Plugins
         # initialize autopair plugin
         autopair-init
 
         # ==================================================================================================
         # Key-bindings
         # ==================================================================================================
-        bindkey -s '^v' "^U$ZDOTDIR/scripts/fzf_vim.sh^M"
-        bindkey -s '^_' "^U$ZDOTDIR/scripts/conf.sh^M"
-        bindkey -s '^f' "^Ucdi^M"
+        source "$ZMODULES/keybinds.zsh"
         # bindkey -s '^s' "^Utmux-sessionizer^M"
 
         bindkey "^[[3~" delete-char
