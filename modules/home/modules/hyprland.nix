@@ -13,7 +13,6 @@
   config = lib.mkIf config.ave.hyprlandwm.enable {
 
     home.packages = with pkgs; [
-      fuzzel
       grim
       gthumb
       hyprcursor
@@ -102,6 +101,7 @@
     };
 
     programs = {
+
       hyprlock = {
         enable = true;
         settings = {
@@ -181,6 +181,42 @@
 
         };
       };
+
+      fuzzel = {
+        enable = true;
+        settings = {
+          main = {
+            font = "Mononoki Nerd Font Propo:weight=bold";
+            terminal = "${pkgs.alacritty}/bin/alacritty -e";
+            fuzze = "yes";
+            dpi-aware = true;
+            layer = "overlay";
+
+            lines = 10;
+            width = 80;
+            tabs = 8;
+            horizontal-pad = 30;
+            vertical-pad = 20;
+            inner-pad = 10;
+            image-size-ratio = 0.5;
+            line-height = 30;
+          };
+          colors = {
+            background = "1d2021f0";
+            text = "fbf1c7ff";
+            match = "fb4934ff";
+            selection = "fe8019dd";
+            selection-text = "ffffffff";
+            selection-match = "000000ff";
+            border = "98971a00";
+          };
+          border = {
+            width = 1;
+            radius = 20;
+          };
+        };
+      };
+
       zsh.initContent = ''
         function resprg() {
           pkill $1
