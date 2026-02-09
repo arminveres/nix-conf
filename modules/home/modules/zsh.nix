@@ -35,6 +35,7 @@ in
         ignoreSpace = true;
       };
       setOptions = [
+        "AUTO_PUSHD" # Make cd push the old directory onto the directory stack.
         # Treat  the  `#', `~' and `^' characters as part of patterns for filename generation, etc.
         # (An initial unquoted `~' always produces named directory expansion.)
         # "EXTENDED_GLOB"
