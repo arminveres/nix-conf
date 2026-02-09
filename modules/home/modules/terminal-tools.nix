@@ -1,12 +1,8 @@
 {
-  pkgs,
   lib,
   config,
   ...
 }:
-let
-  link = config.lib.file.mkOutOfStoreSymlink;
-in
 {
   options.ave.terminal-tools.enable = lib.mkEnableOption "enables Home-Manager Terminal Tools module";
 
