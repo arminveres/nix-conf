@@ -154,8 +154,7 @@ in
         # ==================================================================================================
         # Sourcing plugins and custom scripts
         # ==================================================================================================
-
-        # Useful Functions
+        source "$ZMODULES/dotdot.zsh"
         source "$ZMODULES/functions.zsh"
 
         # Normal files to source
