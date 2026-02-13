@@ -126,7 +126,6 @@ in
       '';
 
       shellAliases = {
-        hswitch = "home-manager switch -b backup --flake \"${systemSettings.homeDirectory}/nix-conf?submodules=1#ubuntu\" --verbose";
         # ================================================================================================
         # aliasing coreutils
         # ================================================================================================
