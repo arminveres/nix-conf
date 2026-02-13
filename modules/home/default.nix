@@ -1,12 +1,9 @@
 {
   pkgs,
   systemSettings,
-  overlays,
-  inputs,
   ...
 }:
 {
-  # nixpkgs.overlays = overlays;
 
   programs = {
     home-manager.enable = true;
@@ -50,28 +47,23 @@
     homeDirectory = systemSettings.homeDirectory;
     # IMPORTANT: set this once and don’t change it casually.
     stateVersion = "26.05"; # pick your HM release/state version
-    packages =
-      with pkgs;
-      [
-        nodejs
+    packages = with pkgs; [
+      nodejs
 
-        # fastfetch
-        # gh
-        # tldr
-        # ncdu
-        # imagemagick # for converting stuff
-        # stow
+      # fastfetch
+      # gh
+      # tldr
+      # ncdu
+      # imagemagick # for converting stuff
+      # stow
 
-        # TODO(aver): investigate utility
-        # age
-        # termshark
-        # atac
-        # sshs
-        # portal
-        # miro
-      ]
-      ++ [
-        inputs.pwndbg.packages.${systemSettings.system}.pwndbg
-      ];
+      # TODO(aver): investigate utility
+      # age
+      # termshark
+      # atac
+      # sshs
+      # portal
+      # miro
+    ];
   };
 }

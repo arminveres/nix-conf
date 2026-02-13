@@ -63,15 +63,17 @@
             ;
         }
       );
-      # TODO(aver): move to similar layout as nixosConfigurations,
-      # or use flake-parts.
-      homeConfigurations."ubuntu" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = { inherit inputs systemSettings overlays; };
-        modules = [
-          ./modules/home
-        ];
-      };
+      homeConfigurations = (
+        import ./home {
+          inherit
+            home-manager
+            inputs
+            overlays
+            pkgs
+            systemSettings
+            ;
+        }
+      );
 
       # # Don't inherit pkgs and system, as it is not a x86_64-linux based system
       # darwinConfigurations =
