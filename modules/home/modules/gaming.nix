@@ -12,7 +12,7 @@ in {
       heroic # heroic game launcher
       # protonup-qt
       protonplus
-      xorg.xrdb
+      xrdb
     ];
     # ensure that steam is scaled. Base is 96, multiply with whatever scaling
     xresources.extraConfig = "Xft.dpi: ${getXDpi 1.5}";
