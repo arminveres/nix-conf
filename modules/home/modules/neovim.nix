@@ -70,6 +70,8 @@ in
       gitlint
       basedpyright
       bash-language-server
+      # docker-language-server
+      dockerfile-language-server-nodejs
       # rust-analyzer
 
       # binaries
