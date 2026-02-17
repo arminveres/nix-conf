@@ -44,6 +44,8 @@
       ripgrep.enable = true;
       fd.enable = true;
 
+      lazydocker.enable = true;
+
       lazygit = {
         enable = true;
         enableZshIntegration = false;
@@ -67,19 +69,24 @@
           "--quiet"
           "--quick"
         ];
-        keys = [ "id_ed25519" ];
       };
 
-      zsh.initContent = ''
-        #
-        # Use a better lg function alias
-        #
-        function lg {
-          pushd $(realpath .) >/dev/null
-          lazygit
-          popd >/dev/null
-        }
-      '';
+      # Extra shell configs for these tools
+      zsh = {
+        initContent = ''
+          #
+          # Use a better lg function alias
+          #
+          function lg {
+            pushd $(realpath .) >/dev/null
+            lazygit
+            popd >/dev/null
+          }
+        '';
+        shellAliases = {
+          lad = "lazydocker";
+        };
+      };
 
     };
   };
