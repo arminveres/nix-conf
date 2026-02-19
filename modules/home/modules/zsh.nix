@@ -265,6 +265,12 @@ in
             trap 'printf "\033k\033\\"' EXIT
         fi
 
+
+        ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[red]%}"
+        ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[green]%}●"
+        ZSH_THEME_GIT_PROMPT_UNSTAGED="%{$fg[red]%}"
+        ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}"
+
         # ==================================================================================================
         # END
         # ==================================================================================================
