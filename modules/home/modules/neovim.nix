@@ -71,7 +71,7 @@ in
       basedpyright
       bash-language-server
       # docker-language-server
-      dockerfile-language-server-nodejs
+      dockerfile-language-server
       # rust-analyzer
 
       # binaries
