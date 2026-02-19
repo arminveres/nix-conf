@@ -49,7 +49,25 @@
       lazygit = {
         enable = true;
         enableZshIntegration = false;
-        # TODO(aver): Consider moving configuration here.
+        settings = {
+          git = {
+            autoStageResolvedConflicts = false;
+            pagers = [
+              { pager = "delta --paging=never --side-by-side"; }
+              { externalDiffCommand = "difft --color=always --syntax-highlight=off"; } # --display=inline
+              { pager = "delta --paging=never"; }
+            ];
+          };
+          os = {
+            copyToClipboardCmd = ''
+              if [[ "$TERM" =~ ^(screen|tmux) ]]; then
+                printf "\033Ptmux;\033\033]52;c;$(printf {{text}} | base64 -w 0)\a\033\\" > /dev/tty
+              else
+                printf "\033]52;c;$(printf {{text}} | base64 -w 0)\a" > /dev/tty
+              fi
+            '';
+          };
+        };
       };
 
       bat = {
