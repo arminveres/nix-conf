@@ -74,9 +74,5 @@
             ;
         }
       );
-
-      # # Don't inherit pkgs and system, as it is not a x86_64-linux based system
-      # darwinConfigurations =
-      #   (import ./darwin { inherit self inputs nixpkgs home-manager nix-darwin; });
     };
 }
