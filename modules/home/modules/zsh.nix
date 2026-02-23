@@ -73,6 +73,9 @@ in
         MANPAGER = "nvim +Man!";
         VIMTEX_OUTPUT_DIRECTORY = "build";
         DISTRO = "$(lsb_release -i | awk '{print $3}')";
+
+        # Location where Zsh dumps its completion cache (speeds up startup)
+        ZSH_COMPLETION_DUMP = "$XDG_CACHE_HOME/zsh/.zcompdump";
       };
 
       envExtra = ''
@@ -95,11 +98,46 @@ in
         # Completions Configuration
         # -------------------------------------------------------------------------------------------------
 
+        _comp_options+=(globdots)      # Include hidden files.
+
         # We need to set fpath here, because it gets loaded by /etc/zsh* very early
         fpath+=(
-          $ZDOTDIR/plugins/zsh-completions/src
-          $ZDOTDIR/completion
+          "$ZDOTDIR/plugins/zsh-completions/src"
+          "$ZDOTDIR/completion"
         )
+
+        autoload -Uz compinit
+
+        # Glob Logic:
+        # #q : Start glob qualifiers
+        # N  : Nullglob (don't error if file missing)
+        # .  : Plain files only
+        # mh : Modification time in hours
+        # +24: Older than 24 hours
+        if [[ ! -f "$ZSH_COMPLETION_DUMP" || -n "$ZSH_COMPLETION_DUMP"(#qN.mh+24) ]]; then
+
+            # Scenario A: Cache is old or missing. Rebuild.
+            # -i: Ignore insecure directories (don't ask user)
+            # -u: Use insecure directories (silently)
+            # -d: Dump path
+            compinit -i -u -d "$ZSH_COMPLETION_DUMP"
+
+            # Touch the file to reset its modification time, preventing compaudit loops
+            touch "$ZSH_COMPLETION_DUMP"
+        else
+
+            # Scenario B: Cache is fresh. Fast Load.
+            # -C: Skip ALL security checks, trust the dump file
+            compinit -C -d "$ZSH_COMPLETION_DUMP"
+
+        fi
+
+
+        # Compile for speed
+        if [[ ! -f "$ZSH_COMPLETION_DUMP.zwc" || "$ZSH_COMPLETION_DUMP" -nt "$ZSH_COMPLETION_DUMP.zwc" ]]; then
+            zcompile "$ZSH_COMPLETION_DUMP" &!
+
+        fi
 
         # shows current location type
         zstyle ':completion:*:*:*:*:descriptions' format '%F{green}-- %d --%f'
@@ -115,10 +153,6 @@ in
         # Add colors from ls to completions
         zstyle ':completion:*:default' list-colors ${"$"}{(s.:.)LS_COLORS}
         zmodload zsh/complist
-
-        _comp_options+=(globdots)      # Include hidden files.
-
-        autoload -Uz compinit && compinit #-d $ZDOTDIR/.zcompdump
 
         # -------------------------------------------------------------------------------------------------
         # END
@@ -148,7 +182,6 @@ in
         ZMODULES = "$ZDOTDIR/modules";
       };
 
-      # TODO(aver): Integrate into home-manager
       initContent = ''
         # ==================================================================================================
         # Sourcing plugins and custom scripts
@@ -170,6 +203,8 @@ in
         # ==================================================================================================
         # Key-bindings
         # ==================================================================================================
+        # TODO(aver): use zmodload to get proper escapes, see
+        # https://github.com/adityastomar67/zsh-conf/blob/b20cf56556d68cb743edb07e872a8cbf121d4a61/zsh/conf.d/keybinds.zsh#L36
         source "$ZMODULES/keybinds.zsh"
         # bindkey -s '^s' "^Utmux-sessionizer^M"
 
