@@ -30,6 +30,11 @@
       hyprlandwm = {
         enable = true;
         hostConfig = {
+          cursor = {
+          # otherwise my cursor disappears...?
+            no_hardware_cursors = 1;
+          };
+
           monitor = [
             # Bitdepth 10 provides some compability issues with screensharing.
             "DP-1,      3840x2160@240,  0x0,        1.5"
@@ -146,6 +151,8 @@
         };
       };
     };
+
+    programs.keychain.keys = [ "id_ed25519" ];
 
   };
 
