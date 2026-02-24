@@ -48,7 +48,6 @@
         NAUTILUS_4_EXTENSION_DIR = "${pkgs.nautilus-python}/lib/nautilus/extensions-4";
         # https://wiki.hyprland.org/Getting-Started/Master-Tutorial/#force-apps-to-use-wayland
         NIXOS_OZONE_WL = "1";
-        WLR_NO_HARDWARE_CURSORS = "1";
       };
     };
 
