@@ -22,7 +22,7 @@ in
   # Generate documentation caches, as from NixOS 21.05 they ware not automatically created.
   # https://wiki.nixos.org/wiki/Apropos
   documentation = {
-  enable = true;
+    enable = true;
     man.generateCaches = true;
   };
 
@@ -150,6 +150,7 @@ in
   };
 
   programs = {
+    zsh.enable = true;
     nh = {
       enable = true;
       clean.enable = true;
