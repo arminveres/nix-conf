@@ -73,6 +73,7 @@ in
       # docker-language-server
       dockerfile-language-server
       # rust-analyzer
+      bitbake-language-server
 
       # binaries
       go
