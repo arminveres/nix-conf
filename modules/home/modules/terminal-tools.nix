@@ -110,6 +110,9 @@
     };
 
     services.tldr-update.enable = true;
-    home.packages = with pkgs; [ tldr ];
+    home.packages = with pkgs; [
+      tldr
+      gh # use as package otherwise config is not writable
+    ];
   };
 }
