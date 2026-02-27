@@ -52,6 +52,7 @@
         enableZshIntegration = false;
         settings = {
           git = {
+            overrideGpg = true;
             autoStageResolvedConflicts = false;
             pagers = [
               { pager = "delta --paging=never --side-by-side"; }
