@@ -75,7 +75,7 @@
         enable = true;
         config = {
           pager = "less --RAW-CONTROL-CHARS --quit-if-one-screen --mouse";
-          theme = "TwoDark";
+          theme = "Visual Studio Dark+";
           style = "plain";
         };
       };
