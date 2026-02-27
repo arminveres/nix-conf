@@ -74,6 +74,7 @@ in
       dockerfile-language-server
       # rust-analyzer
       bitbake-language-server
+      systemd-lsp
 
       # binaries
       go
