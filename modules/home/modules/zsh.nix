@@ -226,6 +226,22 @@ in
         autoload edit-command-line; zle -N edit-command-line
         bindkey '^e' edit-command-line
 
+        # Create a flake out of a directory/repository
+        function flakify() {
+            if [ ! -e flake.nix ]; then
+                nix flake new -t github:nix-community/nix-direnv .
+            elif [ ! -e .envrc ]; then
+                echo "use flake" >.envrc
+                direnv allow
+            fi
+            ${"EDITOR:-vim"} flake.nix
+        }
+
+        # Pretty print log messages
+        function _log() {
+            printf "\n<<<< $1 >>>>\n\n"
+        }
+
         # ================================================================================================
         # Distro specifig setup
         # ================================================================================================
@@ -236,6 +252,26 @@ in
                 alias upd='sudo apt update && sudo apt upgrade'
                 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"                   # This loads nvm
                 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+
+                function nxup() {
+                    local git_repo="$HOME/nix-conf"
+                    readonly message="build(flake): update lockfile (home-manager) $(date -u +%Y-%m-%dT%H:%M%Z)"
+
+                    _log "Running Nix Home-Manager update"
+                    if ! nh home switch --configuration ubuntu-cli --update; then
+                        _log "Update failed!"
+                        return
+                    fi
+
+                    _log "Creating commit for update"
+                    pushd $git_repo
+                    git commit $git_repo/flake.lock -m "$message"
+                    if [[ $? -ne 0 ]]; then
+                        git commit --amend -m "$message"
+                    fi
+                    popd
+                    _log "Update successful!"
+                }
                 ;;
             Fedora) # echo Fedora
                 alias dnf='sudo dnf'
@@ -244,11 +280,6 @@ in
                 alias doffup='dnf offline-upgrade download -y && dnf offline-upgrade reboot'
                 ;;
             NixOS)
-                # Pretty print log messages
-                function log() {
-                    printf "\n<<<< $1 >>>>\n\n"
-                }
-
                 #
                 # Rebuilds the system on my remote server
                 #
@@ -259,49 +290,29 @@ in
                         --use-remote-sudo
                 }
 
-                # Create a flake out of a directory/repository
-                function flakify() {
-                    if [ ! -e flake.nix ]; then
-                        nix flake new -t github:nix-community/nix-direnv .
-                    elif [ ! -e .envrc ]; then
-                        echo "use flake" >.envrc
-                        direnv allow
-                    fi
-                    ${"EDITOR:-vim"} flake.nix
-                }
-
                 # Update flake based nix setup and create a commit with the date and time
                 function nxup() {
-                    local GIT_REPO=$HOME/nix-conf
+                    local git_repo=$HOME/nix-conf
+                    readonly message="build(flake): update lockfile $(date -u +%Y-%m-%dT%H:%M%Z)"
 
-                    log "Running NixOS system update"
+                    _log "Running NixOS system update"
                     if ! nh os boot --update; then
-                        log "Update failed!"
+                        _log "Update failed!"
                         return
                     fi
 
-                    log "Creating commit for update"
-                    pushd $GIT_REPO
-                    git commit $GIT_REPO/flake.lock \
-                        -m "build(flake): update lockfile $(date -u +%Y-%m-%dT%H:%M%Z)"
+                    _log "Creating commit for update"
+                    pushd $git_repo
+                    git commit $git_repo/flake.lock -m "$message"
                     if [[ $? -ne 0 ]]; then
-                        git commit --amend \
-                            -m "build(flake): update lockfile $(date -u +%Y-%m-%dT%H:%M%Z)"
+                        git commit --amend -m "$message"
                     fi
                     popd
-                    log "Update successful!"
+                    _log "Update successful!"
                 }
             ;;
-            *) ;;
             esac
         fi
-
-        if [[ -n $SSH_CONNECTION ]]; then
-            # Set window name to hostname when in SSH
-            printf '\033k%s\033\\' "$(hostname -s)"
-            # trap 'printf "\033k\033\\"' EXIT
-        fi
-
 
         ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[red]%}"
         ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[green]%}●"
@@ -315,11 +326,6 @@ in
         # ==================================================================================================
         zsh_end_time=$(python3 -c 'import time; print(int(time.time() * 1000))')
         echo "Shell init time: $((zsh_end_time - zsh_start_time)) ms"
-      '';
-
-      logoutExtra = ''
-        # Reset window name on exit
-        printf "\033k\033\\"
       '';
 
       plugins = [
