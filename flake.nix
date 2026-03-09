@@ -23,6 +23,8 @@
     probe-rs-rules.url = "github:jneem/probe-rs-rules";
 
     pwndbg.url = "github:pwndbg/pwndbg";
+
+    subportal.url = "github:zimbatm/subportal";
   };
 
   outputs =
