@@ -10,6 +10,11 @@
   };
 
   config = lib.mkIf config.ave.desktop.enable {
+    services.nextcloud-client = {
+      enable = true;
+      startInBackground = true;
+    };
+
     programs = {
       mpv.enable = true;
       zathura = {
@@ -50,7 +55,6 @@
         mission-center
         libreoffice
         kdePackages.okular
-        nextcloud-client
         obsidian
         signal-desktop
         # vesktop
