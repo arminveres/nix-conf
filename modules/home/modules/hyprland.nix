@@ -59,12 +59,12 @@
 
           listener = [
             {
-              timeout = 240;
+              timeout = 480;
               on-timeout = "hyprctl dispatch dpms off"; # screen off when timeout has passed
               on-resume = "hyprctl dispatch dpms on"; # screen on when activity is detected after timeout has fired.
             }
             {
-              timeout = 360;
+              timeout = 600;
               on-timeout = "loginctl lock-session"; # lock screen when timeout has passed
             }
             {
@@ -247,8 +247,8 @@
 
         general = {
           # See https://wiki.hyprland.org/Configuring/Variables/ for more
-          gaps_in = 0;
-          gaps_out = 0;
+          gaps_in = 2;
+          gaps_out = 5;
           border_size = 2;
           layout = "master"; # dwindle
           "col.active_border" = "rgba(83a598ee) rgba(b8bb26ee) 45deg";
@@ -274,7 +274,7 @@
         };
         decoration = {
           # See https://wiki.hyprland.org/Configuring/Variables/ for more
-          rounding = 0;
+          rounding = 5;
         };
 
         animations = {
@@ -423,6 +423,7 @@
 
           "$mainMod SHIFT, p, exec, hyprshot --clipboard-only -m window"
           "$mainMod SHIFT, s, exec, hyprshot --clipboard-only -m region"
+          "$mainMod SHIFT, x, exec, hyprshot --output-folder ~/Pictures/screenshots -m region"
 
           "ALT, ESCAPE, exec, wlogout"
         ];
@@ -456,8 +457,6 @@
           "${pkgs.pasystray}/bin/pasystray"
           "${pkgs.kanshi}/bin/kanshi"
           "nm-applet"
-          "tmux new -s daemon -d"
-          "nextcloud --background"
           # "protonmail-bridge-gui --no-window" # "protonmail-bridge -n -l info"
           "corectrl --minimize-systray"
           "solaar -w hide"

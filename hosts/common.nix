@@ -23,7 +23,7 @@ in
   # https://wiki.nixos.org/wiki/Apropos
   documentation = {
     enable = true;
-    man.generateCaches = true;
+    man.cache.enable = true;
   };
 
   nixpkgs = {
@@ -145,6 +145,7 @@ in
         s-tui
         stress-ng
         lm_sensors
+        pciutils
       ]
       ++ myLibs;
   };
@@ -162,7 +163,10 @@ in
       enable = true;
       libraries = myLibs;
     };
-    light.enable = true;
+    # TODO(aver): Find replacement for laptop:
+    # The corresponding package was removed from nixpkgs due to being unmaintained upstream.
+    # `brightnessctl` and `hardware.acpilight` offer replacements.
+    # light.enable = true;
     direnv.enable = true;
 
     # Some programs need SUID wrappers, can be configured further or are
