@@ -89,6 +89,7 @@
 
     gtk = {
       enable = true;
+      # GTK 2/3
       theme = {
         name = "Colloid-Orange-Dark";
         package = (
@@ -102,6 +103,23 @@
             ];
           }
         );
+      };
+      # TODO(aver): Update home state version to 26.05 or newer, then this can be removed
+      gtk4 = {
+        theme = {
+          name = "Colloid-Orange-Dark";
+          package = (
+            pkgs.colloid-gtk-theme.override {
+              themeVariants = [ "orange" ];
+              colorVariants = [ "dark" ];
+              tweaks = [
+                "black"
+                "rimless"
+                "normal"
+              ];
+            }
+          );
+        };
       };
       iconTheme = {
         name = "Adwaita";
