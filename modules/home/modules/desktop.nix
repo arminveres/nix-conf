@@ -77,7 +77,6 @@
     };
 
     xdg.mime.enable = true;
-
     dconf = {
       enable = true;
       settings = {
@@ -100,6 +99,7 @@
               "black"
               "rimless"
               "normal"
+              "gruvbox"
             ];
           }
         );
