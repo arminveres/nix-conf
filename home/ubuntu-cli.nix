@@ -24,14 +24,6 @@
     terminal-tools.enable = true;
   };
 
-  imports = [ inputs.subportal.homeModules.subportald ];
-  services.subportald = {
-    enable = true;
-    sshHosts = {
-      "builder" = { };
-    };
-  };
-
   programs = {
     nh.homeFlake = "${systemSettings.homeDirectory}/nix-conf?submodules=1";
     zsh = {
