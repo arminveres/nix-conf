@@ -9,14 +9,20 @@
 {
   nixpkgs.overlays = overlays;
 
-  home.packages =
-    with pkgs;
-    [
-      devbox
-    ]
-    ++ [
-      inputs.pwndbg.packages.${systemSettings.system}.pwndbg
-    ];
+  home = {
+    sessionVariables = {
+      # ensure that external GUIs also inherit this path, e.g., neovide
+      PATH = "${systemSettings.homeDirectory}/.nix-profile/bin:$PATH";
+    };
+    packages =
+      with pkgs;
+      [
+        devbox
+      ]
+      ++ [
+        inputs.pwndbg.packages.${systemSettings.system}.pwndbg
+      ];
+  };
 
   ave = {
     zsh.enable = true;
