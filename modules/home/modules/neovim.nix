@@ -72,6 +72,7 @@ in
       bash-language-server
       # docker-language-server
       dockerfile-language-server
+      dockerfmt
       # rust-analyzer
       bitbake-language-server
       systemd-lsp
