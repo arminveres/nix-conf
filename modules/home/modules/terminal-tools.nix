@@ -15,6 +15,10 @@
         icons = "always";
         git = true; # do i need this?
         enableZshIntegration = lib.mkIf config.ave.zsh.enable true;
+        extraOptions = [
+          "--group"
+          "--group-directories-first"
+        ];
       };
 
       fzf = {
