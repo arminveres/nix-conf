@@ -11,3 +11,4 @@ or with nix helper
 ## TODOs
 
 - [ ] setup [disko](https://saylesss88.github.io/nix/minimal_install.html) for preconfigured disk management.
+- [ ] Consider separating Home-Manager from system configuration for improved speed
