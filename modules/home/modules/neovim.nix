@@ -75,6 +75,7 @@ in
       # rust-analyzer
       bitbake-language-server
       systemd-lsp
+      texlab
 
       # binaries
       go
