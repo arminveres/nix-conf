@@ -266,7 +266,7 @@
         misc = {
           # set adaptive sync rate, 0=off, 1=on, 2=fullscreen only
           vrr = 2;
-          vfr = true;
+          # vfr = true;
           # we need to set this, otherwise turning dpms off results in off displays
           key_press_enables_dpms = true;
           # allow to restore if the monitor goes off; happens with my OLED when regenerating
