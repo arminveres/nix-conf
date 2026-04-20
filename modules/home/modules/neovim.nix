@@ -17,10 +17,8 @@ in
     xdg.configFile = (helpers.linkDir "nvim");
 
     programs = {
-      neovim = {
-        enable = true;
-        package = pkgs.neovim;
-      };
+      # TODO: 20-04-2026 disable program management, as config files may be generated...
+      # neovim = { enable = true; package = pkgs.neovim; };
 
       neovide = {
         enable = false;
@@ -49,6 +47,7 @@ in
     };
 
     home.packages = with pkgs; [
+      neovim
       tree-sitter
       # LSPs and Formatters
       lua-language-server
