@@ -36,6 +36,9 @@
         enable = true;
         package = pkgs.openjdk17;
       };
+
+      firefox.enable = true;
+      chromium.enable = true; # Some web-based apps do not work in firefox
     };
 
     home = {
@@ -43,7 +46,6 @@
         gnome-calculator
         gnome-disk-utility
         dconf
-        firefox # browser
         alacritty # terminal
         # ghostty  # TODO(aver): 18-07-2025 seems to have some weird loading issues
         nautilus # filebrowser
@@ -60,6 +62,7 @@
         # vesktop
         discord
         drawio
+        teams-for-linux
       ];
 
       pointerCursor = {
