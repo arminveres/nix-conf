@@ -10,10 +10,12 @@
   nixpkgs.overlays = overlays;
 
   home = {
-    sessionVariables = {
-      # ensure that external GUIs also inherit this path, e.g., neovide
-      PATH = "${systemSettings.homeDirectory}/.nix-profile/bin:$PATH";
-    };
+    # ensure that external GUIs also inherit this path, e.g., neovide
+    sessionPath = [
+      "$HOME/.nix-profile/bin"
+      "/nix/var/nix/profiles/default/bin"
+    ];
+
     packages =
       with pkgs;
       [
