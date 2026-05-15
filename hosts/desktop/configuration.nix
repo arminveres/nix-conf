@@ -12,12 +12,18 @@
 
   gaming.enable = true;
   fm.enable = true;
-  bluetooth.enable = true;
+  # bluetooth.enable = true;
   docker.enable = true;
   desktop.enable = true;
 
   # enable hyprlock pam authentication
   security.pam.services.hyprlock = { };
+
+  services.ollama = {
+    enable = true;
+    package = pkgs.ollama-rocm;
+    rocmOverrideGfx = "10.3.0";
+  };
 
   home-manager.users.${systemSettings.username} = {
     ave = {
@@ -31,14 +37,15 @@
         enable = true;
         hostConfig = {
           cursor = {
-          # otherwise my cursor disappears...?
-            no_hardware_cursors = 1;
+            # otherwise my cursor disappears...?
+            # no_hardware_cursors = 1;
           };
 
           monitor = [
             # Bitdepth 10 provides some compability issues with screensharing.
-            "DP-1,      3840x2160@240,  0x0,        1.5"
-            "DP-2,      1920x1200@60,   auto-left,  1,  transform, 1"
+            # "DP-1,      3840x2160@240,  0x0,        1.5, bitdepth, 10, cm, hdr, sdrbrightness, 2.0, sdrsaturation, 0.98"
+            "DP-1,      3840x2160@240,  0x0,        1.5, bitdepth, 10"
+            "DP-2,      1920x1200@60,   auto-left,  1"
           ];
 
           input = {
@@ -83,13 +90,13 @@
             "5,   monitor:DP-1"
             # use layoutopt:orientation:top for master placement
             # messages
-            "6,   monitor:DP-2, layoutopt:orientation:top, default:true"
+            "6,   monitor:DP-2, default:true"
             # mail
-            "7,   monitor:DP-2, layoutopt:orientation:top"
+            "7,   monitor:DP-2"
             # sound + bluetooth
-            "8,   monitor:DP-2, layoutopt:orientation:top"
-            "9,   monitor:DP-2, layoutopt:orientation:top"
-            "10,  monitor:DP-2, layoutopt:orientation:top"
+            "8,   monitor:DP-2"
+            "9,   monitor:DP-2"
+            "10,  monitor:DP-2"
           ];
 
           windowrule = [
@@ -135,7 +142,7 @@
     };
 
     services = {
-      blueman-applet.enable = true;
+      blueman-applet.enable = false;
       hyprpaper = {
         settings = {
           wallpaper = [
