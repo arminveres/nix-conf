@@ -1,6 +1,13 @@
-{ pkgs, lib, config, ... }:
-let getXDpi = scalingFactor: toString (builtins.floor (96 * scalingFactor));
-in {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+let
+  getXDpi = scalingFactor: toString (builtins.floor (96 * scalingFactor));
+in
+{
   options.ave = {
     gaming.enable = lib.mkEnableOption "enables Home-Manager Gaming module";
   };
@@ -16,5 +23,8 @@ in {
     ];
     # ensure that steam is scaled. Base is 96, multiply with whatever scaling
     xresources.extraConfig = "Xft.dpi: ${getXDpi 1.5}";
+
+    # Save game backup tool
+    services.ludusavi.enable = true;
   };
 }
