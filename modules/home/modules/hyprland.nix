@@ -229,6 +229,9 @@
       enable = true;
       xwayland.enable = true;
 
+      # TODO: 15-05-2026 remove once lua config file is mature.
+      configType = "hyprlang";
+
       # do not set the packages, use those from top NixOS module:
       # https://wiki.hypr.land/Nix/Hyprland-on-Home-Manager/#using-the-home-manager-module-with-nixos
       package = null;
