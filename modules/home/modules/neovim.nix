@@ -43,7 +43,7 @@ in
 
       opencode = {
         enable = true;
-        skills = {
+        agents = {
           caveman = ''
             ---
             name: caveman
@@ -163,4 +163,5 @@ in
       claude-code
     ];
   };
+
 }
