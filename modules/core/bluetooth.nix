@@ -1,4 +1,5 @@
-{ pkgs, lib, config, ... }: {
+{ lib, config, ... }:
+{
   options = {
     bluetooth.enable = lib.mkEnableOption "enables Nix bluetooth module";
   };

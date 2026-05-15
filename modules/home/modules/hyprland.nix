@@ -298,12 +298,11 @@
           allow_workspace_cycles = true;
         };
         dwindle = {
-          # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
-          pseudotile = true; # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+          # See https://wiki.hyprland.org/Configuring/Dwindle-Layout
           preserve_split = true; # you probably want this
         };
         master = {
-          # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
+          # See https://wiki.hyprland.org/Configuring/Master-Layout
           new_status = "master";
           new_on_top = true;
           # orientation = "center";
