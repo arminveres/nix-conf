@@ -418,10 +418,10 @@
           # Capslock (If you don't want to use the backend)
           ", --release Caps_Lock, exec, swayosd-client --caps-lock"
 
-          # Brightness raise
-          ", XF86MonBrightnessUp, exec, swayosd-client --brightness raise 5"
           # Brightness lower
-          ", XF86MonBrightnessDown, exec, swayosd-client --brightness lower 5"
+          ", XF86MonBrightnessDown, exec, swayosd-client --brightness lower"
+          # Brightness raise
+          ", XF86MonBrightnessUp, exec, swayosd-client --brightness raise"
 
           "$mainMod SHIFT, p, exec, hyprshot --clipboard-only -m window"
           "$mainMod SHIFT, s, exec, hyprshot --clipboard-only -m region"
