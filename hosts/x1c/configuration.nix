@@ -27,6 +27,7 @@
   # security.pam.services.hyprlock = { fprintAuth = false; enableGnomeKeyring = true; };
 
   home-manager.users.${systemSettings.username} = {
+    programs.keychain.keys = [ "id_ed25519" ];
     services = {
       blueman-applet.enable = true;
       easyeffects.enable = true;
