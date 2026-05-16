@@ -31,11 +31,8 @@
         };
       };
 
-      # required for my tax software...
-      java = {
-        enable = true;
-        package = pkgs.openjdk17;
-      };
+      # No reason to enable it for now...
+      # java = { enable = true; };
 
       firefox.enable = true;
       chromium.enable = true; # Some web-based apps do not work in firefox
@@ -63,6 +60,7 @@
         discord
         drawio
         teams-for-linux
+        freecad
       ];
 
       pointerCursor = {
