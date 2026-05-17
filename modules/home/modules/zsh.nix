@@ -194,10 +194,9 @@ in
 
         # Normal files to source
         # Exports are needed before aliases
-        source "$ZMODULES/vim_mode.zsh"
+        # # TODO(aver): lets use the vi plugin, because mine is messed up.
+        # source "$ZMODULES/vim_mode.zsh"
         source "$ZMODULES/git.zsh"
-
-        # Prompt
         source "$ZMODULES/prompt.zsh"
 
         # initialize autopair plugin
@@ -211,20 +210,28 @@ in
         source "$ZMODULES/keybinds.zsh"
         # bindkey -s '^s' "^Utmux-sessionizer^M"
 
-        bindkey "^[[3~" delete-char
-        bindkey '^o' end-of-line
         # bindkey -r "^d"
         # bindkey -r "^u"
 
-        # search using a prefix, e.g., `cd` only searches history including cd
-        autoload -U up-line-or-beginning-search && zle -N up-line-or-beginning-search
-        autoload -U down-line-or-beginning-search && zle -N down-line-or-beginning-search
-        bindkey "^p" up-line-or-beginning-search # Up
-        bindkey "^n" down-line-or-beginning-search # Down
+        # https://github.com/jeffreytse/zsh-vi-mode#execute-extra-commands
+        function _zvm_keybinds {
+            # search using a prefix, e.g., `cd` only searches history including cd
+            autoload -U up-line-or-beginning-search
+            zle -N up-line-or-beginning-search
+            bindkey "^p" up-line-or-beginning-search
 
-        # Edit line in vim with ctrl-e:
-        autoload edit-command-line; zle -N edit-command-line
-        bindkey '^e' edit-command-line
+            autoload -U down-line-or-beginning-search
+            zle -N down-line-or-beginning-search
+            bindkey "^n" down-line-or-beginning-search
+
+            # Edit line in vim with ctrl-e:
+            autoload edit-command-line
+            zle -N edit-command-line
+            bindkey '^e' edit-command-line
+
+            source ${pkgs.fzf}/share/fzf/key-bindings.zsh
+        }
+        zvm_after_init_commands+=(_zvm_keybinds)
 
         # Create a flake out of a directory/repository
         function flakify() {
@@ -357,6 +364,11 @@ in
           name = "zsh-autopair";
           src = pkgs.zsh-autopair;
           file = "share/zsh/zsh-autopair/autopair.zsh";
+        }
+        {
+          name = "zsh-vi-mode";
+          src = pkgs.zsh-vi-mode;
+          file = "share/zsh-vi-mode/zsh-vi-mode.plugin.zsh";
         }
       ];
     };
