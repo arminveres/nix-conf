@@ -1,4 +1,9 @@
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  systemSettings,
+  ...
+}:
 {
   options = {
     bluetooth.enable = lib.mkEnableOption "enables Nix bluetooth module";
@@ -12,5 +17,9 @@
       };
     }; # powers up the default Bluetooth controller on boot
     # NOTE: setup rest in HM.
+
+    # setup librepods
+    programs.librepods.enable = true;
+    users.users.${systemSettings.username}.extraGroups = [ "librepods" ];
   };
 }
