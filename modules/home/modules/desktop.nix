@@ -62,6 +62,7 @@
         drawio
         teams-for-linux
         freecad
+        prusa-slicer
       ];
 
       pointerCursor = {
