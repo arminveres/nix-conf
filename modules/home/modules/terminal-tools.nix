@@ -108,7 +108,7 @@
           }
         '';
         shellAliases = {
-          lad = "lazydocker";
+          lad = "${pkgs.lazydocker}/bin/lazydocker";
         };
       };
 

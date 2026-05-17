@@ -40,6 +40,7 @@
 
     home = {
       packages = with pkgs; [
+        nextcloud-client # ensure we have the binary as well
         gnome-calculator
         gnome-disk-utility
         dconf
