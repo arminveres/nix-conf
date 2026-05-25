@@ -66,17 +66,24 @@
       ];
 
       pointerCursor = {
+        # name = "Adwaita";
+        # package = pkgs.adwaita-icon-theme;
+        # size = 24;
+
+        name = "phinger-cursors-light";
+        package = pkgs.phinger-cursors;
+        size = 32;
         gtk.enable = true;
-        name = "Adwaita";
-        package = pkgs.adwaita-icon-theme;
-        size = 24;
       };
 
       sessionVariables = {
         GTK_THEME = "Colloid-Orange-Dark";
       };
-      file.".face".source = ../.assets/profile.jpg;
-      file.".config/face.jpg".source = ../.assets/profile.jpg;
+
+      file = {
+        ".face".source = ../.assets/profile.jpg;
+        ".config/face.jpg".source = ../.assets/profile.jpg;
+      };
     };
 
     xdg.mime.enable = true;

@@ -12,30 +12,39 @@
 
   config = lib.mkIf config.ave.hyprlandwm.enable {
 
-    home.packages = with pkgs; [
-      grim
-      gthumb
-      hyprcursor
-      hyprland-protocols
-      hyprland-qt-support
-      hyprpicker
-      hyprshot
-      hyprsysteminfo
-      kanshi
-      pasystray
-      pavucontrol
-      playerctl
-      pulseaudio
-      slurp
-      swaynotificationcenter
-      udiskie
-      waybar
-      wdisplays
-      wlogout
-      wlr-randr
-      xcur2png
-      xdg-utils
-    ];
+    home = {
+      packages = with pkgs; [
+        grim
+        gthumb
+        hyprcursor
+        hyprland-protocols
+        hyprland-qt-support
+        hyprpicker
+        hyprshot
+        hyprsysteminfo
+        kanshi
+        pasystray
+        pavucontrol
+        playerctl
+        pulseaudio
+        slurp
+        swaynotificationcenter
+        udiskie
+        waybar
+        wdisplays
+        wlogout
+        wlr-randr
+        xcur2png
+        xdg-utils
+      ];
+
+      pointerCursor = {
+        hyprcursor = {
+          enable = true;
+          size = 32;
+        };
+      };
+    };
 
     services = {
       cliphist.enable = true;
@@ -95,7 +104,12 @@
           ];
         };
       };
+
       swayosd = {
+        enable = true;
+      };
+
+      swaync = {
         enable = true;
       };
     };

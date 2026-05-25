@@ -130,9 +130,6 @@
           ];
 
           env = [
-            "XCURSOR_SIZE,24"
-            "HYPRCURSOR_SIZE,24"
-            "HYPRCURSOR_THEME,Adwaita"
             "QT_QPA_PLATFORM,wayland"
             "GDK_SCALE,1.25"
             "QT_SCALE,1.25"
@@ -163,37 +160,44 @@
 
   };
 
-  hardware.graphics = {
-    extraPackages = with pkgs; [
-      # amdvlk # NOTE: superseded mainly by radv, https://www.phoronix.com/news/AMDVLK-Four-Months-Go
-      # add OpenCL support, or just rely on the amgpu module from `nixos-hardware`
-      # rocmPackages.clr.icd
-      # clinfo
-    ];
-    extraPackages32 = with pkgs; [
-      # driversi686Linux.amdvlk # NOTE: superseded mainly by radv, https://www.phoronix.com/news/AMDVLK-Four-Months-Go
-    ];
-    enable32Bit = true;
+  hardware = {
+    graphics = {
+      extraPackages = with pkgs; [
+        # amdvlk # NOTE: superseded mainly by radv, https://www.phoronix.com/news/AMDVLK-Four-Months-Go
+        # add OpenCL support, or just rely on the amgpu module from `nixos-hardware`
+        # rocmPackages.clr.icd
+        # clinfo
+      ];
+      extraPackages32 = with pkgs; [
+        # driversi686Linux.amdvlk # NOTE: superseded mainly by radv, https://www.phoronix.com/news/AMDVLK-Four-Months-Go
+      ];
+      enable32Bit = true;
+    };
+    probe-rs.enable = true;
   };
-  hardware.probe-rs.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    vulkan-tools
-    ddcui
-    nvtopPackages.amd
-    radeontop
+  environment = {
+    systemPackages = with pkgs; [
+      vulkan-tools
+      ddcui
+      nvtopPackages.amd
+      radeontop
 
-    prusa-slicer
-  ];
+      prusa-slicer
+    ];
 
-  # define default driver
-  environment.variables.AMD_VULKAN_ICD = "RADV";
+    # define default driver
+    variables.AMD_VULKAN_ICD = "RADV";
+  };
 
-  #
-  # scx_lavd, Steam built gaming first scheduler
-  # From NixOS 24.11 onwards, scx is available on Nixpkgs. Using a kernel of version 6.12+ or later is required.
-  #
-  services.scx.enable = true;
-  services.scx.scheduler = "scx_lavd"; # default is "scx_rustland"
-
+  services = {
+    #
+    # scx_lavd, Steam built gaming first scheduler
+    # From NixOS 24.11 onwards, scx is available on Nixpkgs. Using a kernel of version 6.12+ or later is required.
+    #
+    scx = {
+      enable = true;
+      scheduler = "scx_lavd"; # default is "scx_rustland"
+    };
+  };
 }
