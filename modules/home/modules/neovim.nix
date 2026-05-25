@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgs-no-overlay,
   lib,
   config,
   systemSettings,
@@ -21,7 +22,8 @@ in
       # neovim = { enable = true; package = pkgs.neovim; };
 
       neovide = {
-        enable = false;
+        enable = true;
+        package = pkgs-no-overlay.neovide;
         settings = {
           font = {
             normal = [ ];

@@ -17,6 +17,12 @@ let
     fontconfig.lib
     freetype
   ];
+  # create a no overlay package variable, because e.g., neovide has issues with rebuilding because of
+  # neovim-nightly.
+  pkgs-no-overlay = import inputs.nixpkgs {
+    inherit (pkgs) system;
+    config.allowUnfree = true;
+  };
 in
 {
   # Generate documentation caches, as from NixOS 21.05 they ware not automatically created.
@@ -37,7 +43,7 @@ in
     useGlobalPkgs = true;
     useUserPackages = true;
     users.${systemSettings.username} = (import ../modules/home);
-    extraSpecialArgs = { inherit inputs systemSettings; };
+    extraSpecialArgs = { inherit inputs systemSettings pkgs-no-overlay; };
   };
 
   nix = {
