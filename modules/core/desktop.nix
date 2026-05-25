@@ -19,8 +19,10 @@
     services = {
       displayManager = {
         autoLogin.enable = false;
-        gdm = {
+        # gdm = { enable = true; };
+        sddm = {
           enable = true;
+          wayland.enable = true;
         };
       };
 
