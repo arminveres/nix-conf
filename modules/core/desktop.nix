@@ -1,4 +1,12 @@
-{ inputs, pkgs, lib, config, systemSettings, ... }: {
+{
+  inputs,
+  pkgs,
+  lib,
+  config,
+  systemSettings,
+  ...
+}:
+{
   options = {
     desktop.enable = lib.mkEnableOption "enables Nix desktop module. Based on GDM login manager";
   };
@@ -13,7 +21,6 @@
         autoLogin.enable = false;
         gdm = {
           enable = true;
-          wayland = true;
         };
       };
 
