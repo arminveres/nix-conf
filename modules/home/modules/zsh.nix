@@ -90,6 +90,7 @@ in
           "$XDG_DATA_HOME"/bob/nvim-bin
           "$HOME"/.luarocks/bin
           "$DOTNET_ROOT"
+          "$DOTNET_ROOT/tools"
         )
       '';
 
@@ -358,7 +359,7 @@ in
         {
           name = "zsh-completions";
           src = pkgs.zsh-completions;
-          completions = [ "share/zsh/site-functions" ];
+          functions = [ "share/zsh/site-functions" ];
         }
         {
           name = "zsh-autopair";
