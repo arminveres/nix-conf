@@ -146,6 +146,7 @@ in
         stress-ng
         lm_sensors
         pciutils
+        lsof # list open files
       ]
       ++ myLibs;
   };
