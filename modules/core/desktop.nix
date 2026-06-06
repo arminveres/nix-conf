@@ -3,7 +3,6 @@
   pkgs,
   lib,
   config,
-  systemSettings,
   ...
 }:
 {
@@ -12,10 +11,6 @@
   };
 
   config = lib.mkIf config.desktop.enable {
-    # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
-    systemd.services."getty@tty1".enable = false;
-    systemd.services."autovt@tty1".enable = false;
-
     services = {
       displayManager = {
         autoLogin.enable = false;
@@ -23,6 +18,9 @@
         sddm = {
           enable = true;
           wayland.enable = true;
+          # https://wiki.nixos.org/wiki/SDDM_Themes
+          theme = "Elegant";
+          extraPackages = with pkgs; [ elegant-sddm ];
         };
       };
 
@@ -58,6 +56,7 @@
         # https://wiki.hyprland.org/Getting-Started/Master-Tutorial/#force-apps-to-use-wayland
         NIXOS_OZONE_WL = "1";
       };
+      systemPackages = with pkgs; [ elegant-sddm ];
     };
 
     xdg.portal = {
@@ -97,6 +96,7 @@
       nerd-fonts.jetbrains-mono
       nerd-fonts.mononoki
       nerd-fonts.martian-mono
+      ioskeley-mono.normal
     ];
   };
 }
