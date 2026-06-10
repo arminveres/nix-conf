@@ -8,16 +8,14 @@ if hostname:match("nixos-.*") ~= nil then
 			options = {
 				nixos = {
 					expr = '(builtins.getFlake "/home/arminveres/nix-conf").nixosConfigurations.'
-					    .. hostname
-					    .. ".options",
+						.. hostname
+						.. ".options",
 				},
 				home_manager = {
 					-- nixos with hm module
 					expr = '(builtins.getFlake "/home/arminveres/nix-conf").nixosConfigurations.'
-					    .. hostname
-					    .. ".options.home-manager.users.type.getSubOptions []",
-					-- hm styl
-					-- expr = '(builtins.getFlake "/home/arminveres/nix-conf").homeConfigurations.arminveres@' .. vim.uv.os_gethostname() .. ".options",
+						.. hostname
+						.. ".options.home-manager.users.type.getSubOptions []",
 				},
 				-- currently not used
 				-- flake_parts = { expr = 'let flake = builtins.getFlake ("/home/arminveres/nix-conf"); in flake.debug.options // flake.currentSystem.options', },
@@ -25,7 +23,20 @@ if hostname:match("nixos-.*") ~= nil then
 		},
 	}
 else
-	-- TODO: do for hm only configs
+	config = {
+		settings = {
+			options = {
+				nixos = {
+					expr = '(builtins.getFlake "/home/arminveres/nix-conf").nixosConfigurations.'
+						.. hostname
+						.. ".options",
+				},
+				home_manager = {
+					expr = '(builtins.getFlake "/home/arminveres/nix-conf").homeConfigurations.ubuntu-cli.options',
+				},
+			},
+		},
+	}
 end
 
 vim.lsp.config("nixd", config)
