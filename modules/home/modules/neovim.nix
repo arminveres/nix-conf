@@ -170,6 +170,7 @@ in
       systemd-lsp
       texlab
       stylelint
+      black
 
       # binaries
       go
