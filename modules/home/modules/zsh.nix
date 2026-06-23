@@ -103,7 +103,6 @@ in
 
         # We need to set fpath here, because it gets loaded by /etc/zsh* very early
         fpath+=(
-          "$ZDOTDIR/plugins/zsh-completions/src"
           "$ZDOTDIR/completion"
         )
 
@@ -358,7 +357,12 @@ in
         }
         {
           name = "zsh-completions";
-          src = pkgs.zsh-completions;
+          src = pkgs.fetchFromGitHub {
+            owner = "zsh-users";
+            repo = "zsh-completions";
+            rev = "24e22843b96588773bed3c139db94701ca605c32";
+            sha256 = "sha256-Shj+lWb7ySpGWHginoFkNFY8s23xb7/rb4bjcXrhsn4=";
+          };
           functions = [ "share/zsh/site-functions" ];
         }
         {
