@@ -63,6 +63,7 @@
               { externalDiffCommand = "difft --color=always --syntax-highlight=off"; } # --display=inline
               { pager = "delta --paging=never"; }
             ];
+            branchPrefix = ''{{ runCommand "bash -c '[[ \"$(git remote -v)\" =~ \"varian\" ]] && printf \"u/ave/\"'" }}'';
           };
           os = {
             copyToClipboardCmd = ''
