@@ -113,6 +113,7 @@
         };
       };
 
+      uv.enable = true;
     };
 
     services.tldr-update.enable = true;

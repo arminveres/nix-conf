@@ -131,7 +131,7 @@ in
       };
 
       claude-code = {
-        enable = true;
+        enable = false;
         skills = {
           caveman = caveman;
         };
