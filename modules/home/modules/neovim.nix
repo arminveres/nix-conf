@@ -171,6 +171,7 @@ in
       texlab
       stylelint
       black
+      just-lsp
 
       # binaries
       go
