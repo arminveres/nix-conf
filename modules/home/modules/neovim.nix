@@ -140,6 +140,7 @@ in
     };
 
     home.packages = with pkgs; [
+      inputs.maki.packages.${pkgs.system}.default
       neovim
       tree-sitter
       # LSPs and Formatters

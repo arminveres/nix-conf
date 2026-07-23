@@ -448,6 +448,26 @@
         "type": "github"
       }
     },
+    "maki": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1784754540,
+        "narHash": "sha256-CZy2fGty4wjO8k1Z6Kh/nJITGkmPkTz5PxOWY9lAVNk=",
+        "owner": "tontinton",
+        "repo": "maki",
+        "rev": "2acf66acb4087045af714ebcb4cf036032e53bb9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tontinton",
+        "repo": "maki",
+        "type": "github"
+      }
+    },
     "neovim-nightly": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -711,6 +731,7 @@
         "dzgui-nix": "dzgui-nix",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
+        "maki": "maki",
         "neovim-nightly": "neovim-nightly",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_4",

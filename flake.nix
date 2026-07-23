@@ -23,6 +23,11 @@
     probe-rs-rules.url = "github:jneem/probe-rs-rules";
 
     pwndbg.url = "github:pwndbg/pwndbg";
+
+    maki = {
+      url = "github:tontinton/maki";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
