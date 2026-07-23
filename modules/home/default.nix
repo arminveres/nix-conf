@@ -21,7 +21,7 @@
       enable = true;
       clean.enable = true;
       clean.extraArgs = "--keep-since 4d --keep 3";
-      flake = "${systemSettings.homeDirectory}/nix-conf?submodules=1"; # sets NH_OS_FLAKE variable for you
+      flake = "git+file://${systemSettings.homeDirectory}/nix-conf?submodules=1"; # sets NH_OS_FLAKE variable for you
     };
 
   };
