@@ -49,7 +49,6 @@
     stateVersion = "26.05"; # pick your HM release/state version
     packages = with pkgs; [
       nodejs
-      dotnet-sdk_10
 
       # fastfetch
       # gh
