@@ -14,7 +14,8 @@
         colors = "always";
         icons = "always";
         git = true; # do i need this?
-        enableZshIntegration = lib.mkIf config.ave.zsh.enable true;
+        # aliases are owned by dotfiles/zsh/.config/zsh/aliases.zsh
+        enableZshIntegration = false;
         extraOptions = [
           "--group"
           "--group-directories-first"
