@@ -28,6 +28,11 @@
       url = "github:tontinton/maki";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    pi-agent = {
+      url = "github:rbright/nix-pi-agent";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -43,7 +48,7 @@
         timezone = "Europe/Zurich";
         locale = "en_US.UTF-8";
         kernelVersion = "6_18";
-        username = "arminveres";
+        username = "aver";
         homeDirectory = "/home/${username}";
       };
       overlays = [ inputs.neovim-nightly.overlays.default ];
