@@ -62,7 +62,7 @@
             pagers = [
               { pager = "delta --paging=never --side-by-side"; }
               { externalDiffCommand = "difft --color=always --syntax-highlight=off"; } # --display=inline
-              { pager = "delta --paging=never"; }
+              # { pager = "delta --paging=never"; } TODO: lg does not support delta with inline comparison
             ];
             branchPrefix = ''{{ runCommand "bash -c '[[ \"$(git remote -v)\" =~ \"varian\" ]] && printf \"u/ave/\"'" }}'';
           };
