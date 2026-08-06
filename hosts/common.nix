@@ -123,7 +123,6 @@ in
         python3
         wget
         git
-        tmux
 
         nodejs
         unzip

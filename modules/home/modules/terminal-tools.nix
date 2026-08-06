@@ -121,6 +121,7 @@
     home.packages = with pkgs; [
       tldr
       gh # use as package otherwise config is not writable
+      tmux
     ];
   };
 }
