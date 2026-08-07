@@ -59,12 +59,15 @@
           git = {
             overrideGpg = true;
             autoStageResolvedConflicts = false;
-            pagers = [
-              { pager = "delta --paging=never --side-by-side"; }
-              { externalDiffCommand = "difft --color=always --syntax-highlight=off"; } # --display=inline
-              # { pager = "delta --paging=never"; } TODO: lg does not support delta with inline comparison
+            diffRenderers = [
+              { command = "delta --paging=never --side-by-side"; }
+              {
+                command = "difft --color=always --syntax-highlight=off";
+                type = "extDiff";
+              }
+              # { command = "delta --paging=never"; } TODO: lg does not support delta with inline comparison
             ];
-            branchPrefix = ''{{ runCommand "bash -c '[[ \"$(git remote -v)\" =~ \"varian\" ]] && printf \"u/ave/\"'" }}'';
+            branchPrefix = ''{{ runCommand "bash -c '[[ \"$(git remote -v)\" =~ \"varian\" ]] && printf \"u/ave/\" || true'" }}'';
           };
           os = {
             copyToClipboardCmd = ''
