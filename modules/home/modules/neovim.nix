@@ -87,7 +87,12 @@ in
       shfmt
       shellcheck
       prettier
+
+      # cmake stuff
       neocmakelsp
+      cmake-lint
+      gersemi
+
       vscode-json-languageserver
       mdformat
       gitlint
@@ -103,6 +108,7 @@ in
       stylelint
       black
       just-lsp
+      luajitPackages.luacheck
 
       # binaries
       go
@@ -112,6 +118,8 @@ in
       difftastic
       delta
       onefetch
+
+      inotify-tools # improved filewatcher for neovim
     ];
   };
 
