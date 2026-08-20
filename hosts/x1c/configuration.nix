@@ -39,20 +39,34 @@
       hyprlandwm = {
         enable = true;
         hostConfig = {
-          monitor = [ ",preferred,auto,1.0" ];
+          config = {
+            input = {
+              kb_layout = "eu";
+              repeat_rate = 30;
+              repeat_delay = 250;
 
-          input = {
-            kb_layout = "eu";
-            repeat_rate = 30;
-            repeat_delay = 250;
+              follow_mouse = 1;
+              sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
+              touchpad.natural_scroll = true;
 
-            follow_mouse = 1;
-            sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
-            touchpad.natural_scroll = true;
+              force_no_accel = false;
+              accel_profile = "adaptive"; # flat
+            };
 
-            force_no_accel = false;
-            accel_profile = "adaptive"; # flat
+            decoration = {
+              blur.enabled = false;
+              shadow.enabled = false;
+            };
           };
+
+          monitor = [
+            {
+              output = "";
+              mode = "preferred";
+              position = "auto";
+              scale = 1.0;
+            }
+          ];
 
           # only swap keys for the builtin laptop keyboard
           device = [
@@ -68,43 +82,122 @@
           ];
 
           env = [
-            "XCURSOR_SIZE,24"
-            "HYPRCURSOR_SIZE,24"
-            "HYPRCURSOR_THEME,Adwaita"
-            "QT_QPA_PLATFORM,wayland"
+            {
+              _args = [
+                "XCURSOR_SIZE"
+                "24"
+              ];
+            }
+            {
+              _args = [
+                "HYPRCURSOR_SIZE"
+                "24"
+              ];
+            }
+            {
+              _args = [
+                "HYPRCURSOR_THEME"
+                "Adwaita"
+              ];
+            }
+            {
+              _args = [
+                "QT_QPA_PLATFORM"
+                "wayland"
+              ];
+            }
           ];
 
-          decoration = {
-            blur.enabled = false;
-            shadow.enabled = false;
-          };
-          workspace = [ "1, monitor:eDP-1, default:true" ];
-
-          windowrule = [
-            "workspace 4 silent, match:class ^Spotify$"
-            "workspace 4 silent, match:class ^blueman-manager$"
-            "workspace 4 silent, match:class ^easyeffects$"
-
-            "workspace 5 silent, match:class ^steam$"
-            # add steam games to ws 6
-            "workspace 5 silent, match:class ^steam_app_d*$"
-            "monitor 1,          match:class ^steam_app_d*$"
-            "fullscreen on,      match:class ^steam_app_d*$"
-
-            "workspace 7 silent, match:class ^thunderbird$"
-            "workspace 7 silent, match:class ^ch.proton.bridge-gui$"
-
-            "workspace 6 silent, match:class ^signal$"
-            "workspace 6 silent, match:class ^Signal$"
-            "workspace 6 silent, match:class ^discord$"
-            "workspace 6 silent, match:class ^Discord$"
-            "workspace 6 silent, match:class ^WebCord$"
-            "workspace 6 silent, match:title ^Microsoft Teams*$"
-            "tile on,            match:title ^Microsoft Teams*$"
-            "float on,           match:class ^org.gnome.Calculator$"
+          workspace_rule = [
+            {
+              workspace = "1";
+              monitor = "eDP-1";
+              default = true;
+            }
           ];
 
-          gesture = [ "3, horizontal, workspace" ];
+          window_rule = [
+            {
+              match.class = "^Spotify$";
+              workspace = "4 silent";
+            }
+            {
+              match.class = "^blueman-manager$";
+              workspace = "4 silent";
+            }
+            {
+              match.class = "^easyeffects$";
+              workspace = "4 silent";
+            }
+
+            {
+              match.class = "^steam$";
+              workspace = "5 silent";
+            }
+            # add steam games to ws 5
+            {
+              match.class = "^steam_app_d*$";
+              workspace = "5 silent";
+            }
+            {
+              match.class = "^steam_app_d*$";
+              monitor = "1";
+            }
+            {
+              match.class = "^steam_app_d*$";
+              fullscreen = true;
+            }
+
+            {
+              match.class = "^thunderbird$";
+              workspace = "7 silent";
+            }
+            {
+              match.class = "^ch.proton.bridge-gui$";
+              workspace = "7 silent";
+            }
+
+            {
+              match.class = "^signal$";
+              workspace = "6 silent";
+            }
+            {
+              match.class = "^Signal$";
+              workspace = "6 silent";
+            }
+            {
+              match.class = "^discord$";
+              workspace = "6 silent";
+            }
+            {
+              match.class = "^Discord$";
+              workspace = "6 silent";
+            }
+            {
+              match.class = "^WebCord$";
+              workspace = "6 silent";
+            }
+            {
+              match.title = "^Microsoft Teams*$";
+              workspace = "6 silent";
+            }
+            {
+              match.title = "^Microsoft Teams*$";
+              tile = true;
+            }
+            {
+              match.class = "^org.gnome.Calculator$";
+              float = true;
+            }
+          ];
+
+          gesture = [
+            {
+              fingers = 3;
+              direction = "horizontal";
+              action = "workspace";
+            }
+          ];
         };
       };
     };

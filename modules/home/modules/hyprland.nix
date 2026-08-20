@@ -39,6 +39,7 @@
       ];
 
       pointerCursor = {
+        enable = true;
         hyprcursor = {
           enable = true;
           size = 32;
@@ -243,242 +244,213 @@
       enable = true;
       xwayland.enable = true;
 
-      # TODO: 15-05-2026 remove once lua config file is mature.
-      configType = "hyprlang";
-
       # do not set the packages, use those from top NixOS module:
       # https://wiki.hypr.land/Nix/Hyprland-on-Home-Manager/#using-the-home-manager-module-with-nixos
       package = null;
       portalPackage = null;
 
-      systemd.enable = true;
+      # Since Hyprland 0.55 the config is written in Lua instead of hyprlang.
+      # https://wiki.hypr.land/Configuring/Start/
+      configType = "lua";
+
+      systemd.enable = false;
       systemd.variables = [ "--all" ];
 
       plugins = [ ];
 
-      # https://github.com/nix-community/home-manager/blob/master/tests/modules/services/window-managers/hyprland/simple-config.nix
+      # All hyprlang categories (general/input/misc/decoration/...) are
+      # merged under a single `config` key, which home-manager renders as one
+      # `hl.config({...})` call. Host-specific overrides (monitor, device,
+      # env, window/workspace rules, config.input, config.decoration, ...)
+      # are merged in via hostConfig.
+      # https://github.com/nix-community/home-manager/blob/master/tests/modules/services/window-managers/hyprland/lua-config.nix
       settings = lib.recursiveUpdate {
-        xwayland = {
-          force_zero_scaling = true;
+        config = {
+          xwayland = {
+            force_zero_scaling = true;
+          };
+
+          general = {
+            # See https://wiki.hypr.land/Configuring/Basics/Variables/ for more
+            gaps_in = 2;
+            gaps_out = 5;
+            border_size = 2;
+            layout = "master"; # dwindle
+            col = {
+              active_border = {
+                colors = [
+                  "rgba(83a598ee)"
+                  "rgba(b8bb26ee)"
+                ];
+                angle = 45;
+              };
+              inactive_border = "rgba(595959aa)";
+            };
+          };
+
+          input = {
+            kb_layout = "eu";
+            repeat_rate = 30;
+            repeat_delay = 250;
+
+            follow_mouse = 0;
+            sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
+            touchpad.natural_scroll = true;
+          };
+
+          misc = {
+            # set adaptive sync rate, 0=off, 1=on, 2=fullscreen only
+            vrr = 2;
+            # vfr = true;
+            # we need to set this, otherwise turning dpms off results in off displays
+            key_press_enables_dpms = true;
+            # allow to restore if the monitor goes off; happens with my OLED when regenerating
+            allow_session_lock_restore = true;
+          };
+
+          decoration = {
+            # See https://wiki.hypr.land/Configuring/Basics/Variables/ for more
+            rounding = 5;
+          };
+
+          animations = {
+            enabled = false;
+          };
+
+          binds = {
+            # together with previous workspace works like in AwesomeWM
+            allow_workspace_cycles = true;
+          };
+
+          dwindle = {
+            # See https://wiki.hypr.land/Configuring/Layouts/Dwindle-Layout/
+            preserve_split = true; # you probably want this
+          };
+
+          master = {
+            # See https://wiki.hypr.land/Configuring/Layouts/Master-Layout/
+            new_status = "master";
+            new_on_top = true;
+          };
         };
-
-        general = {
-          # See https://wiki.hyprland.org/Configuring/Variables/ for more
-          gaps_in = 2;
-          gaps_out = 5;
-          border_size = 2;
-          layout = "master"; # dwindle
-          "col.active_border" = "rgba(83a598ee) rgba(b8bb26ee) 45deg";
-          "col.inactive_border" = "rgba(595959aa)";
-        };
-        input = {
-          kb_layout = "eu";
-          repeat_rate = 30;
-          repeat_delay = 250;
-
-          follow_mouse = 0;
-          sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
-          touchpad.natural_scroll = true;
-        };
-        misc = {
-          # set adaptive sync rate, 0=off, 1=on, 2=fullscreen only
-          vrr = 2;
-          # vfr = true;
-          # we need to set this, otherwise turning dpms off results in off displays
-          key_press_enables_dpms = true;
-          # allow to restore if the monitor goes off; happens with my OLED when regenerating
-          allow_session_lock_restore = true;
-        };
-        decoration = {
-          # See https://wiki.hyprland.org/Configuring/Variables/ for more
-          rounding = 5;
-        };
-
-        animations = {
-          enabled = false;
-
-          # # Some default animations, see https://wiki.hyprland.org/Configuring/Animations/ for more
-          # bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
-
-          # animation = [
-          #   "windows, 1, 7, myBezier"
-          #   "windowsOut, 1, 7, default, popin 80%"
-          #   "border, 1, 10, default"
-          #   "borderangle, 1, 8, default"
-          #   "fade, 1, 7, default"
-          #   "workspaces, 1, 6, default"
-          # ];
-        };
-
-        binds = {
-          # together with previous workspace works like in AwesomeWM
-          allow_workspace_cycles = true;
-        };
-        dwindle = {
-          # See https://wiki.hyprland.org/Configuring/Dwindle-Layout
-          preserve_split = true; # you probably want this
-        };
-        master = {
-          # See https://wiki.hyprland.org/Configuring/Master-Layout
-          new_status = "master";
-          new_on_top = true;
-          # orientation = "center";
-          # always_center_master = true;
-        };
-
-        plugin = { };
-
-        # =================================================================================================
-        # Keybinds
-        # =================================================================================================
-        "$mainMod" = "SUPER";
-
-        bind = [
-          "$mainMod, return, exec, alacritty"
-          "$mainMod SHIFT, c, killactive,"
-          # add a windows like launcher
-          "$mainMod, b, exec, nautilus" # or thunar
-          # "$mainMod, i, exec, firefox"
-          "$mainMod, v, togglefloating,"
-          "$mainMod, t, pin," # only floating
-          "$mainMod, c, centerwindow," # only floating
-          "$mainMod, SPACE, exec, fuzzel"
-          # "$mainMod, P, pseudo," # dwindle
-          # $mainMod, J, togglesplit, # dwindle
-          "$mainMod CONTROL, v, exec, ~/.local/bin/rofi-pactl-output"
-          "$mainMod, z, exec, ~/.local/bin/rofi-zathura"
-          "$mainMod SHIFT, t, togglegroup,"
-          "$mainMod, ESCAPE, workspace, previous"
-          # Go to urgen workspace and swap back and forth!
-          "$mainMod CONTROL, u, focusurgentorlast"
-          # bind = $mainMod, o, focusmonitor, eDP-1 or DP-3
-          "$mainMod, f, fullscreen, 0" # use entire screen
-          "$mainMod, m, fullscreen, 1" # akin to maximize in AwesomeWM
-          # $mainMod, SPACE, togglefloating
-          # to switch between windows in a floating workspace
-          "$mainMod, Tab, cyclenext," # change focus to another window
-          "$mainMod, Tab, bringactivetotop," # bring it to the top
-
-          # Move focus with mainMod + arrow keys
-          "$mainMod, h, movefocus, l"
-          "$mainMod, l, movefocus, r"
-          "$mainMod, k, movefocus, u"
-          "$mainMod, j, movefocus, d"
-
-          # Move windows/client in a direction
-          "$mainMod SHIFT, h, movewindow, l"
-          "$mainMod SHIFT, l, movewindow, r"
-          "$mainMod SHIFT, k, movewindow, u"
-          "$mainMod SHIFT, j, movewindow, d"
-
-          # resize windows x y
-          "ALT CONTROL, l, resizeactive, 40 0"
-          "ALT CONTROL, h, resizeactive, -40 0"
-          "ALT CONTROL, j, resizeactive, 0 40"
-          "ALT CONTROL, k, resizeactive, 0 -40"
-
-          "$mainMod CONTROL, RETURN, layoutmsg, swapwithmaster master"
-          # "$mainMod CONTROL, h, layoutmsg, addmaster"
-          # "$mainMod CONTROL, l, layoutmsg, removemaster"
-          "$mainMod CONTROL, h, layoutmsg, orientationleft"
-          "$mainMod CONTROL, j, layoutmsg, orientationbottom"
-          "$mainMod CONTROL, k, layoutmsg, orientationtop"
-          "$mainMod CONTROL, l, layoutmsg, orientationright"
-          "$mainMod CONTROL, c, layoutmsg, orientationcenter"
-
-          # Switch workspaces with mainMod + [0-9]
-          "$mainMod, q, workspace, 1"
-          "$mainMod, w, workspace, 2"
-          "$mainMod, e, workspace, 3"
-          "$mainMod, r, workspace, 4"
-          "$mainMod, t, workspace, 5"
-          "$mainMod, y, workspace, 6"
-          "$mainMod, u, workspace, 7"
-          "$mainMod, i, workspace, 8"
-          "$mainMod, o, workspace, 9"
-          "$mainMod, p, workspace, 10"
-
-          # Move active window to a workspace with mainMod + SHIFT + [0-9] bind = $mainMod SHIFT, 1, movetoworkspace, 1
-          # To bring focus to moved workspace use without 'silent'
-          "$mainMod SHIFT, q, movetoworkspacesilent, 1"
-          "$mainMod SHIFT, w, movetoworkspacesilent, 2"
-          "$mainMod SHIFT, e, movetoworkspacesilent, 3"
-          "$mainMod SHIFT, r, movetoworkspacesilent, 4"
-          "$mainMod SHIFT, t, movetoworkspacesilent, 5"
-          "$mainMod SHIFT, y, movetoworkspacesilent, 6"
-          "$mainMod SHIFT, u, movetoworkspacesilent, 7"
-          "$mainMod SHIFT, i, movetoworkspacesilent, 8"
-          "$mainMod SHIFT, o, movetoworkspacesilent, 9"
-          "$mainMod SHIFT, p, movetoworkspacesilent, 10"
-
-          # TODO(aver): Find better replacement, event something like moving workspaces to other
-          # monitors
-          # "$mainMod SHIFT, o, movewindow, mon:+1"
-          # "$mainMod, o, focusmonitor, +1"
-
-          # Scroll through existing workspaces with mainMod + scroll
-          "$mainMod, mouse_down, workspace, e+1"
-          "$mainMod, mouse_up, workspace, e-1"
-
-          # Sink volume raise optionally with --device
-          ", XF86AudioRaiseVolume, exec, swayosd-client --output-volume +5"
-          # Sink volume lower optionally with --device
-          ", XF86AudioLowerVolume, exec,  swayosd-client --output-volume -5"
-          # Sink volume toggle mute
-          ", XF86AudioMute, exec, swayosd-client --output-volume mute-toggle"
-          # Source volume toggle mute
-          ", XF86AudioMicMute, exec, swayosd-client --input-volume mute-toggle"
-
-          # Capslock (If you don't want to use the backend)
-          ", --release Caps_Lock, exec, swayosd-client --caps-lock"
-
-          # Brightness lower
-          ", XF86MonBrightnessDown, exec, swayosd-client --brightness lower"
-          # Brightness raise
-          ", XF86MonBrightnessUp, exec, swayosd-client --brightness raise"
-
-          "$mainMod SHIFT, p, exec, hyprshot --clipboard-only -m window"
-          "$mainMod SHIFT, s, exec, hyprshot --clipboard-only -m region"
-          "$mainMod SHIFT, x, exec, hyprshot --output-folder ~/Pictures/screenshots -m region"
-
-          "ALT, ESCAPE, exec, wlogout"
-        ];
-
-        # allow bindings while locked
-        bindl = [
-          ", XF86AudioPlay,     exec, playerctl play-pause"
-          ", XF86AudioPause,    exec, playerctl pause"
-          ", XF86AudioStop,     exec, playerctl stop"
-          ", XF86AudioNext,     exec, playerctl next"
-          ", XF86AudioPrev,     exec, playerctl previous"
-          ", XF86AudioMute,     exec, pactl set-sink-mute @DEFAULT_SINK@ toggle"
-          # ", XF86AudioLowerVolume,     exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
-          # ", XF86AudioRaiseVolume,     exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
-        ];
-
-        # Bind to mouse
-        bindm = [
-          # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
-          # Move/resize windows with mainMod + LMB/RMB and dragging
-          "$mainMod, mouse:272, movewindow"
-          "$mainMod, mouse:273, resizewindow"
-        ];
-
-        exec-once = [
-          # "polkit-agent-helper-1"
-
-          "${pkgs.swaynotificationcenter}/bin/swaync"
-          "${pkgs.waybar}/bin/waybar"
-          "${pkgs.udiskie}/bin/udiskie --tray --notify"
-          "${pkgs.pasystray}/bin/pasystray"
-          "${pkgs.kanshi}/bin/kanshi"
-          "nm-applet"
-          # "protonmail-bridge-gui --no-window" # "protonmail-bridge -n -l info"
-          "corectrl --minimize-systray"
-          "solaar -w hide"
-          "xrdb ~/.Xresources"
-        ];
       } config.ave.hyprlandwm.hostConfig;
+
+      # =================================================================================================
+      # Keybinds & autostart
+      # https://wiki.hypr.land/Configuring/Basics/Binds/
+      # https://wiki.hypr.land/Configuring/Basics/Dispatchers/
+      # =================================================================================================
+      extraConfig = ''
+        local mainMod = "SUPER"
+
+        hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd("alacritty"))
+        hl.bind(mainMod .. " + SHIFT + C", hl.dsp.window.close())
+        -- add a windows like launcher
+        hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("nautilus")) -- or thunar
+        hl.bind(mainMod .. " + V", hl.dsp.window.float())
+        hl.bind(mainMod .. " + T", hl.dsp.window.pin()) -- only floating
+        hl.bind(mainMod .. " + C", hl.dsp.window.center()) -- only floating
+        hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("fuzzel"))
+        hl.bind(mainMod .. " + CTRL + V", hl.dsp.exec_cmd("~/.local/bin/rofi-pactl-output"))
+        hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd("~/.local/bin/rofi-zathura"))
+        hl.bind(mainMod .. " + CTRL + T", hl.dsp.group.toggle())
+        hl.bind(mainMod .. " + ESCAPE", hl.dsp.focus({ workspace = "previous" }))
+        -- Go to urgent workspace and swap back and forth!
+        hl.bind(mainMod .. " + CTRL + U", hl.dsp.focus({ urgent_or_last = true }))
+        hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen" })) -- use entire screen
+        hl.bind(mainMod .. " + M", hl.dsp.window.fullscreen({ mode = "maximized" })) -- akin to maximize in AwesomeWM
+
+        -- to switch between windows in a floating workspace
+        hl.bind(mainMod .. " + Tab", function()
+          hl.dispatch(hl.dsp.window.cycle_next())   -- change focus to another window
+          hl.dispatch(hl.dsp.window.bring_to_top()) -- bring it to the top
+        end)
+
+        -- Move focus with mainMod + arrow keys
+        hl.bind(mainMod .. " + H", hl.dsp.focus({ direction = "l" }))
+        hl.bind(mainMod .. " + L", hl.dsp.focus({ direction = "r" }))
+        hl.bind(mainMod .. " + K", hl.dsp.focus({ direction = "u" }))
+        hl.bind(mainMod .. " + J", hl.dsp.focus({ direction = "d" }))
+
+        -- Move windows/client in a direction
+        hl.bind(mainMod .. " + SHIFT + H", hl.dsp.window.move({ direction = "l" }))
+        hl.bind(mainMod .. " + SHIFT + L", hl.dsp.window.move({ direction = "r" }))
+        hl.bind(mainMod .. " + SHIFT + K", hl.dsp.window.move({ direction = "u" }))
+        hl.bind(mainMod .. " + SHIFT + J", hl.dsp.window.move({ direction = "d" }))
+
+        -- resize windows x y
+        hl.bind("ALT + CTRL + L", hl.dsp.window.resize({ x = 40, y = 0, relative = true }))
+        hl.bind("ALT + CTRL + H", hl.dsp.window.resize({ x = -40, y = 0, relative = true }))
+        hl.bind("ALT + CTRL + J", hl.dsp.window.resize({ x = 0, y = 40, relative = true }))
+        hl.bind("ALT + CTRL + K", hl.dsp.window.resize({ x = 0, y = -40, relative = true }))
+
+        hl.bind(mainMod .. " + CTRL + RETURN", hl.dsp.layout("swapwithmaster master"))
+        hl.bind(mainMod .. " + CTRL + H", hl.dsp.layout("orientationleft"))
+        hl.bind(mainMod .. " + CTRL + J", hl.dsp.layout("orientationbottom"))
+        hl.bind(mainMod .. " + CTRL + K", hl.dsp.layout("orientationtop"))
+        hl.bind(mainMod .. " + CTRL + L", hl.dsp.layout("orientationright"))
+        hl.bind(mainMod .. " + CTRL + C", hl.dsp.layout("orientationcenter"))
+
+        -- Switch workspaces with mainMod + [q w e r t y u i o p]
+        local workspaceKeys = { "q", "w", "e", "r", "t", "y", "u", "i", "o", "p" }
+        for i, key in ipairs(workspaceKeys) do
+          hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
+          -- Move active window to a workspace with mainMod + SHIFT + key, without following
+          hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i, follow = false }))
+        end
+
+        -- Scroll through existing workspaces with mainMod + scroll
+        hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
+        hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
+
+        -- Sink volume raise optionally with --device
+        hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("swayosd-client --output-volume +5"))
+        -- Sink volume lower optionally with --device
+        hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("swayosd-client --output-volume -5"))
+        -- Sink volume toggle mute
+        hl.bind("XF86AudioMute", hl.dsp.exec_cmd("swayosd-client --output-volume mute-toggle"))
+        -- Source volume toggle mute
+        hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("swayosd-client --input-volume mute-toggle"))
+
+        -- Capslock (if you don't want to use the backend)
+        hl.bind("Caps_Lock", hl.dsp.exec_cmd("swayosd-client --caps-lock"), { release = true })
+
+        -- Brightness lower
+        hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("swayosd-client --brightness lower"))
+        -- Brightness raise
+        hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("swayosd-client --brightness raise"))
+
+        hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd("hyprshot --clipboard-only -m window"))
+        hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("hyprshot --clipboard-only -m region"))
+        hl.bind(mainMod .. " + SHIFT + X", hl.dsp.exec_cmd("hyprshot --output-folder ~/Pictures/screenshots -m region"))
+
+        hl.bind("ALT + ESCAPE", hl.dsp.exec_cmd("wlogout"))
+
+        -- allow bindings while locked
+        hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+        hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl pause"), { locked = true })
+        hl.bind("XF86AudioStop", hl.dsp.exec_cmd("playerctl stop"), { locked = true })
+        hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
+        hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
+        hl.bind("XF86AudioMute", hl.dsp.exec_cmd("pactl set-sink-mute @DEFAULT_SINK@ toggle"), { locked = true })
+
+        -- Move/resize windows with mainMod + LMB/RMB and dragging
+        hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
+        hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+
+        -- Autostart, runs once on Hyprland startup (not on every config reload).
+        hl.on("hyprland.start", function()
+          hl.exec_cmd("${pkgs.swaynotificationcenter}/bin/swaync")
+          hl.exec_cmd("${pkgs.waybar}/bin/waybar")
+          hl.exec_cmd("${pkgs.udiskie}/bin/udiskie --tray --notify")
+          hl.exec_cmd("${pkgs.pasystray}/bin/pasystray")
+          hl.exec_cmd("${pkgs.kanshi}/bin/kanshi")
+          hl.exec_cmd("nm-applet")
+          hl.exec_cmd("corectrl --minimize-systray")
+          hl.exec_cmd("solaar -w hide")
+          hl.exec_cmd("xrdb ~/.Xresources")
+        end)
+      '';
     };
 
   };

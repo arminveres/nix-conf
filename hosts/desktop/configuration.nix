@@ -36,27 +36,50 @@
       hyprlandwm = {
         enable = true;
         hostConfig = {
-          cursor = {
-            # otherwise my cursor disappears...?
-            # no_hardware_cursors = 1;
+          config = {
+            cursor = {
+              # otherwise my cursor disappears...?
+              # no_hardware_cursors = 1;
+            };
+
+            input = {
+              kb_layout = "eu";
+              repeat_rate = 30;
+              repeat_delay = 250;
+
+              follow_mouse = 1;
+              sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
+              touchpad.natural_scroll = true;
+            };
+
+            decoration = {
+              blur.enabled = true;
+              shadow = {
+                enabled = true;
+                range = 4;
+                render_power = 3;
+                color = "rgba(1a1a1aee)";
+              };
+            };
           };
 
           monitor = [
             # Bitdepth 10 provides some compability issues with screensharing.
-            # "DP-1,      3840x2160@240,  0x0,        1.5, bitdepth, 10, cm, hdr, sdrbrightness, 2.0, sdrsaturation, 0.98"
-            "DP-1,      3840x2160@240,  0x0,        1.5, bitdepth, 10"
-            "DP-2,      1920x1200@60,   auto-left,  1"
+            # { output = "DP-1"; mode = "3840x2160@240"; position = "0x0"; scale = 1.5; bitdepth = 10; cm = "hdr"; sdrbrightness = 2.0; sdrsaturation = 0.98; }
+            {
+              output = "DP-1";
+              mode = "3840x2160@240";
+              position = "0x0";
+              scale = 1.5;
+              bitdepth = 10;
+            }
+            {
+              output = "DP-2";
+              mode = "1920x1200@60";
+              position = "auto-left";
+              scale = 1;
+            }
           ];
-
-          input = {
-            kb_layout = "eu";
-            repeat_rate = 30;
-            repeat_delay = 250;
-
-            follow_mouse = 1;
-            sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
-            touchpad.natural_scroll = true;
-          };
 
           device = [
             {
@@ -69,70 +92,168 @@
             }
           ];
 
-          decoration = {
-            blur.enabled = true;
-            shadow = {
-              enabled = true;
-              range = 4;
-              render_power = 3;
-              color = "rgba(1a1a1aee)";
-            };
-          };
-          workspace = [
+          workspace_rule = [
             # code
-            "1,   monitor:DP-1, default:true"
+            {
+              workspace = "1";
+              monitor = "DP-1";
+              default = true;
+            }
             # web
-            "2,   monitor:DP-1"
+            {
+              workspace = "2";
+              monitor = "DP-1";
+            }
             # games
-            "3,   monitor:DP-1"
+            {
+              workspace = "3";
+              monitor = "DP-1";
+            }
             # research
-            "4,   monitor:DP-1"
-            "5,   monitor:DP-1"
-            # use layoutopt:orientation:top for master placement
+            {
+              workspace = "4";
+              monitor = "DP-1";
+            }
+            {
+              workspace = "5";
+              monitor = "DP-1";
+            }
+            # use layout_opts.orientation:top for master placement
             # messages
-            "6,   monitor:DP-2, default:true"
+            {
+              workspace = "6";
+              monitor = "DP-2";
+              default = true;
+            }
             # mail
-            "7,   monitor:DP-2"
+            {
+              workspace = "7";
+              monitor = "DP-2";
+            }
             # sound + bluetooth
-            "8,   monitor:DP-2"
-            "9,   monitor:DP-2"
-            "10,  monitor:DP-2"
+            {
+              workspace = "8";
+              monitor = "DP-2";
+            }
+            {
+              workspace = "9";
+              monitor = "DP-2";
+            }
+            {
+              workspace = "10";
+              monitor = "DP-2";
+            }
           ];
 
-          windowrule = [
-            "workspace 3 silent, match:class ^steam$"
-            "workspace 3 silent, match:class ^heroic$"
-            # add steam games to ws 6
-            "workspace 5 silent, match:class (steam_app_*)"
-            "monitor 0,          match:class (steam_app_*)"
-            # "fullscreen,          class:(steam_app_*)"
+          window_rule = [
+            {
+              match.class = "^steam$";
+              workspace = "3 silent";
+            }
+            {
+              match.class = "^heroic$";
+              workspace = "3 silent";
+            }
+            # add steam games to ws 5
+            {
+              match.class = "(steam_app_*)";
+              workspace = "5 silent";
+            }
+            {
+              match.class = "(steam_app_*)";
+              monitor = "0";
+            }
+            # { match.class = "(steam_app_*)"; fullscreen = true; }
 
-            "workspace 6 silent, match:class ^signal$"
-            "workspace 6 silent, match:class ^Signal$"
-            "workspace 6 silent, match:class ^discord$"
-            "workspace 6 silent, match:class ^Discord$"
-            "workspace 6 silent, match:class ^WebCord$"
-            "workspace 6 silent, match:class ^vesktop$"
-            "workspace 6 silent, match:title ^Microsoft Teams*$"
-            "tile on,            match:title ^Microsoft Teams*$"
+            {
+              match.class = "^signal$";
+              workspace = "6 silent";
+            }
+            {
+              match.class = "^Signal$";
+              workspace = "6 silent";
+            }
+            {
+              match.class = "^discord$";
+              workspace = "6 silent";
+            }
+            {
+              match.class = "^Discord$";
+              workspace = "6 silent";
+            }
+            {
+              match.class = "^WebCord$";
+              workspace = "6 silent";
+            }
+            {
+              match.class = "^vesktop$";
+              workspace = "6 silent";
+            }
+            {
+              match.title = "^Microsoft Teams*$";
+              workspace = "6 silent";
+            }
+            {
+              match.title = "^Microsoft Teams*$";
+              tile = true;
+            }
 
-            "workspace 7 silent, match:class ^ch.proton.bridge-gui$"
-            "workspace 7 silent, match:class ^thunderbird$"
+            {
+              match.class = "^ch.proton.bridge-gui$";
+              workspace = "7 silent";
+            }
+            {
+              match.class = "^thunderbird$";
+              workspace = "7 silent";
+            }
 
-            "workspace 8 silent, match:class ^Spotify$"
-            "workspace 8 silent, match:class ^blueman-manager$"
-            "workspace 8 silent, match:class ^easyeffects$"
+            {
+              match.class = "^Spotify$";
+              workspace = "8 silent";
+            }
+            {
+              match.class = "^blueman-manager$";
+              workspace = "8 silent";
+            }
+            {
+              match.class = "^easyeffects$";
+              workspace = "8 silent";
+            }
 
-            "workspace 9 silent, match:class ^org.corectrl.CoreCtrl$"
+            {
+              match.class = "^org.corectrl.CoreCtrl$";
+              workspace = "9 silent";
+            }
 
-            "float on, match:class ^org.gnome.Calculator$"
-            "float on, match:title ^Friends List$"
+            {
+              match.class = "^org.gnome.Calculator$";
+              float = true;
+            }
+            {
+              match.title = "^Friends List$";
+              float = true;
+            }
           ];
 
           env = [
-            "QT_QPA_PLATFORM,wayland"
-            "GDK_SCALE,1.25"
-            "QT_SCALE,1.25"
+            {
+              _args = [
+                "QT_QPA_PLATFORM"
+                "wayland"
+              ];
+            }
+            {
+              _args = [
+                "GDK_SCALE"
+                "1.25"
+              ];
+            }
+            {
+              _args = [
+                "QT_SCALE"
+                "1.25"
+              ];
+            }
           ];
         };
       };
