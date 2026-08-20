@@ -48,7 +48,7 @@
         timezone = "Europe/Zurich";
         locale = "en_US.UTF-8";
         kernelVersion = "6_18";
-        username = "aver";
+        username = "arminveres"; # TODO: switch to 'user' for anonymity
         homeDirectory = "/home/${username}";
       };
       overlays = [ inputs.neovim-nightly.overlays.default ];
