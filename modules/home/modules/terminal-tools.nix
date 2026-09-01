@@ -29,6 +29,7 @@
         # defaultCommand = "rg --hidden -l ''";
         # defaultCommand = "fd --type f";
         defaultOptions = [
+          "--cycle"
           "--height 40%"
           "--layout=reverse"
           "--border"
