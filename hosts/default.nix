@@ -1,10 +1,17 @@
 # Different host profiles when building NixOS
 
-{ inputs, nixos-hardware, systemSettings, home-manager, ... }:
+{
+  inputs,
+  nixos-hardware,
+  systemSettings,
+  home-manager,
+  ...
+}:
 let
   lib = inputs.nixpkgs.lib;
   system = systemSettings.system;
-in {
+in
+{
   nixos-desktop = lib.nixosSystem {
     inherit system;
     specialArgs = { inherit inputs systemSettings; };
@@ -32,6 +39,7 @@ in {
       ./x1c/configuration.nix
       nixos-hardware.nixosModules.lenovo-thinkpad-x1-9th-gen
       nixos-hardware.nixosModules.common-pc-ssd
+      inputs.xremap.nixosModules.default
     ];
   };
 

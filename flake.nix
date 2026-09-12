@@ -33,6 +33,8 @@
       url = "github:rbright/nix-pi-agent";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    xremap.url = "github:xremap/nix-flake";
   };
 
   outputs =

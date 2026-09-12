@@ -48,6 +48,9 @@
     };
 
     services = {
+
+      gnome-keyring.enable = true;
+
       cliphist.enable = true;
       hyprpaper = {
         enable = true;
@@ -203,8 +206,7 @@
           main = {
             font = "Mononoki Nerd Font Propo:weight=bold";
             terminal = "${pkgs.alacritty}/bin/alacritty -e";
-            fuzze = "yes";
-            dpi-aware = true;
+            dpi-aware = "yes";
             layer = "overlay";
 
             lines = 10;

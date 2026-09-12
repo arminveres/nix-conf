@@ -26,6 +26,24 @@
   # enable hyprlock pam authentication
   # security.pam.services.hyprlock = { fprintAuth = false; enableGnomeKeyring = true; };
 
+  services.xremap = {
+    enable = true;
+    config = {
+      modmap = [
+        {
+          name = "Laptop Keyboard";
+          device.only = "AT Translated Set 2 keyboard";
+          remap = {
+            CapsLock = "LeftCtrl";
+            LeftCtrl = "CapsLock";
+            LeftAlt = "LeftMeta";
+            LeftMeta = "LeftAlt";
+          };
+        }
+      ];
+    };
+  };
+
   home-manager.users.${systemSettings.username} = {
     # my modules
     ave = {
@@ -70,10 +88,6 @@
 
           # only swap keys for the builtin laptop keyboard
           device = [
-            {
-              name = "at-translated-set-2-keyboard";
-              kb_options = "ctrl:swapcaps,altwin:swap_lalt_lwin";
-            }
             {
               name = "tpps/2-elan-trackpoint";
               accel_profile = "flat";
