@@ -2,7 +2,9 @@
   lib,
   config,
   pkgs,
+  systemSettings,
   ...
+
 }:
 {
   options.ave.terminal-tools.enable = lib.mkEnableOption "enables Home-Manager Terminal Tools module";
@@ -123,34 +125,25 @@
       pi-coding-agent = {
         enable = true;
         context = ''
-          # Global guidelines
-
-          ## File search tooling
-
-          - Search file contents with `rg` (ripgrep), never `grep`/`grep -r`.
-          - Find files by name with `fd`, never `find`, `ls -R` or shell globbing.
-          - Both respect `.gitignore` and `.ignore` by default; keep it that way. Only
-            reach for `--no-ignore` / `--hidden` when an ignored file is explicitly the
-            target, and say why.
         '';
         extraPackages = with pkgs; [
           nodejs
           bun
           pnpm
         ];
-        settings = {
-          packages = [
-            "npm:pi-subagents"
-            "npm:@narumitw/pi-plan-mode"
-            "npm:@dietrichgebert/ponytail"
-            "npm:pi-caveman"
-          ];
-        };
-
       };
     };
 
     services.tldr-update.enable = true;
+
+    # global pi-agent instructions: rg/fd instead of grep/find
+    home.file = {
+      ".pi/agent/AGENTS.md".source =
+        config.lib.file.mkOutOfStoreSymlink "${systemSettings.homeDirectory}/nix-conf/dotfiles/pi/.pi/agent/AGENTS.md";
+      ".pi/agent/settings.json".source =
+        config.lib.file.mkOutOfStoreSymlink "${systemSettings.homeDirectory}/nix-conf/dotfiles/pi/.pi/agent/settings.json";
+    };
+
     home.packages = with pkgs; [
       tldr
       gh # use as package otherwise config is not writable
