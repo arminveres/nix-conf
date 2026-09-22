@@ -23,9 +23,6 @@ in
 
     xdg.configFile = (helpers.linkDir "nvim");
 
-    # global pi-agent instructions: rg/fd instead of grep/find
-    home.file.".pi/agent/AGENTS.md".source = config.lib.file.mkOutOfStoreSymlink "${systemSettings.homeDirectory}/nix-conf/dotfiles/pi/.pi/agent/AGENTS.md";
-
     programs = {
       # TODO: 20-04-2026 disable program management, as config files may be generated...
       # neovim = { enable = true; package = pkgs.neovim; };
@@ -72,8 +69,6 @@ in
     };
 
     home.packages = with pkgs; [
-      inputs.maki.packages.${pkgs.system}.default
-      inputs.pi-agent.packages.${pkgs.system}.default
       neovim
       tree-sitter
       # LSPs and Formatters

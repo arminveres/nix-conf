@@ -21,19 +21,7 @@
     };
 
     probe-rs-rules.url = "github:jneem/probe-rs-rules";
-
     pwndbg.url = "github:pwndbg/pwndbg";
-
-    maki = {
-      url = "github:tontinton/maki";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    pi-agent = {
-      url = "github:rbright/nix-pi-agent";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     xremap.url = "github:xremap/nix-flake";
   };
 

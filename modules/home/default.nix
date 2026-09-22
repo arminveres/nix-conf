@@ -48,8 +48,6 @@
     # IMPORTANT: set this once and don’t change it casually.
     stateVersion = "26.05"; # pick your HM release/state version
     packages = with pkgs; [
-      nodejs
-
       # fastfetch
       # gh
       # tldr
