@@ -6,6 +6,23 @@
   ...
 
 }:
+let
+  # ponytail: nixos-unstable tmux (3.7c) had a cursor-flicker regression;
+  # tracking upstream release/rc from GitHub instead of nixpkgs until fixed there.
+  # Bump `tmuxNewVersion`/`tmuxNewSha256` for a newer tag, `nix-prefetch-url
+  # --unpack --type sha256 https://github.com/tmux/tmux/archive/refs/tags/<tag>.tar.gz`.
+  tmuxNewVersion = "3.8-rc2";
+  tmuxNewSha256 = "0gp2vbrd26b3dw1lki7gwjz6m1rfmbr5lln30dhmn0d526cj2z24";
+  tmux-rc = pkgs.tmux.overrideAttrs (old: {
+    version = tmuxNewVersion;
+    src = pkgs.fetchFromGitHub {
+      owner = "tmux";
+      repo = "tmux";
+      rev = tmuxNewVersion;
+      sha256 = tmuxNewSha256;
+    };
+  });
+in
 {
   options.ave.terminal-tools.enable = lib.mkEnableOption "enables Home-Manager Terminal Tools module";
 
@@ -147,7 +164,7 @@
       packages = with pkgs; [
         tldr
         gh # use as package otherwise config is not writable
-      tmux
+        tmux-rc
       ];
 
     };
