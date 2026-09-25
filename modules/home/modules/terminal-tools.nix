@@ -124,8 +124,7 @@
 
       pi-coding-agent = {
         enable = true;
-        context = ''
-        '';
+        context = "";
         extraPackages = with pkgs; [
           nodejs
           bun
@@ -136,18 +135,21 @@
 
     services.tldr-update.enable = true;
 
-    # global pi-agent instructions: rg/fd instead of grep/find
-    home.file = {
-      ".pi/agent/AGENTS.md".source =
-        config.lib.file.mkOutOfStoreSymlink "${systemSettings.homeDirectory}/nix-conf/dotfiles/pi/.pi/agent/AGENTS.md";
-      ".pi/agent/settings.json".source =
-        config.lib.file.mkOutOfStoreSymlink "${systemSettings.homeDirectory}/nix-conf/dotfiles/pi/.pi/agent/settings.json";
-    };
+    home = {
+      # global pi-agent instructions: rg/fd instead of grep/find
+      file = {
+        ".pi/agent/AGENTS.md".source =
+          config.lib.file.mkOutOfStoreSymlink "${systemSettings.homeDirectory}/nix-conf/dotfiles/pi/.pi/agent/AGENTS.md";
+        ".pi/agent/settings.json".source =
+          config.lib.file.mkOutOfStoreSymlink "${systemSettings.homeDirectory}/nix-conf/dotfiles/pi/.pi/agent/settings.json";
+      };
 
-    home.packages = with pkgs; [
-      tldr
-      gh # use as package otherwise config is not writable
+      packages = with pkgs; [
+        tldr
+        gh # use as package otherwise config is not writable
       tmux
-    ];
+      ];
+
+    };
   };
 }
