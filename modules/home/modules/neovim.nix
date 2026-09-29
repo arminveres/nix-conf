@@ -14,6 +14,22 @@ let
     config.allowUnfree = true;
   };
   helpers = import ../helpers.nix { inherit config systemSettings; };
+
+  # nixpkgs' clang-tools wraps every bin/* with a clangd-oriented wrapper whose shebang is `#!/bin/sh` but whose body uses bash-only syntax ([[ ]], local, (( )) ).
+  # On Ubuntu /bin/sh is dash, so clang-format/clang-tidy/etc. fail with "[[: not found".
+  # Rewrite the shebang to bash for wrapper scripts only (leaves *-unwrapped ELF binaries and plain scripts like git-clang-format untouched).
+  #
+  # TODO: remove once fixed upstream
+  clang-tools-fixed = pkgs.clang-tools.overrideAttrs (old: {
+    postFixup = (old.postFixup or "") + ''
+      for f in "$out"/bin/*; do
+        [ -f "$f" ] || continue
+        if [ "$(head -c 11 "$f")" = "#!/bin/sh" ]; then
+          sed -i '1s|^#!/bin/sh|#!/usr/bin/env bash|' "$f"
+        fi
+      done
+    '';
+  });
 in
 {
   options.ave.neovim.enable = lib.mkEnableOption "enables Home-Manager NeoVim module";
@@ -80,7 +96,7 @@ in
         stylua
         cppcheck
         bear # add to generate compile_commands.json, if necessary
-        clang-tools
+        clang-tools-fixed
         marksman
         nixd # official nix lsp
         nixfmt
