@@ -68,57 +68,62 @@ in
 
     };
 
-    home.packages = with pkgs; [
-      neovim
-      tree-sitter
-      # LSPs and Formatters
-      lua-language-server
-      stylua
-      cppcheck
-      bear # add to generate compile_commands.json, if necessary
-      clang-tools
-      marksman
-      nixd # official nix lsp
-      nixfmt
-      taplo
-      yaml-language-server
-      shfmt
-      shellcheck
-      prettier
+    home = {
+      file.".config/neocmakelsp/config.toml".source =
+        config.lib.file.mkOutOfStoreSymlink "${systemSettings.homeDirectory}/nix-conf/dotfiles/nvim/.config/neocmakelsp/config.toml";
 
-      # cmake stuff
-      neocmakelsp
-      cmake-lint
-      gersemi
+      packages = with pkgs; [
+        neovim
+        tree-sitter
+        # LSPs and Formatters
+        lua-language-server
+        stylua
+        cppcheck
+        bear # add to generate compile_commands.json, if necessary
+        clang-tools
+        marksman
+        nixd # official nix lsp
+        nixfmt
+        taplo
+        yaml-language-server
+        shfmt
+        shellcheck
+        prettier
 
-      vscode-json-languageserver
-      mdformat
-      gitlint
-      basedpyright
-      bash-language-server
-      # docker-language-server
-      dockerfile-language-server
-      dockerfmt
-      # rust-analyzer
-      bitbake-language-server
-      systemd-lsp
-      texlab
-      stylelint
-      black
-      just-lsp
-      luajitPackages.luacheck
+        # cmake stuff
+        neocmakelsp
+        cmake-lint
+        gersemi
 
-      # binaries
-      go
-      jq
+        vscode-json-languageserver
+        mdformat
+        gitlint
+        basedpyright
+        bash-language-server
+        # docker-language-server
+        dockerfile-language-server
+        dockerfmt
+        # rust-analyzer
+        bitbake-language-server
+        systemd-lsp
+        texlab
+        stylelint
+        black
+        just-lsp
+        luajitPackages.luacheck
 
-      # TODO(aver): move these into cli development module
-      difftastic
-      delta
-      onefetch
+        # binaries
+        go
+        jq
 
-      inotify-tools # improved filewatcher for neovim
-    ];
+        # TODO(aver): move these into cli development module
+        difftastic
+        delta
+        onefetch
+
+        inotify-tools # improved filewatcher for neovim
+      ];
+    };
   };
 
 }
