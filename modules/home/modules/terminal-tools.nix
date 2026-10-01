@@ -11,15 +11,14 @@ let
   # tracking upstream release/rc from GitHub instead of nixpkgs until fixed there.
   # Bump `tmuxNewVersion`/`tmuxNewSha256` for a newer tag, `nix-prefetch-url
   # --unpack --type sha256 https://github.com/tmux/tmux/archive/refs/tags/<tag>.tar.gz`.
-  tmuxNewVersion = "3.8-rc2";
-  tmuxNewSha256 = "0gp2vbrd26b3dw1lki7gwjz6m1rfmbr5lln30dhmn0d526cj2z24";
+  tmuxNewVersion = "3.8-rc3";
   tmux-rc = pkgs.tmux.overrideAttrs (old: {
     version = tmuxNewVersion;
     src = pkgs.fetchFromGitHub {
       owner = "tmux";
       repo = "tmux";
       rev = tmuxNewVersion;
-      sha256 = tmuxNewSha256;
+      sha256 = "sha256-dWUD62onx4cSwngtZTlF9pggA/9Z/Vmn77nD53luld0=";
     };
   });
 in
