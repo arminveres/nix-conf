@@ -89,12 +89,9 @@ in
             branchPrefix = ''{{ runCommand "bash -c '[[ \"$(git remote -v)\" =~ \"varian\" ]] && printf \"u/ave/\" || true'" }}'';
           };
           os = {
+            # OSC52; tmux (set-clipboard on + Ms feature) forwards it to alacritty
             copyToClipboardCmd = ''
-              if [[ "$TERM" =~ ^(screen|tmux) ]]; then
-                printf "\033Ptmux;\033\033]52;c;$(printf {{text}} | base64 -w 0)\a\033\\" > /dev/tty
-              else
-                printf "\033]52;c;$(printf {{text}} | base64 -w 0)\a" > /dev/tty
-              fi
+              printf '\033]52;c;%s\a' "$(printf '%s' {{text}} | base64 | tr -d '\n')" > /dev/tty
             '';
           };
         };
