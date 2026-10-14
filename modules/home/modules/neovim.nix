@@ -30,6 +30,22 @@ let
       done
     '';
   });
+
+  # nixpkgs still ships onefetch v2; use the upstream v3 release binary.
+  # TODO: remove once nixpkgs catches up
+  onefetch-v3 = pkgs.stdenv.mkDerivation rec {
+    pname = "onefetch";
+    version = "3.0.0";
+    src = pkgs.fetchzip {
+      url = "https://github.com/o2sh/onefetch/releases/download/${version}/onefetch-linux.tar.gz";
+      hash = "sha256-3a5/NtSxgPwH9a4d4pCUXz0JQQQeE1LnnIawg7kvKao=";
+      stripRoot = false;
+    };
+    nativeBuildInputs = [ pkgs.autoPatchelfHook ];
+    buildInputs = [ pkgs.stdenv.cc.cc.lib ];
+    installPhase = "install -Dm755 onefetch $out/bin/onefetch";
+    meta.mainProgram = "onefetch";
+  };
 in
 {
   options.ave.neovim.enable = lib.mkEnableOption "enables Home-Manager NeoVim module";
@@ -135,7 +151,7 @@ in
         # TODO(aver): move these into cli development module
         difftastic
         delta
-        onefetch
+        onefetch-v3
 
         inotify-tools # improved filewatcher for neovim
       ];
