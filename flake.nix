@@ -37,7 +37,7 @@
         system = "x86_64-linux";
         timezone = "Europe/Zurich";
         locale = "en_US.UTF-8";
-        kernelVersion = "6_18";
+        kernelVersion = "7_2";
         username = "arminveres"; # TODO: switch to 'user' for anonymity
         homeDirectory = "/home/${username}";
       };
