@@ -2,8 +2,12 @@
   pkgs,
   lib,
   config,
+  systemSettings,
   ...
 }:
+let
+  helpers = import ../helpers.nix { inherit config systemSettings; };
+in
 {
   options.ave.hyprlandwm = {
     enable = lib.mkEnableOption "enables Home-Manager Hyprland module";
@@ -11,6 +15,8 @@
   };
 
   config = lib.mkIf config.ave.hyprlandwm.enable {
+
+    xdg.configFile = helpers.linkDir "waybar" // helpers.linkDir "wlogout" // helpers.linkDir "swaync";
 
     home = {
       packages = with pkgs; [
@@ -28,6 +34,7 @@
         playerctl
         pulseaudio
         slurp
+        socat # waybar/ws.sh
         swaynotificationcenter
         udiskie
         waybar
@@ -107,10 +114,6 @@
       };
 
       swayosd = {
-        enable = true;
-      };
-
-      swaync = {
         enable = true;
       };
     };
@@ -230,13 +233,6 @@
           };
         };
       };
-
-      zsh.initContent = ''
-        function resprg() {
-          pkill $1
-          hyprctl dispatch exec $1
-        }
-      '';
     };
 
     wayland.windowManager.hyprland = {
