@@ -14,15 +14,18 @@
     services = {
       displayManager = {
         autoLogin.enable = false;
-        # gdm = { enable = true; };
-        sddm = {
+        gdm = {
           enable = true;
-          wayland.enable = true;
-          # https://wiki.nixos.org/wiki/SDDM_Themes
-          theme = "Elegant";
-          extraPackages = with pkgs; [ elegant-sddm ];
         };
+
+        # sddm = { enable = false; wayland.enable = true;
+        #   # https://wiki.nixos.org/wiki/SDDM_Themes
+        #   theme = "Elegant"; extraPackages = with pkgs; [ elegant-sddm ];
+        # };
+
       };
+      # enable keyring
+      gnome.gnome-keyring.enable = true;
 
       # Configure keymap in X11
       xserver.xkb = {
@@ -34,8 +37,10 @@
       pulseaudio.enable = false;
       pipewire = {
         enable = true;
-        alsa.enable = true;
-        alsa.support32Bit = true;
+        alsa = {
+          enable = true;
+          support32Bit = true;
+        };
         pulse.enable = true;
         # If you want to use JACK applications, uncomment this
         #jack.enable = true;
@@ -96,7 +101,8 @@
       nerd-fonts.jetbrains-mono
       nerd-fonts.mononoki
       nerd-fonts.martian-mono
-      ioskeley-mono.normal
+      # ioskeley-mono.normal
+      # ioskeley-mono.normal-term-NF
     ];
   };
 }

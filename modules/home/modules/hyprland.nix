@@ -48,9 +48,6 @@
     };
 
     services = {
-
-      gnome-keyring.enable = true;
-
       cliphist.enable = true;
       hyprpaper = {
         enable = true;
