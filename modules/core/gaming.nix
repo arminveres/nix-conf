@@ -1,14 +1,26 @@
-{ inputs, pkgs, lib, config, systemSettings, ... }: {
+{
+  inputs,
+  pkgs,
+  lib,
+  config,
+  systemSettings,
+  ...
+}:
+{
 
-  options = { gaming.enable = lib.mkEnableOption "enables Nix Gaming module"; };
+  options = {
+    gaming.enable = lib.mkEnableOption "enables Nix Gaming module";
+  };
 
   config = lib.mkIf config.gaming.enable {
     environment.systemPackages = with pkgs; [
-      linuxKernel.packages."linux_${systemSettings.kernelVersion}".xone
       # vkbasalt # A Vulkan post processing layer for Linux
       # this may be missing for some games on steam
       SDL2
-      inputs.dzgui-nix.packages.${systemSettings.system}.default
+      # BUG(AVE): reenable
+      # inputs.dzgui-nix.packages.${systemSettings.system}.default
+      # NOTE: not sure it is needed anymore.
+      # linuxKernel.packages."linux_${systemSettings.kernelVersion}".xone
     ];
 
     # systemd.packages = with pkgs; [ lact ];
@@ -44,5 +56,7 @@
 
     # Enable XBOX controller firmware
     hardware.xone.enable = true;
+    # TODO: reenable once 10.22 is merged to unstable nixpkgs
+    hardware.xpad-noone.enable = false;
   };
 }
