@@ -10,11 +10,12 @@
 let
   lib = inputs.nixpkgs.lib;
   system = systemSettings.system;
+  kernelVersion = "7_2";
 in
 {
   nixos-desktop = lib.nixosSystem {
     inherit system;
-    specialArgs = { inherit inputs systemSettings; };
+    specialArgs = { inherit inputs systemSettings kernelVersion; };
     modules = [
       home-manager.nixosModules.home-manager
       ./common.nix
@@ -30,7 +31,7 @@ in
 
   nixos-x1c = lib.nixosSystem {
     inherit system;
-    specialArgs = { inherit inputs systemSettings; };
+    specialArgs = { inherit inputs systemSettings kernelVersion; };
     modules = [
       home-manager.nixosModules.home-manager
       ./common.nix
@@ -45,7 +46,7 @@ in
 
   nixos-iraclion = lib.nixosSystem {
     inherit system;
-    specialArgs = { inherit inputs systemSettings; };
+    specialArgs = { inherit inputs systemSettings kernelVersion; };
     modules = [
       home-manager.nixosModules.home-manager
       ./common.nix

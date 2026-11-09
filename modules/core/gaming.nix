@@ -1,9 +1,7 @@
 {
-  inputs,
   pkgs,
   lib,
   config,
-  systemSettings,
   ...
 }:
 {
@@ -20,7 +18,7 @@
       # BUG(AVE): reenable
       # inputs.dzgui-nix.packages.${systemSettings.system}.default
       # NOTE: not sure it is needed anymore.
-      # linuxKernel.packages."linux_${systemSettings.kernelVersion}".xone
+      # linuxKernel.packages."linux_${kernelVersion}".xone
     ];
 
     # systemd.packages = with pkgs; [ lact ];
@@ -55,8 +53,10 @@
     '';
 
     # Enable XBOX controller firmware
-    hardware.xone.enable = true;
-    # TODO: reenable once 10.22 is merged to unstable nixpkgs
-    hardware.xpad-noone.enable = false;
+    hardware = {
+      xone.enable = true;
+      # TODO: reenable once 10.22 is merged to unstable nixpkgs
+      xpad-noone.enable = false;
+    };
   };
 }
