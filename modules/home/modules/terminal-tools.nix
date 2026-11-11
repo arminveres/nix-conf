@@ -147,6 +147,7 @@ in
     };
 
     services.tldr-update.enable = true;
+    services.proton-pass-agent.enable = false; # TODO: login fail on work laptop/wsl
 
     home = {
       # global pi-agent instructions: rg/fd instead of grep/find
@@ -161,6 +162,7 @@ in
         tldr
         gh # use as package otherwise config is not writable
         tmux-rc
+        lnav
       ];
 
     };
