@@ -79,6 +79,7 @@ in
             overrideGpg = true;
             autoStageResolvedConflicts = false;
             diffRenderers = [
+              { command = "delta --paging=never"; }
               { command = "delta --paging=never --side-by-side"; }
               {
                 command = "difft --color=always --syntax-highlight=off";
