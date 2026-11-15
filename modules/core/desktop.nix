@@ -12,6 +12,14 @@
 
   config = lib.mkIf config.desktop.enable {
     services = {
+      desktopManager = {
+        gnome.enable = true;
+      };
+      gnome = {
+        core-apps.enable = false;
+        core-developer-tools.enable = false;
+      };
+
       displayManager = {
         autoLogin.enable = false;
         gdm = {
