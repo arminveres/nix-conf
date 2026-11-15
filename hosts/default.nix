@@ -10,7 +10,7 @@
 let
   lib = inputs.nixpkgs.lib;
   system = systemSettings.system;
-  kernelVersion = "7_2";
+  kernelVersion = "7_3";
 in
 {
   nixos-desktop = lib.nixosSystem {

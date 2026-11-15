@@ -10,7 +10,7 @@ let
   # create a no overlay package variable, because e.g., neovide has issues with rebuilding because of
   # neovim-nightly.
   pkgs-no-overlay = import inputs.nixpkgs {
-    inherit (pkgs) system;
+    inherit (pkgs.stdenv.hostPlatform) system;
     config.allowUnfree = true;
   };
   helpers = import ../helpers.nix { inherit config systemSettings; };

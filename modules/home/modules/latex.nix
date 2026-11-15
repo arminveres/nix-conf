@@ -9,7 +9,7 @@
     home.packages = with pkgs; [
       pandoc
       inkscape
-  texlive.combined.scheme-full
+      texliveFull
     ];
 
     # programs.texlive = {

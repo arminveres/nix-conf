@@ -316,9 +316,9 @@
     # scx_lavd, Steam built gaming first scheduler
     # From NixOS 24.11 onwards, scx is available on Nixpkgs. Using a kernel of version 6.12+ or later is required.
     #
-    scx = {
+    scx-loader = {
       enable = true;
-      scheduler = "scx_lavd"; # default is "scx_rustland"
+      config.default_sched = "scx_lavd";
     };
   };
 }
