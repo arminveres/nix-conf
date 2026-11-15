@@ -145,6 +145,15 @@ in
           pnpm
         ];
       };
+
+      github-copilot-cli = {
+        enable = true;
+      };
+
+      claude-code = {
+        enable = true;
+        skills = { };
+      };
     };
 
     services.tldr-update.enable = true;

@@ -78,23 +78,6 @@ in
         };
       };
 
-      opencode = {
-        enable = true;
-        settings = {
-          "plugin" = [ "@dietrichgebert/ponytail" ];
-        };
-        agents = { };
-      };
-
-      github-copilot-cli = {
-        enable = true;
-      };
-
-      claude-code = {
-        enable = false;
-        skills = { };
-      };
-
     };
 
     home = {
