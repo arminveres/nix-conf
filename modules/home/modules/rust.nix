@@ -8,6 +8,7 @@
       cargo-cache
       cargo-binstall
       cargo-update
+      cargo-watch
     ];
   };
 }

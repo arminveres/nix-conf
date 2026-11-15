@@ -206,7 +206,8 @@ in
           main = {
             font = "Mononoki Nerd Font Propo:weight=bold";
             terminal = "${pkgs.alacritty}/bin/alacritty -e";
-            dpi-aware = "yes";
+            fuzze = "yes";
+            # dpi-aware = true;
             layer = "overlay";
 
             lines = 10;
@@ -248,8 +249,7 @@ in
       # https://wiki.hypr.land/Configuring/Start/
       configType = "lua";
 
-      systemd.enable = false;
-      systemd.variables = [ "--all" ];
+      systemd = { enable = false; variables = [ "--all" ]; };
 
       plugins = [ ];
 

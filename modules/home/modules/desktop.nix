@@ -63,6 +63,7 @@
         teams-for-linux
         freecad
         prusa-slicer
+        proton-pass
       ];
 
       pointerCursor = {
