@@ -3,7 +3,11 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    nixos-hardware.url = "github:nixos/nixos-hardware/master"; # Hardware Specific Configurations
+    # Hardware Specific Configurations
+    nixos-hardware = {
+      url = "github:nixos/nixos-hardware/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager/master";
@@ -20,9 +24,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    probe-rs-rules.url = "github:jneem/probe-rs-rules";
+    probe-rs-rules = {
+      url = "github:jneem/probe-rs-rules";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     pwndbg.url = "github:pwndbg/pwndbg";
-    xremap.url = "github:xremap/nix-flake";
+    xremap = {
+      url = "github:xremap/nix-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

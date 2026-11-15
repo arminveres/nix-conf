@@ -52,7 +52,7 @@ in
       ./common.nix
       ./iraclion/configuration.nix
       ./iraclion/hardware-configuration.nix
-      nixos-hardware.nixosModules.common-cpu-intel-coffe-lake
+      nixos-hardware.nixosModules.common-cpu-intel-coffee-lake
     ];
   };
 }

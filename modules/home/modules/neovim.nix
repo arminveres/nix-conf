@@ -9,10 +9,7 @@
 let
   # create a no overlay package variable, because e.g., neovide has issues with rebuilding because of
   # neovim-nightly.
-  pkgs-no-overlay = import inputs.nixpkgs {
-    inherit (pkgs.stdenv.hostPlatform) system;
-    config.allowUnfree = true;
-  };
+  pkgs-no-overlay = inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
   helpers = import ../helpers.nix { inherit config systemSettings; };
 
   # nixpkgs' clang-tools wraps every bin/* with a clangd-oriented wrapper whose shebang is `#!/bin/sh` but whose body uses bash-only syntax ([[ ]], local, (( )) ).
