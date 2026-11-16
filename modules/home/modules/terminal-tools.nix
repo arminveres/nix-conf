@@ -7,6 +7,7 @@
 
 }:
 let
+  helpers = import ../helpers.nix { inherit config systemSettings; };
   # ponytail: nixos-unstable tmux (3.7c) had a cursor-flicker regression;
   # tracking upstream release/rc from GitHub instead of nixpkgs until fixed there.
   # Bump `tmuxNewVersion`/`tmuxNewSha256` for a newer tag, `nix-prefetch-url
@@ -74,28 +75,6 @@ in
       lazygit = {
         enable = true;
         enableZshIntegration = false;
-        settings = {
-          git = {
-            overrideGpg = true;
-            autoStageResolvedConflicts = false;
-            diffRenderers = [
-              { command = "delta --paging=never"; }
-              { command = "delta --paging=never --side-by-side"; }
-              {
-                command = "difft --color=always --syntax-highlight=off";
-                type = "extDiff";
-              }
-              # { command = "delta --paging=never"; } TODO: lg does not support delta with inline comparison
-            ];
-            branchPrefix = ''{{ runCommand "bash -c '[[ \"$(git remote -v)\" =~ \"varian\" ]] && printf \"u/ave/\" || true'" }}'';
-          };
-          os = {
-            # OSC52; tmux (set-clipboard on + Ms feature) forwards it to alacritty
-            copyToClipboardCmd = ''
-              printf '\033]52;c;%s\a' "$(printf '%s' {{text}} | base64 | tr -d '\n')" > /dev/tty
-            '';
-          };
-        };
       };
 
       bat = {
@@ -156,6 +135,8 @@ in
         skills = { };
       };
     };
+
+    xdg.configFile = helpers.linkDir "lazygit";
 
     services.tldr-update.enable = true;
     services.proton-pass-agent.enable = false; # TODO: login fail on work laptop/wsl
