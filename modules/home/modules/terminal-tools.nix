@@ -114,6 +114,7 @@ in
           "--noask"
           "--quiet"
           "--quick"
+          "--dir \"$XDG_RUNTIME_DIR\"/keychain"
         ];
       };
 
