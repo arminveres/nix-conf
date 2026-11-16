@@ -17,7 +17,7 @@ let
   # Rewrite the shebang to bash for wrapper scripts only (leaves *-unwrapped ELF binaries and plain scripts like git-clang-format untouched).
   #
   # TODO: remove once fixed upstream
-  clang-tools-fixed = pkgs.clang-tools.overrideAttrs (old: {
+  clang-tools-fixed = pkgs.llvmPackages_23.clang-tools.overrideAttrs (old: {
     postFixup = (old.postFixup or "") + ''
       for f in "$out"/bin/*; do
         [ -f "$f" ] || continue

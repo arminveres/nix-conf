@@ -149,6 +149,9 @@ in
         gh # use as package otherwise config is not writable
         lnav
         tmux
+        nodejs
+        bun
+        pnpm
       ];
 
     };
