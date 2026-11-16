@@ -71,11 +71,6 @@ in
         sessionVariables = {
           EDITOR = "${pkgs.neovim}/bin/nvim";
         };
-        shellAliases = {
-          vi = "nvim";
-          viup = "nvim --headless '+Lazy! sync' +qa";
-          vim = "nvim";
-        };
       };
 
     };
