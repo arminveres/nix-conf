@@ -10,6 +10,11 @@ let
       recursive = true;
     };
   };
+  # link dotfiles/<pkg>/.local/bin/<name> to ~/.local/bin/<name>
+  linkBin = pkg: name: {
+    ".local/bin/${name}".source =
+      config.lib.file.mkOutOfStoreSymlink "${systemSettings.homeDirectory}/nix-conf/dotfiles/${pkg}/.local/bin/${name}";
+  };
 in
 {
   inherit
@@ -17,5 +22,6 @@ in
     linkSubDir
     linkFile
     linkDir
+    linkBin
     ;
 }

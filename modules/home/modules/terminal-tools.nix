@@ -150,14 +150,11 @@ in
     services.proton-pass-agent.enable = false; # TODO: login fail on work laptop/wsl
 
     home = {
-      file = {
-        ".local/bin/tm".source =
-          config.lib.file.mkOutOfStoreSymlink "${systemSettings.homeDirectory}/nix-conf/dotfiles/tmux/.local/bin/tm";
-        ".local/bin/tmp".source =
-          config.lib.file.mkOutOfStoreSymlink "${systemSettings.homeDirectory}/nix-conf/dotfiles/tmux/.local/bin/tmp";
-        ".local/bin/tms".source =
-          config.lib.file.mkOutOfStoreSymlink "${systemSettings.homeDirectory}/nix-conf/dotfiles/tmux/.local/bin/tms";
-      };
+      file = lib.mergeAttrsList (map (helpers.linkBin "tmux") [
+        "tm"
+        "tmp"
+        "tms"
+      ]);
 
       packages = with pkgs; [
         tldr
