@@ -13,6 +13,7 @@
     # ensure that external GUIs also inherit this path, e.g., neovide
     sessionPath = [
       "$HOME/.nix-profile/bin"
+      "$HOME/.local/state/nix/profile"
       "/nix/var/nix/profiles/default/bin"
     ];
 
