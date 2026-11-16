@@ -136,18 +136,27 @@ in
       };
     };
 
-    xdg.configFile = helpers.linkDir "lazygit";
+    xdg.configFile =
+      helpers.linkDir "lazygit"
+      // helpers.linkDir "ripgrep"
+      // helpers.linkDir "tmux"
+      // {
+        # global pi-agent instructions: rg/fd instead of grep/find; PI_CODING_AGENT_DIR=$XDG_CONFIG_HOME/pi/agent
+        "pi/agent/AGENTS.md".source = helpers.linkSubDir "pi" "agent/AGENTS.md";
+        "pi/agent/settings.json".source = helpers.linkSubDir "pi" "agent/settings.json";
+      };
 
     services.tldr-update.enable = true;
     services.proton-pass-agent.enable = false; # TODO: login fail on work laptop/wsl
 
     home = {
-      # global pi-agent instructions: rg/fd instead of grep/find
       file = {
-        ".pi/agent/AGENTS.md".source =
-          config.lib.file.mkOutOfStoreSymlink "${systemSettings.homeDirectory}/nix-conf/dotfiles/pi/.pi/agent/AGENTS.md";
-        ".pi/agent/settings.json".source =
-          config.lib.file.mkOutOfStoreSymlink "${systemSettings.homeDirectory}/nix-conf/dotfiles/pi/.pi/agent/settings.json";
+        ".local/bin/tm".source =
+          config.lib.file.mkOutOfStoreSymlink "${systemSettings.homeDirectory}/nix-conf/dotfiles/tmux/.local/bin/tm";
+        ".local/bin/tmp".source =
+          config.lib.file.mkOutOfStoreSymlink "${systemSettings.homeDirectory}/nix-conf/dotfiles/tmux/.local/bin/tmp";
+        ".local/bin/tms".source =
+          config.lib.file.mkOutOfStoreSymlink "${systemSettings.homeDirectory}/nix-conf/dotfiles/tmux/.local/bin/tms";
       };
 
       packages = with pkgs; [
