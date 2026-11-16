@@ -8,20 +8,6 @@
 }:
 let
   helpers = import ../helpers.nix { inherit config systemSettings; };
-  # ponytail: nixos-unstable tmux (3.7c) had a cursor-flicker regression;
-  # tracking upstream release/rc from GitHub instead of nixpkgs until fixed there.
-  # Bump `tmuxNewVersion`/`tmuxNewSha256` for a newer tag, `nix-prefetch-url
-  # --unpack --type sha256 https://github.com/tmux/tmux/archive/refs/tags/<tag>.tar.gz`.
-  tmuxNewVersion = "3.8";
-  tmux-rc = pkgs.tmux.overrideAttrs (old: {
-    version = tmuxNewVersion;
-    src = pkgs.fetchFromGitHub {
-      owner = "tmux";
-      repo = "tmux";
-      rev = tmuxNewVersion;
-      sha256 = "sha256-pv2wlr3coo+E0pfpb58giJJQn9PGgMFqtVA6nk+9JdE=";
-    };
-  });
 in
 {
   options.ave.terminal-tools.enable = lib.mkEnableOption "enables Home-Manager Terminal Tools module";
@@ -150,17 +136,19 @@ in
     services.proton-pass-agent.enable = false; # TODO: login fail on work laptop/wsl
 
     home = {
-      file = lib.mergeAttrsList (map (helpers.linkBin "tmux") [
-        "tm"
-        "tmp"
-        "tms"
-      ]);
+      file = lib.mergeAttrsList (
+        map (helpers.linkBin "tmux") [
+          "tm"
+          "tmp"
+          "tms"
+        ]
+      );
 
       packages = with pkgs; [
         tldr
         gh # use as package otherwise config is not writable
-        tmux-rc
         lnav
+        tmux
       ];
 
     };
