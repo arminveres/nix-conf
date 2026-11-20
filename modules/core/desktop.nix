@@ -102,13 +102,13 @@
       spleen
       envypn-font
       terminus_font
-      nerd-fonts.terminess-ttf
-      nerd-fonts.meslo-lg
-      nerd-fonts.iosevka
-      nerd-fonts.iosevka-term
       nerd-fonts.jetbrains-mono
       nerd-fonts.mononoki
-      nerd-fonts.martian-mono
+      # nerd-fonts.terminess-ttf
+      # nerd-fonts.meslo-lg
+      # nerd-fonts.iosevka
+      # nerd-fonts.iosevka-term
+      # nerd-fonts.martian-mono
       # ioskeley-mono.normal
       # ioskeley-mono.normal-term-NF
     ];
