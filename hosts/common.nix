@@ -77,10 +77,10 @@ in
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
-    # defaultUserShell = pkgs.zsh;
     users.${systemSettings.username} = {
-      isNormalUser = true;
       description = "Armin Veres";
+      isNormalUser = true;
+      shell = pkgs.zsh;
       extraGroups = [
         "networkmanager"
         "wheel"
