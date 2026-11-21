@@ -36,6 +36,7 @@ in
       home-manager.nixosModules.home-manager
       ./common.nix
       ./x1c/boot.nix
+      ./x1c/power-management.nix
       ./x1c/hardware-configuration.nix
       ./x1c/configuration.nix
       nixos-hardware.nixosModules.lenovo-thinkpad-x1-9th-gen

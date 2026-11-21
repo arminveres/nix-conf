@@ -17,7 +17,6 @@
 
   printing.enable = true;
   fm.enable = true;
-  power-management.enable = true;
   fingerprint.enable = false;
   bluetooth.enable = true;
   docker.enable = true;
@@ -99,13 +98,13 @@
             {
               _args = [
                 "XCURSOR_SIZE"
-                "24"
+                "32"
               ];
             }
             {
               _args = [
                 "HYPRCURSOR_SIZE"
-                "24"
+                "32"
               ];
             }
             {
