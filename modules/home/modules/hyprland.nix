@@ -47,10 +47,7 @@ in
 
       pointerCursor = {
         enable = true;
-        hyprcursor = {
-          enable = true;
-          size = 32;
-        };
+        hyprcursor.enable = true; # size follows home.pointerCursor.size
       };
     };
 

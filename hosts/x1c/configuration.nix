@@ -1,9 +1,12 @@
 {
-  inputs,
   systemSettings,
   pkgs,
+  config,
   ...
 }:
+let
+  cursor = config.home-manager.users.${systemSettings.username}.home.pointerCursor;
+in
 {
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -98,19 +101,19 @@
             {
               _args = [
                 "XCURSOR_SIZE"
-                "32"
+                (toString cursor.size)
               ];
             }
             {
               _args = [
                 "HYPRCURSOR_SIZE"
-                "32"
+                (toString cursor.size)
               ];
             }
             {
               _args = [
                 "HYPRCURSOR_THEME"
-                "Adwaita"
+                cursor.name
               ];
             }
             {
