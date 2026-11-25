@@ -16,6 +16,9 @@
       "$HOME/.local/state/nix/profile/bin"
       "/nix/var/nix/profiles/default/bin"
     ];
+    sessionVariables = {
+      WORK = "1";
+    };
 
     packages =
       with pkgs;
@@ -53,6 +56,7 @@
         )
       '';
     };
+
     keychain.keys = [
       "id_rsa"
       "gh"
