@@ -95,7 +95,10 @@ in
         dockerfile-language-server
         dockerfmt
         # rust-analyzer
-        bitbake-language-server
+
+        # bitbake-language-server
+        (callPackage ../../../pkgs/language-server-bitbake { })
+
         systemd-lsp
         texlab
         stylelint
