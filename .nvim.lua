@@ -1,42 +1,21 @@
-local hostname = vim.loop.os_gethostname()
+local hostname = vim.loop.os_gethostname() or ""
 -- https://nix-community.github.io/nixd/md_nixd_2docs_2configuration.html
-local config = {}
+local flake = '(builtins.getFlake "/home/arminveres/nix-conf")'
+local options = {}
 
 if hostname:match("nixos-.*") ~= nil then
-	config = {
-		settings = {
-			options = {
-				nixos = {
-					expr = '(builtins.getFlake "/home/arminveres/nix-conf").nixosConfigurations.'
-						.. hostname
-						.. ".options",
-				},
-				home_manager = {
-					-- nixos with hm module
-					expr = '(builtins.getFlake "/home/arminveres/nix-conf").nixosConfigurations.'
-						.. hostname
-						.. ".options.home-manager.users.type.getSubOptions []",
-				},
-				-- currently not used
-				-- flake_parts = { expr = 'let flake = builtins.getFlake ("/home/arminveres/nix-conf"); in flake.debug.options // flake.currentSystem.options', },
-			},
+	options = {
+		nixos = { expr = flake .. ".nixosConfigurations." .. hostname .. ".options" },
+		-- nixos with hm module
+		home_manager = {
+			expr = flake .. ".nixosConfigurations." .. hostname .. ".options.home-manager.users.type.getSubOptions []",
 		},
 	}
 else
-	config = {
-		settings = {
-			options = {
-				nixos = {
-					expr = '(builtins.getFlake "/home/arminveres/nix-conf").nixosConfigurations.'
-						.. hostname
-						.. ".options",
-				},
-				home_manager = {
-					expr = '(builtins.getFlake "/home/arminveres/nix-conf").homeConfigurations.ubuntu-cli.options',
-				},
-			},
-		},
+	-- standalone home-manager (no nixosConfiguration for this host)
+	options = {
+		home_manager = { expr = flake .. ".homeConfigurations.ubuntu-cli.options" },
 	}
 end
 
-vim.lsp.config("nixd", config)
+vim.lsp.config("nixd", { settings = { nixd = { options = options } } })
