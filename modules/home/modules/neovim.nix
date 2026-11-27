@@ -80,6 +80,7 @@ in
         shfmt
         shellcheck
         prettier
+        ruff
 
         # cmake stuff
         neocmakelsp
