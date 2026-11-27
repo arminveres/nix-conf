@@ -26,6 +26,7 @@ in
           "--group-directories-first"
         ];
       };
+      mergiraf.enable = true;
 
       fzf = {
         enable = true;
