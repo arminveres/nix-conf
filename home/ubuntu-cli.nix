@@ -41,7 +41,10 @@
     zsh = {
       shellAliases = {
         # hswitch = "home-manager switch -b backup --flake \"${systemSettings.homeDirectory}/nix-conf?submodules=1#ubuntu-cli\" --verbose";
-        hswitch = "nh home switch --configuration ubuntu-cli";
+        hswitch = "nh home switch --configuration ${
+          # TODO(aver): unify usernames (aver vs arminveres) so a single config suffices.
+          if systemSettings.username == "arminveres" then "SHS0704792C" else "ubuntu-cli"
+        }";
       };
       sessionVariables = {
         # In WSL we do not have this variable set, resulting in wrong colors.
